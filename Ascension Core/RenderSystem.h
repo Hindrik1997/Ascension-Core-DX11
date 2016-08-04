@@ -37,7 +37,7 @@ public:
 	void SetCamera(ComponentHandle cHandle);
 	Camera& GetCamera();
 
-private:
+protected:
 	ComponentHandle CurrentMainCamera;
 };
 

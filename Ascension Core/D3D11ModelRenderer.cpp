@@ -4,7 +4,11 @@
 
 Handle<EngineSystem> D3D11ModelRenderer::sysHandle;
 
-D3D11ModelRenderer::D3D11ModelRenderer(Handle<GameObject> parentObject) : Component(parentObject)
+D3D11ModelRenderer::D3D11ModelRenderer(Handle<GameObject> parentObject, D3D11Model* model) : Component(parentObject), Model(model)
+{
+}
+
+D3D11ModelRenderer::D3D11ModelRenderer(Handle<GameObject> parentObject) : Component(parentObject), Model(nullptr)
 {
 }
 
@@ -32,5 +36,34 @@ void D3D11ModelRenderer::RemoveComponent(ComponentHandle cHandle, ResetArgs ...a
 }
 
 //Explicit instantiations
-template Handle<Component> D3D11ModelRenderer::AddComponent(Handle<GameObject> parentObject);
+template Handle<Component> D3D11ModelRenderer::AddComponent(Handle<GameObject> parentObject, D3D11Model* model);
 template void D3D11ModelRenderer::RemoveComponent(ComponentHandle cHandle);
+
+
+void D3D11ModelRenderer::Render()
+{
+	Model->Set();
+	D3D11RenderSystem& RS = static_cast<D3D11RenderSystem&>(Engine::MainInstance().SystemsManager.GetRenderSystem());
+	GameObject& Parent = Engine::MainInstance().ObjectsFactory[ParentObject];
+
+	XMMATRIX View = RS.RecalculateViewMatrix();
+	XMMATRIX Projection = RS.RecalculateProjectionMatrix();
+
+	//XMMATRIX World = XMMatrixIdentity();
+	
+
+	XMMATRIX Scale = XMMatrixScaling(Parent.ObjectTransform.Scale.x, Parent.ObjectTransform.Scale.y, Parent.ObjectTransform.Scale.z);
+	XMMATRIX Rotation = XMMatrixRotationX(XMConvertToRadians(Parent.ObjectTransform.Rotation.x)) * XMMatrixRotationY(XMConvertToRadians(Parent.ObjectTransform.Rotation.y)) * XMMatrixRotationZ(XMConvertToRadians(Parent.ObjectTransform.Rotation.z));
+	//XMMATRIX Rotation = XMMatrixIdentity();
+	XMMATRIX Translation = XMMatrixTranslation(Parent.ObjectTransform.Position.x, Parent.ObjectTransform.Position.y, Parent.ObjectTransform.Position.z);
+	
+	XMMATRIX World = Scale * Rotation * Translation;
+	
+
+	XMMATRIX WVP = World * View * Projection;
+	XMFLOAT4X4 WVPFL;
+	XMStoreFloat4x4(&WVPFL, WVP);
+	Model->VertexShader.UpdateConstantBuffer(WVPFL);
+
+	Model->Mesh.ParentRenderer.DeviceContext->DrawIndexed(static_cast<int>(Model->Mesh.Indices.size()), 0, 0);
+}

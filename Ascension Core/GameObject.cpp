@@ -4,7 +4,7 @@
 
 #include "GameObject.h"
 
-GameObject::GameObject(GameObjectFactory* factory, Handle<GameObject> position) : ParentFactory(factory), PositionInFactory(position)
+GameObject::GameObject(Handle<GameObject> position) : PositionInFactory(position)
 {
 	ObjectTransform = Transform();
 }

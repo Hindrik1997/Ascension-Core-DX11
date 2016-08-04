@@ -28,7 +28,7 @@ public:
 
 		WNDCLASSEX wc;
 		wc.cbSize = sizeof(WNDCLASSEX);
-		wc.style = CS_HREDRAW | CS_VREDRAW;
+		wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 		wc.lpfnWndProc = StaticWndProc;
 		wc.cbClsExtra = 0;
 		wc.cbWndExtra = 0;
@@ -40,12 +40,24 @@ public:
 		wc.lpszClassName = WndClassName.c_str();
 		wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 
+		
+		DEVMODE dmScreenSettings;
+
+		memset(&dmScreenSettings, 0, sizeof(dmScreenSettings));
+		dmScreenSettings.dmSize = sizeof(dmScreenSettings);
+		dmScreenSettings.dmPelsWidth = (unsigned long)width;
+		dmScreenSettings.dmPelsHeight = (unsigned long)height;
+		dmScreenSettings.dmBitsPerPel = 32;
+		dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
+
+		ChangeDisplaySettings(&dmScreenSettings, CDS_FULLSCREEN);
+
 		if (!RegisterClassEx(&wc)) {
 			MessageBox(NULL, L"Error registering class", L"Error", MB_OK);
 			throw;
 		}
 
-		hWnd = CreateWindowEx(NULL, WndClassName.c_str(), L"Window Title", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, hInstance, this);
+		hWnd = CreateWindowEx(WS_EX_APPWINDOW, WndClassName.c_str(), L"ASCENSION GAME ENGINE", WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, hInstance, this);
 
 		if (!hWnd)
 		{
@@ -94,6 +106,10 @@ public:
 		{
 			if (WindowRenderer)
 			{
+				RECT t;
+				GetClientRect(hWnd, &t);
+				Width = t.right - t.left;
+				Height = t.bottom - t.top;
 				//resizen enz.
 				//WindowRenderer->SwapChain->ResizeBuffers();
 			}

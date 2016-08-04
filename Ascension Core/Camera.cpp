@@ -9,23 +9,17 @@ Handle<EngineSystem> Camera::sysHandle;
 Camera::Camera(Handle<GameObject> parentObject) : Component(parentObject)
 {
 	UpVector = Vector3f(0.0f, 1.0f, 0.0f);
-	Engine::MainInstance().ObjectsFactory[ParentObject.GetIndex()].ObjectTransform.Position.z = -0.5f;
+	LookAtVector = Vector3f();
+	Engine::MainInstance().ObjectsFactory[ParentObject].ObjectTransform.Position.z = -0.5f;
 }
 
 Camera::~Camera()
 {
 }
 
-void Camera::Reset(Handle<GameObject> parentObject)
-{
-	ParentObject = parentObject;
-	UpVector = Vector3f(0.0f, 1.0f, 0.0f);
-	Engine::MainInstance().ObjectsFactory[ParentObject.GetIndex()].ObjectTransform.Position.z = -0.5f;
-}
-
 Vector3f Camera::GetCamPosition()
 {
-	return Engine::MainInstance().ObjectsFactory[ParentObject.GetIndex()].ObjectTransform.Position;
+	return Engine::MainInstance().ObjectsFactory[ParentObject].ObjectTransform.Position;
 }
 
 Handle<EngineSystem> Camera::GetSystemHandle()

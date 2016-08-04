@@ -28,16 +28,10 @@
     <ClCompile Include="GameObjectFactory.cpp">
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
-    <ClCompile Include="ReleaseCOM.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="SystemManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
@@ -79,6 +73,12 @@
     <ClCompile Include="CoreSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Systems\RenderSystems\Direct3D</Filter>
+    </ClCompile>
+    <ClCompile Include="ReleaseCOM.cpp">
+      <Filter>Systems\RenderSystems\Direct3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector2f.h">
@@ -107,9 +107,6 @@
     </ClInclude>
     <ClInclude Include="GameObjectFactory.h">
       <Filter>GameObjects and Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ReleaseCOM.h">
-      <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="PoolItem.h">
       <Filter>Utilities</Filter>
@@ -171,6 +168,9 @@
     <ClInclude Include="HelperFunctions.h">
       <Filter>Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="ReleaseCOM.h">
+      <Filter>Systems\RenderSystems\Direct3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -220,5 +220,10 @@
     <FxCompile Include="VertexShader.hlsl">
       <Filter>Systems\RenderSystems\Shaders</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Structures.hlslh">
+      <Filter>Systems\RenderSystems\Shaders</Filter>
+    </Text>
   </ItemGroup>
 </Project>

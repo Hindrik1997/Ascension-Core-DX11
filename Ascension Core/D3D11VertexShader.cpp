@@ -24,7 +24,7 @@ D3D11VertexShader::D3D11VertexShader(D3D11Renderer& renderer, wstring fileName) 
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	bufferDesc.CPUAccessFlags = NULL;
 	bufferDesc.MiscFlags = NULL;
-
+	ParentRenderer.Device->CreateInputLayout(D3D11Vertex::Layout, D3D11Vertex::LayoutSize, VS_Buffer->GetBufferPointer(), VS_Buffer->GetBufferSize(), &InputLayout);
 	ParentRenderer.Device->CreateBuffer(&bufferDesc, NULL, &PerObjectBuffer);
 }
 
@@ -33,15 +33,14 @@ void D3D11VertexShader::SetInputLayout(D3D11Mesh& mesh)
 	unsigned int stride = sizeof(D3D11Vertex);
 	unsigned int offset = 0;
 	ParentRenderer.DeviceContext->IASetVertexBuffers(START_SLOT, NUM_BUFFERS, &(mesh.VertexBuffer), &stride, &offset);
-	ParentRenderer.Device->CreateInputLayout(D3D11Vertex::Layout, D3D11Vertex::LayoutSize, VS_Buffer->GetBufferPointer(), VS_Buffer->GetBufferSize(), &InputLayout);
 	ParentRenderer.DeviceContext->IASetInputLayout(InputLayout);
 	ParentRenderer.DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
 void D3D11VertexShader::UpdateConstantBuffer(XMFLOAT4X4 WVP)
 {
-	StructBuffer.WVP = XMMatrixTranspose(XMLoadFloat4x4(&WVP));
-	ParentRenderer.DeviceContext->UpdateSubresource(PerObjectBuffer, NULL, NULL, &StructBuffer, NULL, NULL);
+	ConstantBufferStructure.WVP = XMMatrixTranspose(XMLoadFloat4x4(&WVP));
+	ParentRenderer.DeviceContext->UpdateSubresource(PerObjectBuffer, 0, NULL, &ConstantBufferStructure,0,0);
 	ParentRenderer.DeviceContext->VSSetConstantBuffers(START_SLOT, NUM_BUFFERS, &PerObjectBuffer);
 }
 

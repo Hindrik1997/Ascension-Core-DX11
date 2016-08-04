@@ -41,7 +41,7 @@ void Engine::GameLoop()
 
 		//Calculate frame time
 		double frameTime = GameTimer.FrameTimeCalculations();
-		std::cout << GameTimer.Fps << std::endl;
+		//std::cout << GameTimer.Fps << std::endl;
 
 		//Update systems using frame time
 		SystemsManager.UpdateSystems(static_cast<float>(frameTime));

@@ -29,8 +29,6 @@ public:
 	static Handle<EngineSystem> GetSystemHandle();
 private:
 	static Handle<EngineSystem> sysHandle;
-public:
-	void Reset(Handle<GameObject> parentObject);
 };
 
 inline Vector3f Camera::GetUpVector()

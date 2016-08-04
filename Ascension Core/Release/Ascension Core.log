@@ -1,20 +1,33 @@
-﻿  Camera.cpp
+﻿  compilation object save succeeded; see F:\Repos\Ascension Game Engine\Release\PixelShader.cso
+  compilation object save succeeded; see F:\Repos\Ascension Game Engine\Release\VertexShader.cso
+  Camera.cpp
   Component.cpp
+  ComponentHandle.cpp
   CoreSystem.cpp
+  D3D11Mesh.cpp
+  D3D11Model.cpp
   D3D11ModelRenderer.cpp
-  D3D11RenderSystem.cpp
+  D3D11PixelShader.cpp
   D3D11Renderer.cpp
+  D3D11RenderSystem.cpp
+  D3D11Vertex.cpp
+  D3D11VertexShader.cpp
   Engine.cpp
+  EngineSystem.cpp
+  GameObject.cpp
   GameObjectFactory.cpp
+  main.cpp
+  ReleaseCOM.cpp
   RenderSystem.cpp
-  Scene.cpp
   SystemManager.cpp
   TestSystem.cpp
-  main.cpp
+  Timer.cpp
+  Transform.cpp
+  Vector2f.cpp
+  Vector3f.cpp
+  Vector4f.cpp
   Generating code
-  24 of 597 functions ( 4.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    12 functions had inline decision re-evaluated but remain unchanged
+  All 780 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   Ascension Core.vcxproj -> F:\Repos\Ascension Game Engine\Release\Ascension Core.exe
   Ascension Core.vcxproj -> F:\Repos\Ascension Game Engine\Release\Ascension Core.pdb (Full PDB)

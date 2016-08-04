@@ -66,7 +66,7 @@ public:
 	template<typename... Args>
 	void RemoveTestComponent(ComponentHandle cHandle, Args... args) 
 	{
-		components.RemoveItem(Handle<TestComponent>(cHandle.CompHandle.GetIndex()), args...);
+		components.RemoveItem(Handle<TestComponent>(cHandle.GetCompHandle().GetIndex()), args...);
 	}
 
 	Handle<Component> GetTestComponent(Handle<GameObject> parentObject)

@@ -9,7 +9,9 @@
 #include "ComponentHandle.h"
 #include "Component.h"
 #include <vector>
+#include <string>
 
+using std::string;
 using std::vector;
 
 template<typename T>
@@ -21,7 +23,7 @@ class ComponentHandle;
 class GameObject {
 private:
 	friend class PoolItem<GameObject>;
-    GameObject(GameObjectFactory* factory, Handle<GameObject> position);
+    GameObject(Handle<GameObject> position);
 public:
     //only movable
     GameObject(GameObject&& source) = delete;
@@ -31,8 +33,8 @@ public:
     GameObject& operator=(const GameObject& source) = delete;
 public:
 	Transform ObjectTransform;
-	GameObjectFactory* ParentFactory;
 	Handle<GameObject> PositionInFactory;
+	string Name = "GameObject";
     
 	template<typename T, typename... ResetArgs> inline ComponentHandle AddComponent(ResetArgs... arguments);
 	template<typename T, typename... ResetArgs> inline void RemoveComponent(ComponentHandle cHandle, ResetArgs... arguments);

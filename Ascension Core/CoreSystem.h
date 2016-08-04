@@ -28,5 +28,5 @@ public:
 template<typename ...Args>
 inline void CoreSystem::RemoveCamera(ComponentHandle cHandle, Args ...args)
 {
-	cameras.RemoveItem(Handle<Camera>(cHandle.CompHandle.GetIndex()), args...);
+	cameras.RemoveItem(Handle<Camera>(cHandle.GetCompHandle().GetIndex()), args...);
 }

@@ -15,10 +15,10 @@ class ComponentHandle {
 public:
 	ComponentHandle();
     ComponentHandle(Handle<Component> componentHandle, Handle<EngineSystem> systemHandle);
-
-    const Handle<Component> CompHandle;
-    const Handle<EngineSystem> SysHandle;
-
+private:
+    Handle<Component> CompHandle;
+    Handle<EngineSystem> SysHandle;
+public:
 	inline Handle<Component> GetCompHandle() const;
 	inline Handle<EngineSystem> GetSysHandle() const;
 };

@@ -8,10 +8,12 @@
 #include "EngineSystem.h"
 #include "Component.h"
 #include "ComponentHandle.h"
+#include "D3D11Model.h"
 
 class D3D11ModelRenderer : public Component
 {
 public:
+	D3D11ModelRenderer(Handle<GameObject> parentObject, D3D11Model* model);
 	D3D11ModelRenderer(Handle<GameObject> parentObject);
 	~D3D11ModelRenderer();
 
@@ -28,15 +30,14 @@ public:
 	inline void Reset(Handle<GameObject> parentObject);
 private:
 	static Handle<EngineSystem> sysHandle;
-
+	D3D11Model* Model;
 	//Methods
 public:
-	
+	void Render();
 };
 
 inline void D3D11ModelRenderer::Reset(Handle<GameObject> parentObject)
 {
 	ParentObject = parentObject;
 }
-
 #endif

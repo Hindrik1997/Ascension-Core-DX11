@@ -34,7 +34,6 @@ public:
 	~D3D11Renderer();
 public:
 	void Initialize();
-	void Render();
 };
 
 #endif

@@ -19,12 +19,22 @@
 using std::wstring;
 using std::unique_ptr;
 
-struct PerObjectBufferStruct
+__declspec(align(16)) struct PerObjectBufferStruct
 {
 	XMMATRIX WVP;
+
+	void* operator new(size_t i)
+	{
+		return _mm_malloc(i, 16);
+	}
+
+	void operator delete(void* p)
+	{
+		_mm_free(p);
+	}
 };
 
-class D3D11VertexShader
+__declspec(align(16)) class D3D11VertexShader
 {
 public:
 	D3D11VertexShader(D3D11Renderer& renderer, wstring fileName);
@@ -36,11 +46,23 @@ public:
 public:
 	const D3D11Renderer& ParentRenderer;
 	ID3D11Buffer* PerObjectBuffer = nullptr;
-	PerObjectBufferStruct StructBuffer;
+	PerObjectBufferStruct ConstantBufferStructure;
 	ID3D11InputLayout* InputLayout = nullptr;
 	ID3D11VertexShader* VS = nullptr;
 	ID3DBlob* VS_Buffer = nullptr;
 	wstring FileName;
+
+
+	void* operator new(size_t i)
+	{
+		return _mm_malloc(i, 16);
+	}
+
+	void operator delete(void* p)
+	{
+		_mm_free(p);
+	}
+
 };
 
 inline void D3D11VertexShader::SetShader()

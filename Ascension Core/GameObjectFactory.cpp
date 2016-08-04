@@ -13,3 +13,8 @@ GameObject& GameObjectFactory::operator[](const int index)
 {
 	return GameObjects[index];
 }
+
+GameObject & GameObjectFactory::operator[](const Handle<GameObject> handle)
+{
+	return GameObjects[handle.GetIndex()];
+}

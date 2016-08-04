@@ -32,6 +32,8 @@ public:
 	template<typename... ResetArgs>
     Handle<T> GetNewItem(ResetArgs... args);
 
+	inline const array<PoolItem<T>, SIZE>& GetStorageRef() const;
+
     void RemoveItem(Handle<T> item);
 
     inline size_t size();
@@ -79,6 +81,12 @@ Handle<T> Pool<T, SIZE>::GetNewItem(ResetArgs... args) {
     storage[TempIndex].IsUsed = true;
 	storage[TempIndex].Reset(args...);
     return Handle<T>(TempIndex);
+}
+
+template<typename T, int SIZE>
+inline const array<PoolItem<T>, SIZE>& Pool<T, SIZE>::GetStorageRef() const
+{
+	return storage;
 }
 
 template<typename T, int SIZE>

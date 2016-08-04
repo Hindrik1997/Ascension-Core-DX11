@@ -17,6 +17,8 @@ RenderSystem::~RenderSystem() {
 
 void RenderSystem::SetCamera(ComponentHandle cHandle)
 {
+	//Note, must integrate checks later if this is actually a camera component!
+	CurrentMainCamera = cHandle;
 }
 
 Camera& RenderSystem::GetCamera()

@@ -17,14 +17,22 @@ using std::mutex;
 class Engine;
 
 class GameObjectFactory {
-public:
+private:
+	friend class Engine;
     GameObjectFactory();
-
+public:
 	//Does not include bounds checking!
 	GameObject& operator[] (const int index);
 
+	//Does not include bounds checking!
+	GameObject& operator[] (const Handle<GameObject> handle);
+
 	//Does include bounds checking
 	GameObject& at(const int index);
+
+	//Does include bounds checking
+	GameObject& at(const Handle<GameObject> handle);
+
 
     inline Handle<GameObject> CreateGameObject();
     inline void DeleteGameObject(Handle<GameObject> objectHandle);
@@ -41,11 +49,18 @@ inline GameObject& GameObjectFactory::at(const int index)
 	throw "Out of bounds!";
 }
 
+inline GameObject & GameObjectFactory::at(const Handle<GameObject> handle)
+{
+	if (handle.GetIndex() >= 0 && handle.GetIndex() <= static_cast<int>(GameObjects.size()) - 1)
+		return GameObjects[handle.GetIndex()];
+	throw "Out of bounds!";
+}
+
 inline Handle<GameObject> GameObjectFactory::CreateGameObject()
 {
 	std::lock_guard<std::mutex> guard(GMutex);
 	Handle<GameObject> position(GameObjects.GetFirstFreeIndex());
-    return GameObjects.GetNewItem(this, position);
+    return GameObjects.GetNewItem(position);
 }
 
 inline void GameObjectFactory::DeleteGameObject(Handle<GameObject> objectHandle)

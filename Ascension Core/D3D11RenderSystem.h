@@ -30,8 +30,8 @@ public:
 	virtual void Update(float deltaTime);
 
 	//Component stuff
-
-	inline Handle<Component> GetD3D11ModelRenderer(Handle<GameObject> parentObject);
+	template<typename ...Args>
+	inline Handle<Component> GetD3D11ModelRenderer(Handle<GameObject> parentObject, Args... args);
 
 	template<typename... Args>
 	inline void RemoveD3D11ModelRenderer(ComponentHandle cHandle, Args... args);
@@ -51,6 +51,10 @@ public:
 public:
 	unique_ptr<Win32Window<D3D11Renderer>> MainWindow;
 	unique_ptr<D3D11Renderer> Renderer;
+
+#ifdef _DEBUG
+	ID3D11Debug* debug = nullptr;
+#endif
 
 private:
 	XMFLOAT4X4 ProjectionMatrix;
@@ -74,7 +78,21 @@ inline bool D3D11RenderSystem::ProcessAPI()
 
 inline void D3D11RenderSystem::Render()
 {
-	return Renderer->Render();
+	
+	//Clear depthstencil
+	Renderer->DeviceContext->ClearDepthStencilView(Renderer->DepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+	//Clear background to black
+	float bgColor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	Renderer->DeviceContext->ClearRenderTargetView(Renderer->RenderTargetView, bgColor);
+
+
+	for (size_t i = 0; i < ModelRendererPool.size(); ++i)
+	{
+		if(ModelRendererPool.GetStorageRef()[i].IsUsed)
+		ModelRendererPool[i].Render();
+	}
+	Renderer->SwapChain->Present(0, 0);
 }
 
 inline XMMATRIX D3D11RenderSystem::GetProjectionMatrix() const
@@ -86,17 +104,18 @@ inline XMMATRIX D3D11RenderSystem::GetViewMatrix() const
 	return XMLoadFloat4x4(&ViewMatrix);
 };
 
-inline Handle<Component> D3D11RenderSystem::GetD3D11ModelRenderer(Handle<GameObject> parentObject)
+template<typename ...Args>
+inline Handle<Component> D3D11RenderSystem::GetD3D11ModelRenderer(Handle<GameObject> parentObject, Args ...args)
 {
 	std::lock_guard<std::mutex> guard(MRPMutex);
-	return Handle<Component>(ModelRendererPool.GetNewItem(parentObject).GetIndex());
+	return Handle<Component>(ModelRendererPool.GetNewItem(parentObject, args...).GetIndex());
 }
 
 template<typename ...Args>
 inline void D3D11RenderSystem::RemoveD3D11ModelRenderer(ComponentHandle cHandle, Args ...args)
 {
 	std::lock_guard<std::mutex> guard(MRPMutex);
-	ModelRendererPool.RemoveItem(Handle<D3D11ModelRenderer>(cHandle.CompHandle.GetIndex()), args...);
+	ModelRendererPool.RemoveItem(Handle<D3D11ModelRenderer>(cHandle.GetCompHandle().GetIndex()), args...);
 }
 
 #endif

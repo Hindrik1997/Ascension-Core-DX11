@@ -109,16 +109,3 @@ void D3D11Renderer::Initialize()
 
 	DeviceContext->RSSetViewports(1, &viewport);
 }
-
-void D3D11Renderer::Render()
-{
-	//Clear depthstencil
-	DeviceContext->ClearDepthStencilView(DepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-
-	//Clear background to black
-	float bgColor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-	DeviceContext->ClearRenderTargetView(RenderTargetView, bgColor);
-
-
-	SwapChain->Present(0, 0);
-}
