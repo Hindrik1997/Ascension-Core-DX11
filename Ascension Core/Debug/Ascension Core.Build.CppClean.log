@@ -1,0 +1,44 @@
+f:\repos\ascension game engine\debug\pixelshader.cso
+f:\repos\ascension game engine\debug\vertexshader.cso
+f:\repos\ascension game engine\ascension core\debug\camera.obj
+f:\repos\ascension game engine\ascension core\debug\d3d11modelrenderer.obj
+f:\repos\ascension game engine\ascension core\debug\d3d11vertexshader.obj
+f:\repos\ascension game engine\ascension core\debug\transform.obj
+f:\repos\ascension game engine\ascension core\debug\vector2f.obj
+f:\repos\ascension game engine\ascension core\debug\vector3f.obj
+f:\repos\ascension game engine\ascension core\debug\componenthandle.obj
+f:\repos\ascension game engine\ascension core\debug\d3d11mesh.obj
+f:\repos\ascension game engine\ascension core\debug\d3d11renderer.obj
+f:\repos\ascension game engine\ascension core\debug\engine.obj
+f:\repos\ascension game engine\ascension core\debug\releasecom.obj
+f:\repos\ascension game engine\ascension core\debug\testsystem.obj
+f:\repos\ascension game engine\ascension core\debug\coresystem.obj
+f:\repos\ascension game engine\ascension core\debug\d3d11model.obj
+f:\repos\ascension game engine\ascension core\debug\d3d11vertex.obj
+f:\repos\ascension game engine\ascension core\debug\enginesystem.obj
+f:\repos\ascension game engine\ascension core\debug\gameobjectfactory.obj
+f:\repos\ascension game engine\ascension core\debug\scene.obj
+f:\repos\ascension game engine\ascension core\debug\timer.obj
+f:\repos\ascension game engine\ascension core\debug\vector4f.obj
+f:\repos\ascension game engine\ascension core\debug\component.obj
+f:\repos\ascension game engine\ascension core\debug\d3d11pixelshader.obj
+f:\repos\ascension game engine\ascension core\debug\d3d11rendersystem.obj
+f:\repos\ascension game engine\ascension core\debug\gameobject.obj
+f:\repos\ascension game engine\ascension core\debug\rendersystem.obj
+f:\repos\ascension game engine\ascension core\debug\systemmanager.obj
+f:\repos\ascension game engine\ascension core\debug\main.obj
+f:\repos\ascension game engine\ascension core\debug\vc140.pdb
+f:\repos\ascension game engine\ascension core\debug\vc140.idb
+f:\repos\ascension game engine\debug\ascension core.ilk
+f:\repos\ascension game engine\debug\ascension core.exe
+f:\repos\ascension game engine\debug\ascension core.pdb
+f:\repos\ascension game engine\ascension core\debug\ascension core.tlog\ascension core.write.1u.tlog
+f:\repos\ascension game engine\ascension core\debug\ascension core.tlog\cl.command.1.tlog
+f:\repos\ascension game engine\ascension core\debug\ascension core.tlog\cl.read.1.tlog
+f:\repos\ascension game engine\ascension core\debug\ascension core.tlog\cl.write.1.tlog
+f:\repos\ascension game engine\ascension core\debug\ascension core.tlog\fxc.command.1.tlog
+f:\repos\ascension game engine\ascension core\debug\ascension core.tlog\fxc.read.1.tlog
+f:\repos\ascension game engine\ascension core\debug\ascension core.tlog\fxc.write.1.tlog
+f:\repos\ascension game engine\ascension core\debug\ascension core.tlog\link.command.1.tlog
+f:\repos\ascension game engine\ascension core\debug\ascension core.tlog\link.read.1.tlog
+f:\repos\ascension game engine\ascension core\debug\ascension core.tlog\link.write.1.tlog

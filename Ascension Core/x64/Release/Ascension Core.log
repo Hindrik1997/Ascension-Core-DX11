@@ -1,0 +1,65 @@
+﻿  compilation object save succeeded; see F:\Repos\Ascension Game Engine\x64\Release\PixelShader.cso
+  compilation object save succeeded; see F:\Repos\Ascension Game Engine\x64\Release\VertexShader.cso
+  Camera.cpp
+  Component.cpp
+  ComponentHandle.cpp
+  CoreSystem.cpp
+  D3D11Mesh.cpp
+CoreSystem.cpp(28): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+f:\repos\ascension game engine\ascension core\Pool.h(65): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data (compiling source file CoreSystem.cpp)
+  f:\repos\ascension game engine\ascension core\Pool.h(61): note: while compiling class template member function 'Pool<Camera,32>::Pool(void)' (compiling source file CoreSystem.cpp)
+  CoreSystem.cpp(5): note: see reference to function template instantiation 'Pool<Camera,32>::Pool(void)' being compiled
+  f:\repos\ascension game engine\ascension core\CoreSystem.h(12): note: see reference to class template instantiation 'Pool<Camera,32>' being compiled (compiling source file CoreSystem.cpp)
+  D3D11Model.cpp
+  D3D11ModelRenderer.cpp
+  D3D11PixelShader.cpp
+  D3D11Renderer.cpp
+  D3D11RenderSystem.cpp
+  D3D11Vertex.cpp
+  D3D11VertexShader.cpp
+  Engine.cpp
+D3D11RenderSystem.cpp(48): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+f:\repos\ascension game engine\ascension core\Pool.h(65): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data (compiling source file D3D11RenderSystem.cpp)
+  f:\repos\ascension game engine\ascension core\Pool.h(61): note: while compiling class template member function 'Pool<D3D11ModelRenderer,65535>::Pool(void)' (compiling source file D3D11RenderSystem.cpp)
+  D3D11RenderSystem.cpp(5): note: see reference to function template instantiation 'Pool<D3D11ModelRenderer,65535>::Pool(void)' being compiled
+  f:\repos\ascension game engine\ascension core\D3D11RenderSystem.h(60): note: see reference to class template instantiation 'Pool<D3D11ModelRenderer,65535>' being compiled (compiling source file D3D11RenderSystem.cpp)
+  EngineSystem.cpp
+  GameObject.cpp
+  GameObjectFactory.cpp
+  main.cpp
+f:\repos\ascension game engine\ascension core\Pool.h(65): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data (compiling source file Engine.cpp)
+  f:\repos\ascension game engine\ascension core\Pool.h(61): note: while compiling class template member function 'Pool<TestComponent,65535>::Pool(void)' (compiling source file Engine.cpp)
+  f:\repos\ascension game engine\ascension core\TestSystem.h(59): note: see reference to function template instantiation 'Pool<TestComponent,65535>::Pool(void)' being compiled (compiling source file Engine.cpp)
+  f:\repos\ascension game engine\ascension core\TestSystem.h(54): note: see reference to class template instantiation 'Pool<TestComponent,65535>' being compiled (compiling source file Engine.cpp)
+  ReleaseCOM.cpp
+  RenderSystem.cpp
+f:\repos\ascension game engine\ascension core\Pool.h(65): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data (compiling source file GameObjectFactory.cpp)
+  f:\repos\ascension game engine\ascension core\Pool.h(61): note: while compiling class template member function 'Pool<GameObject,65535>::Pool(void)' (compiling source file GameObjectFactory.cpp)
+  GameObjectFactory.cpp(8): note: see reference to function template instantiation 'Pool<GameObject,65535>::Pool(void)' being compiled
+  f:\repos\ascension game engine\ascension core\GameObjectFactory.h(34): note: see reference to class template instantiation 'Pool<GameObject,65535>' being compiled (compiling source file GameObjectFactory.cpp)
+  Scene.cpp
+  SystemManager.cpp
+f:\repos\ascension game engine\ascension core\Pool.h(65): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data (compiling source file main.cpp)
+  f:\repos\ascension game engine\ascension core\Pool.h(61): note: while compiling class template member function 'Pool<TestComponent,65535>::Pool(void)' (compiling source file main.cpp)
+  f:\repos\ascension game engine\ascension core\TestSystem.h(59): note: see reference to function template instantiation 'Pool<TestComponent,65535>::Pool(void)' being compiled (compiling source file main.cpp)
+  f:\repos\ascension game engine\ascension core\TestSystem.h(54): note: see reference to class template instantiation 'Pool<TestComponent,65535>' being compiled (compiling source file main.cpp)
+f:\repos\ascension game engine\ascension core\SystemManager.h(70): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file main.cpp)
+  main.cpp(18): note: see reference to function template instantiation 'Handle<EngineSystem> SystemManager::AddSystem<TestSystem,>(void)' being compiled
+  TestSystem.cpp
+  Timer.cpp
+  Transform.cpp
+  Vector2f.cpp
+  Vector3f.cpp
+f:\repos\ascension game engine\ascension core\SystemManager.h(70): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file SystemManager.cpp)
+  SystemManager.cpp(15): note: see reference to function template instantiation 'Handle<EngineSystem> SystemManager::AddSystem<CoreSystem,>(void)' being compiled
+  Vector4f.cpp
+TestSystem.cpp(27): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+f:\repos\ascension game engine\ascension core\Pool.h(65): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data (compiling source file TestSystem.cpp)
+  f:\repos\ascension game engine\ascension core\Pool.h(61): note: while compiling class template member function 'Pool<TestComponent,65535>::Pool(void)' (compiling source file TestSystem.cpp)
+  f:\repos\ascension game engine\ascension core\TestSystem.h(59): note: see reference to function template instantiation 'Pool<TestComponent,65535>::Pool(void)' being compiled (compiling source file TestSystem.cpp)
+  f:\repos\ascension game engine\ascension core\TestSystem.h(54): note: see reference to class template instantiation 'Pool<TestComponent,65535>' being compiled (compiling source file TestSystem.cpp)
+  Generating code
+  All 600 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Ascension Core.vcxproj -> F:\Repos\Ascension Game Engine\x64\Release\Ascension Core.exe
+  Ascension Core.vcxproj -> F:\Repos\Ascension Game Engine\x64\Release\Ascension Core.pdb (Full PDB)

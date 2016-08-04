@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Vector2f.cpp">
+      <Filter>Utilities\Vectors</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3f.cpp">
+      <Filter>Utilities\Vectors</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4f.cpp">
+      <Filter>Utilities\Vectors</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentHandle.cpp">
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectFactory.cpp">
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ReleaseCOM.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Renderer.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11RenderSystem.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Vertex.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11VertexShader.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Mesh.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Model.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11PixelShader.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11ModelRenderer.cpp">
+      <Filter>GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>GameObjects and Components\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Vector2f.h">
+      <Filter>Utilities\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3f.h">
+      <Filter>Utilities\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4f.h">
+      <Filter>Utilities\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentHandle.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectFactory.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ReleaseCOM.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="PoolItem.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Pool.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Handle.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32Window.h">
+      <Filter>Systems\RenderSystems\Direct3D</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Renderer.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11RenderSystem.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Vertex.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11VertexShader.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11PixelShader.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Mesh.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Model.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11ModelRenderer.h">
+      <Filter>GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>GameObjects and Components\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="HelperFunctions.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{ddaf6501-d3ed-4dd9-93c7-7f35a878f6ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{0ac992da-92b0-4193-8633-87544a9ce433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects and Components">
+      <UniqueIdentifier>{10a21456-8a0f-418c-b0a5-23ed162a9e2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects and Components\Components">
+      <UniqueIdentifier>{361fb189-db53-49bd-a2bf-b35df94c238f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{a0f7447b-96f8-4064-a68c-4d1836b184ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystems">
+      <UniqueIdentifier>{1a582ff5-8e14-4adc-8207-d1747d75bcfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Vectors">
+      <UniqueIdentifier>{571f4bf3-1522-4be0-8d35-8e9724b4626c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystems\Direct3D">
+      <UniqueIdentifier>{72a4356f-1534-4f3e-b453-88deba3b8dc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem">
+      <UniqueIdentifier>{83a716ea-20e4-4b19-a016-e9c5df7d39f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects and Components\Components\RenderSystems">
+      <UniqueIdentifier>{5315c8d6-b018-4839-b558-395233f39e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects and Components\Components\RenderSystems\Direct3D">
+      <UniqueIdentifier>{d59d2597-ce61-4a39-b096-adaffa96ce12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem">
+      <UniqueIdentifier>{111e423a-6758-4a71-ac8d-8042fa2ebdda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystems\Shaders">
+      <UniqueIdentifier>{a893372d-1bff-4736-9c2b-0bfe8e5d34bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="PixelShader.hlsl">
+      <Filter>Systems\RenderSystems\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexShader.hlsl">
+      <Filter>Systems\RenderSystems\Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>
