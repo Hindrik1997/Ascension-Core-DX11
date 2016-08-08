@@ -41,13 +41,22 @@ XMMATRIX D3D11RenderSystem::RecalculateViewMatrix()
 		throw "No camera found!";
 
 	Camera& CurrentCamera = static_cast<CoreSystem*>(&Engine::MainInstance().SystemsManager[CurrentMainCamera.GetSysHandle()])->cameras[CurrentMainCamera.GetCompHandle().GetIndex()];
+	GameObject& Parent = Engine::MainInstance().ObjectsFactory[CurrentCamera.ParentObject];
+
+	XMMATRIX Scale = XMMatrixScaling(Parent.ObjectTransform.Scale.x, Parent.ObjectTransform.Scale.y, Parent.ObjectTransform.Scale.z);
+	XMMATRIX Rotation = XMMatrixRotationX(XMConvertToRadians(Parent.ObjectTransform.Rotation.x)) * XMMatrixRotationY(XMConvertToRadians(Parent.ObjectTransform.Rotation.y)) * XMMatrixRotationZ(XMConvertToRadians(Parent.ObjectTransform.Rotation.z));
+	XMMATRIX Translation = XMMatrixTranslation(Parent.ObjectTransform.Position.x, Parent.ObjectTransform.Position.y, Parent.ObjectTransform.Position.z);
+	XMMATRIX World = Scale * Rotation * Translation;
+
 
 	XMVECTOR CamPosV = XMVectorSet(CurrentCamera.GetCamPosition().x, CurrentCamera.GetCamPosition().y, CurrentCamera.GetCamPosition().z, 0.0f);
-	XMVECTOR CamLookAtV = XMVectorSet(CurrentCamera.GetLookAtVector().x, CurrentCamera.GetLookAtVector().y, CurrentCamera.GetLookAtVector().z, 0.0f);
-	XMVECTOR CamUpV = XMVectorSet(CurrentCamera.GetUpVector().x, CurrentCamera.GetUpVector().y, CurrentCamera.GetUpVector().z, 0.0f);
+	XMVECTOR CamLookAtV = XMVectorSet(CurrentCamera.GetCamPosition().x, CurrentCamera.GetCamPosition().y, CurrentCamera.GetCamPosition().z + 1, 0.0f);
+	XMVECTOR CamUpV = XMVectorSet(CurrentCamera.GetUpVector().x, CurrentCamera.GetUpVector().y + 1, CurrentCamera.GetUpVector().z, 0.0f);
+
+	CamPosV = XMVector4Transform(CamPosV, World);
 
 	XMMATRIX Temp = XMMatrixLookAtLH(CamPosV, CamLookAtV, CamUpV);
-	XMStoreFloat4x4(&ViewMatrix,Temp);
+	XMStoreFloat4x4(&ViewMatrix, Temp);
 	return Temp;
 }
 
@@ -59,8 +68,36 @@ void D3D11RenderSystem::Update(float deltaTime)
 	{
 		if (ModelRendererPool.GetStorageRef()[i].IsUsed)
 		{
-			Engine::MainInstance().ObjectsFactory[ModelRendererPool[i].ParentObject].ObjectTransform.Rotation.y += 0.05f;
+			//Engine::MainInstance().ObjectsFactory[ModelRendererPool[i].ParentObject].ObjectTransform.Rotation.y += 0.05f;
 		}
+	}
+
+	Camera& CurrentCamera = static_cast<CoreSystem*>(&Engine::MainInstance().SystemsManager[CurrentMainCamera.GetSysHandle()])->cameras[CurrentMainCamera.GetCompHandle().GetIndex()];
+	GameObject& CParent = Engine::MainInstance().ObjectsFactory[CurrentCamera.ParentObject];
+
+	if (MainWindow->Input.IsKeyDown(VK_SHIFT))
+	{
+		CParent.ObjectTransform.Position.y -= 0.01f;
+	}
+	if (MainWindow->Input.IsKeyDown(VK_SPACE))
+	{
+		CParent.ObjectTransform.Position.y += 0.01f;
+	}
+	if (MainWindow->Input.IsKeyDown(0x41)) //A
+	{
+		CParent.ObjectTransform.Position.x -= 0.01f;
+	}
+	if (MainWindow->Input.IsKeyDown(0x44)) //D
+	{
+		CParent.ObjectTransform.Position.x += 0.01f;
+	}
+	if (MainWindow->Input.IsKeyDown(0x57)) //W
+	{
+		CParent.ObjectTransform.Position.z += 0.01f;
+	}
+	if (MainWindow->Input.IsKeyDown(0x53)) //S
+	{
+		CParent.ObjectTransform.Position.z -= 0.01f;
 	}
 
 }

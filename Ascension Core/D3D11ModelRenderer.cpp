@@ -42,28 +42,46 @@ template void D3D11ModelRenderer::RemoveComponent(ComponentHandle cHandle);
 
 void D3D11ModelRenderer::Render()
 {
-	Model->Set();
+	Handle<EngineSystem> sysHandle = D3D11RenderSystem::GetHandle();
+	D3D11Renderer& ParentRenderer = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle])->Renderer;
+
+	Model->Set(*this);
+	Model->Update(*this);
+	ParentRenderer.DeviceContext->DrawIndexed(static_cast<int>(Model->Mesh.Indices.size()), 0, 0);
+}
+
+XMMATRIX D3D11ModelRenderer::GetWorldViewProjectionMatrix()
+{
+	D3D11RenderSystem& RS = static_cast<D3D11RenderSystem&>(Engine::MainInstance().SystemsManager.GetRenderSystem());
+	GameObject& Parent = Engine::MainInstance().ObjectsFactory[ParentObject];
+	XMMATRIX Projection = RS.RecalculateProjectionMatrix();
+
+	XMMATRIX WV = GetWorldViewMatrix();
+	return WV * Projection;
+}
+
+XMMATRIX D3D11ModelRenderer::GetWorldViewMatrix()
+{
 	D3D11RenderSystem& RS = static_cast<D3D11RenderSystem&>(Engine::MainInstance().SystemsManager.GetRenderSystem());
 	GameObject& Parent = Engine::MainInstance().ObjectsFactory[ParentObject];
 
 	XMMATRIX View = RS.RecalculateViewMatrix();
-	XMMATRIX Projection = RS.RecalculateProjectionMatrix();
 
-	//XMMATRIX World = XMMatrixIdentity();
-	
+	XMMATRIX World = GetWorldMatrix();
+
+	return World * View;
+}
+
+XMMATRIX D3D11ModelRenderer::GetWorldMatrix()
+{
+	D3D11RenderSystem& RS = static_cast<D3D11RenderSystem&>(Engine::MainInstance().SystemsManager.GetRenderSystem());
+	GameObject& Parent = Engine::MainInstance().ObjectsFactory[ParentObject];
 
 	XMMATRIX Scale = XMMatrixScaling(Parent.ObjectTransform.Scale.x, Parent.ObjectTransform.Scale.y, Parent.ObjectTransform.Scale.z);
-	XMMATRIX Rotation = XMMatrixRotationX(XMConvertToRadians(Parent.ObjectTransform.Rotation.x)) * XMMatrixRotationY(XMConvertToRadians(Parent.ObjectTransform.Rotation.y)) * XMMatrixRotationZ(XMConvertToRadians(Parent.ObjectTransform.Rotation.z));
-	//XMMATRIX Rotation = XMMatrixIdentity();
+	XMMATRIX Rotation = XMMatrixRotationX(XMConvertToRadians(Parent.ObjectTransform.Rotation.x)) *
+						XMMatrixRotationY(XMConvertToRadians(Parent.ObjectTransform.Rotation.y)) *
+						XMMatrixRotationZ(XMConvertToRadians(Parent.ObjectTransform.Rotation.z));
 	XMMATRIX Translation = XMMatrixTranslation(Parent.ObjectTransform.Position.x, Parent.ObjectTransform.Position.y, Parent.ObjectTransform.Position.z);
-	
-	XMMATRIX World = Scale * Rotation * Translation;
-	
 
-	XMMATRIX WVP = World * View * Projection;
-	XMFLOAT4X4 WVPFL;
-	XMStoreFloat4x4(&WVPFL, WVP);
-	Model->VertexShader.UpdateConstantBuffer(WVPFL);
-
-	Model->Mesh.ParentRenderer.DeviceContext->DrawIndexed(static_cast<int>(Model->Mesh.Indices.size()), 0, 0);
+	return Scale * Rotation * Translation;
 }

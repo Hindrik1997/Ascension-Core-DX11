@@ -6,7 +6,7 @@
 #define ASCENSION_CORE_WIN32_WINDOW_H
 
 #include <string>
-
+#include "SimpleInput.h"
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
@@ -20,6 +20,7 @@ public:
 	T* WindowRenderer;
 	int Width;
 	int Height;
+	SimpleInput Input;
 
 	Win32Window(int width, int height) : Width(width), Height(height)
 	{
@@ -57,7 +58,7 @@ public:
 			throw;
 		}
 
-		hWnd = CreateWindowEx(WS_EX_APPWINDOW, WndClassName.c_str(), L"ASCENSION GAME ENGINE", WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, hInstance, this);
+		hWnd = CreateWindowEx(WS_EX_APPWINDOW, WndClassName.c_str(), L"ASCENSION GAME ENGINE", WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, hInstance, this);
 
 		if (!hWnd)
 		{
@@ -97,7 +98,16 @@ public:
 				if (MessageBox(0, L"Are you sure you want to quit", L"Really?", MB_YESNO | MB_ICONQUESTION) == IDYES)
 					DestroyWindow(hwnd);
 			}
+			else
+			{
+				Input.KeyDown(static_cast<unsigned int>(wParam));
+			}
 		} return 0;
+
+		case WM_KEYUP:
+		{
+			Input.KeyUp(static_cast<unsigned int>(wParam));
+		} break;
 		case WM_DESTROY:
 		{
 			PostQuitMessage(0);

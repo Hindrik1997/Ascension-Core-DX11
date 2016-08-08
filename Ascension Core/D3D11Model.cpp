@@ -4,19 +4,21 @@
 
 #include "D3D11Model.h"
 
-
-D3D11Model::D3D11Model(D3D11VertexShader& vertexShader, D3D11PixelShader& pixelShader, D3D11Mesh& mesh) : VertexShader(vertexShader), PixelShader(pixelShader), Mesh(mesh)
+D3D11Model::D3D11Model(D3D11ModelRendererShaderSet & shaderSet, D3D11Mesh & mesh) : ShaderSet(shaderSet), Mesh(mesh)
 {
 }
-
 
 D3D11Model::~D3D11Model()
 {
 }
 
-void D3D11Model::Set() const
+void D3D11Model::Set(D3D11ModelRenderer& modelRenderer)
 {
-	VertexShader.SetShader();
-	PixelShader.SetShader();
-	VertexShader.SetInputLayout(Mesh);
+	Mesh.Set();
+	ShaderSet.Set(modelRenderer);
+}
+
+void D3D11Model::Update(D3D11ModelRenderer& modelRenderer)
+{
+	ShaderSet.Update(modelRenderer);
 }

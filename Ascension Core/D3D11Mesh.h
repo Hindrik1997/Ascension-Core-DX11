@@ -20,10 +20,11 @@ using std::vector;
 class D3D11Mesh
 {
 public:
-	D3D11Mesh(D3D11Renderer& renderer, vector<DWORD> indices, vector<D3D11Vertex> vertices);
+	D3D11Mesh(vector<DWORD> indices, vector<D3D11Vertex> vertices);
 	~D3D11Mesh();
 
-	const D3D11Renderer& ParentRenderer;
+	void Set();
+
 	ID3D11Buffer* VertexBuffer;
 	ID3D11Buffer* IndexBuffer;
 

@@ -1,3 +1,42 @@
-﻿  D3D11VertexShader.cpp
+﻿  compilation object save succeeded; see F:\Repos\Ascension Game Engine\Debug\SkyBoxPS.cso
+F:\Repos\Ascension Game Engine\Ascension Core\SkyBoxVS.hlsl(13,2-30): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see F:\Repos\Ascension Game Engine\Debug\SkyBoxVS.cso
+  Camera.cpp
+  Component.cpp
+  ComponentHandle.cpp
+  CoreSystem.cpp
+  D3D11Mesh.cpp
+  D3D11Model.cpp
+  D3D11ModelRenderer.cpp
+  D3D11PSBase.cpp
+  D3D11Renderer.cpp
+  D3D11RenderSystem.cpp
+  D3D11ModelRendererShaderSet.cpp
+  D3D11SkyBoxShaderSet.cpp
+  D3D11TexturedDiffuseShaderSet.cpp
+  D3D11Vertex.cpp
+  D3D11VSBase.cpp
+  Engine.cpp
+  EngineSystem.cpp
+  GameObject.cpp
+  GameObjectFactory.cpp
+  main.cpp
+  Mesh.cpp
+  PixelShaderBase.cpp
+  ReleaseCOM.cpp
+  RenderSystem.cpp
+  ShaderBase.cpp
+  SimpleInput.cpp
+  SystemManager.cpp
+  TestSystem.cpp
+  Timer.cpp
+  Transform.cpp
+  Vector2f.cpp
+  Vector3f.cpp
+  Vector4f.cpp
+  Vertex.cpp
+  VertexShaderBase.cpp
   Ascension Core.vcxproj -> F:\Repos\Ascension Game Engine\Debug\Ascension Core.exe
   Ascension Core.vcxproj -> F:\Repos\Ascension Game Engine\Debug\Ascension Core.pdb (Partial PDB)
+  0 File(s) copied

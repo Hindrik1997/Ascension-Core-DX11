@@ -5,9 +5,8 @@
 #include "D3D11ModelRenderer.h"
 #include "D3D11RenderSystem.h"
 #include "Camera.h"
-
 #include "D3D11Model.h"
-
+#include "D3D11SkyBoxShaderSet.h"
 
 
 
@@ -26,9 +25,9 @@ int main()
 
 	D3D11Renderer& rs = *static_cast<D3D11RenderSystem*>(&e->SystemsManager.GetRenderSystem())->Renderer.get();
 
-	D3D11VertexShader* VS = new D3D11VertexShader(rs, L"VertexShader.cso");
-	D3D11PixelShader* PS = new D3D11PixelShader(rs, L"PixelShader.cso");
-	D3D11Mesh*  Mesh = new D3D11Mesh(rs,
+	D3D11VertexShaderBase* VS = new D3D11VertexShaderBase(L"VertexShader.cso");
+	D3D11PixelShaderBase* PS = new D3D11PixelShaderBase(L"PixelShader.cso");
+	D3D11Mesh*  Mesh = new D3D11Mesh(
 		std::vector<DWORD>{     
 			// front face
 			0, 1, 2,
@@ -55,22 +54,28 @@ int main()
 			4, 3, 7 
 		},	
 		std::vector<D3D11Vertex>{ 
-			D3D11Vertex(-1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f),
-			D3D11Vertex(-1.0f, +1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f),
-			D3D11Vertex(+1.0f, +1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
-			D3D11Vertex(+1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 1.0f),
-			D3D11Vertex(-1.0f, -1.0f, +1.0f, 0.0f, 1.0f, 1.0f, 1.0f),
-			D3D11Vertex(-1.0f, +1.0f, +1.0f, 1.0f, 1.0f, 1.0f, 1.0f),
-			D3D11Vertex(+1.0f, +1.0f, +1.0f, 1.0f, 0.0f, 1.0f, 1.0f),
-			D3D11Vertex(+1.0f, -1.0f, +1.0f, 1.0f, 0.0f, 0.0f, 1.0f),
+			D3D11Vertex(Vertex(-1.0f, -1.0f, -1.0f)),
+			D3D11Vertex(Vertex(-1.0f, +1.0f, -1.0f)),
+			D3D11Vertex(Vertex(+1.0f, +1.0f, -1.0f)),
+			D3D11Vertex(Vertex(+1.0f, -1.0f, -1.0f)),
+			D3D11Vertex(Vertex(-1.0f, -1.0f, +1.0f)),
+			D3D11Vertex(Vertex(-1.0f, +1.0f, +1.0f)),
+			D3D11Vertex(Vertex(+1.0f, +1.0f, +1.0f)),
+			D3D11Vertex(Vertex(+1.0f, -1.0f, +1.0f)),
 	});
-	D3D11Model*  Model = new D3D11Model(*VS, *PS, *Mesh);
+
+	D3D11SkyBoxShaderSet shaderset;
+
+	D3D11Model* Model = new D3D11Model(shaderset, *Mesh);
+
 
 	Handle<GameObject> gHandle = e->ObjectsFactory.CreateGameObject();
+
+	Engine::MainInstance().ObjectsFactory[gHandle].ObjectTransform.Scale = Vector3f(999.0f,999.0f,999.0f);
 	ComponentHandle cHandle = e->ObjectsFactory[gHandle].AddComponent<D3D11ModelRenderer>(Model);
 
 	e->ObjectsFactory.at(a).ObjectTransform.Position = Vector3f(0.0f, 0.0f, -8.0f);
-	//e->ObjectsFactory.at(gHandle).ObjectTransform.Rotation = Vector3f(0.0f, 45.0f, 0.0f);
+	e->ObjectsFactory.at(gHandle).ObjectTransform.Rotation = Vector3f(0.0f, 45.0f, 0.0f);
 	e->GameLoop();
 
 	e->ObjectsFactory[gHandle].RemoveComponent<D3D11ModelRenderer>(cHandle);

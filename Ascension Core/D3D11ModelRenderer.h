@@ -34,6 +34,9 @@ private:
 	//Methods
 public:
 	void Render();
+	XMMATRIX GetWorldViewProjectionMatrix();
+	XMMATRIX GetWorldViewMatrix();
+	XMMATRIX GetWorldMatrix();
 };
 
 inline void D3D11ModelRenderer::Reset(Handle<GameObject> parentObject)

@@ -49,21 +49,6 @@
     <ClCompile Include="D3D11RenderSystem.cpp">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
     </ClCompile>
-    <ClCompile Include="D3D11Vertex.cpp">
-      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="D3D11VertexShader.cpp">
-      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="D3D11Mesh.cpp">
-      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="D3D11Model.cpp">
-      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="D3D11PixelShader.cpp">
-      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
-    </ClCompile>
     <ClCompile Include="D3D11ModelRenderer.cpp">
       <Filter>GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
     </ClCompile>
@@ -78,6 +63,48 @@
     </ClCompile>
     <ClCompile Include="ReleaseCOM.cpp">
       <Filter>Systems\RenderSystems\Direct3D</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11PSBase.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\ShaderBase</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11VSBase.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\ShaderBase</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Mesh.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Utility Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Model.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Utility Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Vertex.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Utility Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Utilities\Generic classes</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelShaderBase.cpp">
+      <Filter>Utilities\Generic classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Vertex.cpp">
+      <Filter>Utilities\Generic classes</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShaderBase.cpp">
+      <Filter>Utilities\Generic classes</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleInput.cpp">
+      <Filter>Systems\RenderSystems\Direct3D</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderBase.cpp">
+      <Filter>Utilities\Generic classes</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11ModelRendererShaderSet.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\ShaderBase</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11SkyBoxShaderSet.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\SkyBoxShaderSet</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11TexturedDiffuseShaderSet.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedDiffuseShaderSet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -141,21 +168,6 @@
     <ClInclude Include="Timer.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="D3D11Vertex.h">
-      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="D3D11VertexShader.h">
-      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="D3D11PixelShader.h">
-      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="D3D11Mesh.h">
-      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="D3D11Model.h">
-      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
-    </ClInclude>
     <ClInclude Include="D3D11ModelRenderer.h">
       <Filter>GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
     </ClInclude>
@@ -170,6 +182,48 @@
     </ClInclude>
     <ClInclude Include="ReleaseCOM.h">
       <Filter>Systems\RenderSystems\Direct3D</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11PSBase.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\ShaderBase</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11VSBase.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\ShaderBase</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Mesh.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Utility Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Model.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Utility Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Vertex.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Utility Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Utilities\Generic classes</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelShaderBase.h">
+      <Filter>Utilities\Generic classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Utilities\Generic classes</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShaderBase.h">
+      <Filter>Utilities\Generic classes</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleInput.h">
+      <Filter>Systems\RenderSystems\Direct3D</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderBase.h">
+      <Filter>Utilities\Generic classes</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11ModelRendererShaderSet.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\ShaderBase</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11SkyBoxShaderSet.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\SkyBoxShaderSet</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11TexturedDiffuseShaderSet.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedDiffuseShaderSet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -209,21 +263,58 @@
     <Filter Include="GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem">
       <UniqueIdentifier>{111e423a-6758-4a71-ac8d-8042fa2ebdda}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Systems\RenderSystems\Shaders">
+    <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem\ShaderBase">
+      <UniqueIdentifier>{4395333b-4b85-4282-8038-7c97d19762b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem\Utility Classes">
+      <UniqueIdentifier>{d23343a6-ed45-4564-a39a-7ae9532e4557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Generic classes">
+      <UniqueIdentifier>{80e1f44b-c32e-4d41-bf37-a26983378919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets">
+      <UniqueIdentifier>{de9ce054-dcef-4ea2-b6f3-ae7514f739d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\SkyBoxShaderSet">
+      <UniqueIdentifier>{f1a3f990-bfad-4b54-9c78-a93ef0fd9269}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedDiffuseShaderSet">
+      <UniqueIdentifier>{7cc14b2d-b2ed-47f8-a50f-7ee51b47410f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Shaders">
       <UniqueIdentifier>{a893372d-1bff-4736-9c2b-0bfe8e5d34bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Textures">
+      <UniqueIdentifier>{21d67b51-fe5f-47d8-80e7-2caeb6ec4cb8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PixelShader.hlsl">
-      <Filter>Systems\RenderSystems\Shaders</Filter>
+    <FxCompile Include="SkyBoxPS.hlsl">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\SkyBoxShaderSet</Filter>
     </FxCompile>
-    <FxCompile Include="VertexShader.hlsl">
-      <Filter>Systems\RenderSystems\Shaders</Filter>
+    <FxCompile Include="SkyBoxVS.hlsl">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\SkyBoxShaderSet</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Structures.hlslh">
-      <Filter>Systems\RenderSystems\Shaders</Filter>
+    <Text Include="InputStructures.hlslh">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Shaders</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SkyBoxVSOUTPUT.hlslh">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\SkyBoxShaderSet</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Skybox2.dds">
+      <Filter>Textures</Filter>
+    </Image>
+    <Image Include="box_texture.jpg">
+      <Filter>Textures</Filter>
+    </Image>
+    <Image Include="Skybox.dds">
+      <Filter>Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
