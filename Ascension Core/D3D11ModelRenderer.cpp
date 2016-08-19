@@ -74,7 +74,6 @@ XMMATRIX D3D11ModelRenderer::GetWorldViewMatrix()
 
 XMMATRIX D3D11ModelRenderer::GetWorldMatrix()
 {
-	D3D11RenderSystem& RS = static_cast<D3D11RenderSystem&>(Engine::MainInstance().SystemsManager.GetRenderSystem());
 	GameObject& Parent = Engine::MainInstance().ObjectsFactory[ParentObject];
 
 	XMMATRIX Scale = XMMatrixScaling(Parent.ObjectTransform.Scale.x, Parent.ObjectTransform.Scale.y, Parent.ObjectTransform.Scale.z);

@@ -58,9 +58,6 @@
     <ClCompile Include="CoreSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Systems\RenderSystems\Direct3D</Filter>
-    </ClCompile>
     <ClCompile Include="ReleaseCOM.cpp">
       <Filter>Systems\RenderSystems\Direct3D</Filter>
     </ClCompile>
@@ -106,6 +103,16 @@
     <ClCompile Include="D3D11TexturedDiffuseShaderSet.cpp">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedDiffuseShaderSet</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Quaternion.cpp" />
+    <ClCompile Include="Matrix4x4.cpp">
+      <Filter>Utilities\Matrices</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="LightManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector2f.h">
@@ -152,9 +159,6 @@
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>GameObjects and Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TestSystem.h">
-      <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="Win32Window.h">
       <Filter>Systems\RenderSystems\Direct3D</Filter>
@@ -225,6 +229,17 @@
     <ClInclude Include="D3D11TexturedDiffuseShaderSet.h">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedDiffuseShaderSet</Filter>
     </ClInclude>
+    <ClInclude Include="TestSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Matrix4x4.h">
+      <Filter>Utilities\Matrices</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h" />
+    <ClInclude Include="DirectionalLight.h" />
+    <ClInclude Include="LightManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -287,6 +302,9 @@
     <Filter Include="Textures">
       <UniqueIdentifier>{21d67b51-fe5f-47d8-80e7-2caeb6ec4cb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities\Matrices">
+      <UniqueIdentifier>{1fdd6bc0-4709-491a-86db-afb7d492766c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SkyBoxPS.hlsl">
@@ -294,6 +312,12 @@
     </FxCompile>
     <FxCompile Include="SkyBoxVS.hlsl">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\SkyBoxShaderSet</Filter>
+    </FxCompile>
+    <FxCompile Include="TexturedDiffusePS.hlsl">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedDiffuseShaderSet</Filter>
+    </FxCompile>
+    <FxCompile Include="TexturedDiffuseVS.hlsl">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedDiffuseShaderSet</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +328,9 @@
   <ItemGroup>
     <None Include="SkyBoxVSOUTPUT.hlslh">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\SkyBoxShaderSet</Filter>
+    </None>
+    <None Include="TexturedDiffuseVSOUTPUT.hlslh">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedDiffuseShaderSet</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

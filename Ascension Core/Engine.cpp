@@ -39,9 +39,10 @@ void Engine::GameLoop()
 		if (!MessageResult)
 			break;
 
-		//Calculate frame time
+		//Calculate frame time and deltatime
 		double frameTime = GameTimer.FrameTimeCalculations();
-		//std::cout << GameTimer.Fps << std::endl;
+		//double deltaTime = GameTimer.GetFrameTime();
+
 
 		//Update systems using frame time
 		SystemsManager.UpdateSystems(static_cast<float>(frameTime));

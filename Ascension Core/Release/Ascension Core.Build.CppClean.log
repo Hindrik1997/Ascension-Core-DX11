@@ -1,6 +1,8 @@
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\release\pixelshader.cso
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\release\vertexshader.cso
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\component.obj
+f:\repos\ascension game engine\release\skyboxps.cso
+f:\repos\ascension game engine\release\skyboxvs.cso
+f:\repos\ascension game engine\release\textureddiffusevs.cso
+f:\repos\ascension game engine\release\textureddiffuseps.cso
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\camera.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\d3d11model.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\d3d11rendersystem.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\enginesystem.obj
@@ -9,15 +11,16 @@ f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\relea
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\simpleinput.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\systemmanager.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\timer.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\vertexshaderbase.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\coresystem.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\d3d11psbase.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\d3d11vertex.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\gameobject.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\releasecom.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\vertex.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\componenthandle.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\d3d11mesh.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\d3d11renderer.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\engine.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\main.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\transform.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\vector2f.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\vector4f.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\camera.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\component.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\d3d11modelrenderer.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\d3d11vsbase.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\mesh.obj
@@ -25,26 +28,62 @@ f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\relea
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\pixelshaderbase.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\rendersystem.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\testsystem.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\componenthandle.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\d3d11mesh.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\d3d11renderer.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\engine.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\main.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\transform.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\coresystem.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\d3d11psbase.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\d3d11vertex.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\gameobject.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\releasecom.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\vector3f.obj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\vertex.obj
+f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\vertexshaderbase.obj
 f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\vc140.pdb
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\release\ascension core.exe
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\release\ascension core.ipdb
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\release\ascension core.iobj
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\release\ascension core.pdb
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\ascension core.tlog\ascension core.write.1u.tlog
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\ascension core.tlog\cl.command.1.tlog
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\ascension core.tlog\cl.read.1.tlog
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\ascension core.tlog\cl.write.1.tlog
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\ascension core.tlog\fxc.command.1.tlog
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\ascension core.tlog\fxc.read.1.tlog
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\ascension core.tlog\fxc.write.1.tlog
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\ascension core.tlog\link.command.1.tlog
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\ascension core.tlog\link.read.1.tlog
-f:\downloads\hindrik1997-ascension-game-engine-90ba1fe31df6\ascension core\release\ascension core.tlog\link.write.1.tlog
+f:\repos\ascension game engine\ascension core\release\camera.obj
+f:\repos\ascension game engine\ascension core\release\d3d11modelrenderer.obj
+f:\repos\ascension game engine\ascension core\release\d3d11modelrenderershaderset.obj
+f:\repos\ascension game engine\ascension core\release\d3d11vsbase.obj
+f:\repos\ascension game engine\ascension core\release\mesh.obj
+f:\repos\ascension game engine\ascension core\release\rendersystem.obj
+f:\repos\ascension game engine\ascension core\release\testsystem.obj
+f:\repos\ascension game engine\ascension core\release\component.obj
+f:\repos\ascension game engine\ascension core\release\d3d11model.obj
+f:\repos\ascension game engine\ascension core\release\d3d11rendersystem.obj
+f:\repos\ascension game engine\ascension core\release\d3d11vertex.obj
+f:\repos\ascension game engine\ascension core\release\gameobjectfactory.obj
+f:\repos\ascension game engine\ascension core\release\shaderbase.obj
+f:\repos\ascension game engine\ascension core\release\simpleinput.obj
+f:\repos\ascension game engine\ascension core\release\systemmanager.obj
+f:\repos\ascension game engine\ascension core\release\transform.obj
+f:\repos\ascension game engine\ascension core\release\vector2f.obj
+f:\repos\ascension game engine\ascension core\release\vector4f.obj
+f:\repos\ascension game engine\ascension core\release\coresystem.obj
+f:\repos\ascension game engine\ascension core\release\d3d11psbase.obj
+f:\repos\ascension game engine\ascension core\release\d3d11skyboxshaderset.obj
+f:\repos\ascension game engine\ascension core\release\engine.obj
+f:\repos\ascension game engine\ascension core\release\enginesystem.obj
+f:\repos\ascension game engine\ascension core\release\gameobject.obj
+f:\repos\ascension game engine\ascension core\release\pixelshaderbase.obj
+f:\repos\ascension game engine\ascension core\release\releasecom.obj
+f:\repos\ascension game engine\ascension core\release\timer.obj
+f:\repos\ascension game engine\ascension core\release\vertex.obj
+f:\repos\ascension game engine\ascension core\release\componenthandle.obj
+f:\repos\ascension game engine\ascension core\release\d3d11mesh.obj
+f:\repos\ascension game engine\ascension core\release\d3d11renderer.obj
+f:\repos\ascension game engine\ascension core\release\d3d11textureddiffuseshaderset.obj
+f:\repos\ascension game engine\ascension core\release\main.obj
+f:\repos\ascension game engine\ascension core\release\vector3f.obj
+f:\repos\ascension game engine\ascension core\release\vertexshaderbase.obj
+f:\repos\ascension game engine\ascension core\release\vc140.pdb
+f:\repos\ascension game engine\release\ascension core.exe
+f:\repos\ascension game engine\release\ascension core.ipdb
+f:\repos\ascension game engine\release\ascension core.iobj
+f:\repos\ascension game engine\release\ascension core.pdb
+f:\repos\ascension game engine\ascension core\release\model.obj
+f:\repos\ascension game engine\ascension core\release\ascension core.tlog\ascension core.write.1u.tlog
+f:\repos\ascension game engine\ascension core\release\ascension core.tlog\cl.command.1.tlog
+f:\repos\ascension game engine\ascension core\release\ascension core.tlog\cl.read.1.tlog
+f:\repos\ascension game engine\ascension core\release\ascension core.tlog\cl.write.1.tlog
+f:\repos\ascension game engine\ascension core\release\ascension core.tlog\fxc.command.1.tlog
+f:\repos\ascension game engine\ascension core\release\ascension core.tlog\fxc.read.1.tlog
+f:\repos\ascension game engine\ascension core\release\ascension core.tlog\fxc.write.1.tlog
+f:\repos\ascension game engine\ascension core\release\ascension core.tlog\link.command.1.tlog
+f:\repos\ascension game engine\ascension core\release\ascension core.tlog\link.read.1.tlog
+f:\repos\ascension game engine\ascension core\release\ascension core.tlog\link.write.1.tlog

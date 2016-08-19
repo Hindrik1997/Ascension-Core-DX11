@@ -3,6 +3,7 @@
 #include "EngineSystem.h"
 #include "Pool.h"
 #include "Camera.h"
+#include "LightManager.h"
 
 #define MAX_CAMERA_AMOUNT 32
 
@@ -13,6 +14,9 @@ public:
 
 	CoreSystem();
 	~CoreSystem();
+
+
+	LightManager lManager;
 
 	void Update(float deltaTime);
 
@@ -30,3 +34,5 @@ inline void CoreSystem::RemoveCamera(ComponentHandle cHandle, Args ...args)
 {
 	cameras.RemoveItem(Handle<Camera>(cHandle.GetCompHandle().GetIndex()), args...);
 }
+
+

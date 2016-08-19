@@ -22,7 +22,7 @@ __declspec(align(16)) struct PerObjectBufferStruct
 class D3D11SkyBoxShaderSet : public D3D11ModelRendererShaderSet
 {
 public:
-	D3D11SkyBoxShaderSet();
+	D3D11SkyBoxShaderSet(wstring fileName);
 	~D3D11SkyBoxShaderSet();
 
 	void Set(D3D11ModelRenderer& renderer);

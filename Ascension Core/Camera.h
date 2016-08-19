@@ -4,18 +4,26 @@
 #include "Component.h"
 #include "ComponentHandle.h"
 #include "Vector3f.h"
+#include "Transform.h"
 
 class Engine;
 
 class Camera : public Component
 {
-private:
-	Vector3f LookAtVector;
-	Vector3f UpVector;
+public:
+	Vector3f Up;
+	Vector3f Forward;
+	
+public:
+	//Transform ChangeSinceLastFrame;
 public:
 	Vector3f GetCamPosition();
-	inline Vector3f GetUpVector();
-	inline Vector3f GetLookAtVector();
+	void SetCamPosition(Vector3f pos);
+
+	Vector3f GetRightVector();
+	Vector3f GetLeftVector();
+
+
 public:
 	Camera(Handle<GameObject> parentObject);
 	~Camera();
@@ -30,13 +38,3 @@ public:
 private:
 	static Handle<EngineSystem> sysHandle;
 };
-
-inline Vector3f Camera::GetUpVector()
-{
-	return UpVector;
-}
-
-inline Vector3f Camera::GetLookAtVector()
-{
-	return LookAtVector;
-}

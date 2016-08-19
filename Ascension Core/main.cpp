@@ -7,7 +7,7 @@
 #include "Camera.h"
 #include "D3D11Model.h"
 #include "D3D11SkyBoxShaderSet.h"
-
+#include "D3D11TexturedDiffuseShaderSet.h"
 
 
 using namespace std;
@@ -25,8 +25,6 @@ int main()
 
 	D3D11Renderer& rs = *static_cast<D3D11RenderSystem*>(&e->SystemsManager.GetRenderSystem())->Renderer.get();
 
-	D3D11VertexShaderBase* VS = new D3D11VertexShaderBase(L"VertexShader.cso");
-	D3D11PixelShaderBase* PS = new D3D11PixelShaderBase(L"PixelShader.cso");
 	D3D11Mesh*  Mesh = new D3D11Mesh(
 		std::vector<DWORD>{     
 			// front face
@@ -64,18 +62,90 @@ int main()
 			D3D11Vertex(Vertex(+1.0f, -1.0f, +1.0f)),
 	});
 
-	D3D11SkyBoxShaderSet shaderset;
+	D3D11Mesh*  Mesh2 = new D3D11Mesh(
+		std::vector<DWORD>{
+		// Front Face
+		0, 1, 2,
+			0, 2, 3,
 
-	D3D11Model* Model = new D3D11Model(shaderset, *Mesh);
+			// Back Face
+			4, 5, 6,
+			4, 6, 7,
+
+			// Top Face
+			8, 9, 10,
+			8, 10, 11,
+
+			// Bottom Face
+			12, 13, 14,
+			12, 14, 15,
+
+			// Left Face
+			16, 17, 18,
+			16, 18, 19,
+
+			// Right Face
+			20, 21, 22,
+			20, 22, 23
+	},
+		std::vector<D3D11Vertex>{
+			// Front Face
+			D3D11Vertex(Vertex(-1.0f, -1.0f, -1.0f, 0.0f, 1.0f,0.0f)),
+			D3D11Vertex(Vertex(-1.0f, 1.0f, -1.0f, 0.0f, 0.0f,0.0f)),
+			D3D11Vertex(Vertex(1.0f, 1.0f, -1.0f, 1.0f, 0.0f,0.0f)),
+			D3D11Vertex(Vertex(1.0f, -1.0f, -1.0f, 1.0f, 1.0f,0.0f)),
+			// Back Face
+			D3D11Vertex(Vertex(-1.0f, -1.0f, 1.0f, 1.0f, 1.0f,0.0f)),
+			D3D11Vertex(Vertex(1.0f, -1.0f, 1.0f, 0.0f, 1.0f,0.0f)),
+			D3D11Vertex(Vertex(1.0f, 1.0f, 1.0f, 0.0f, 0.0f,0.0f)),
+			D3D11Vertex(Vertex(-1.0f, 1.0f, 1.0f, 1.0f, 0.0f,0.0f)),
+			// Top Face
+			D3D11Vertex(Vertex(-1.0f, 1.0f, -1.0f, 0.0f, 1.0f,0.0f)),
+			D3D11Vertex(Vertex(-1.0f, 1.0f, 1.0f, 0.0f, 0.0f,0.0f)),
+			D3D11Vertex(Vertex(1.0f, 1.0f, 1.0f, 1.0f, 0.0f,0.0f)),
+			D3D11Vertex(Vertex(1.0f, 1.0f, -1.0f, 1.0f, 1.0f,0.0f)),
+			// Bottom Face
+			D3D11Vertex(Vertex(-1.0f, -1.0f, -1.0f, 1.0f, 1.0f,0.0f)),
+			D3D11Vertex(Vertex(1.0f, -1.0f, -1.0f, 0.0f, 1.0f,0.0f)),
+			D3D11Vertex(Vertex(1.0f, -1.0f, 1.0f, 0.0f, 0.0f,0.0f)),
+			D3D11Vertex(Vertex(-1.0f, -1.0f, 1.0f, 1.0f, 0.0f,0.0f)),
+			// Left Face
+			D3D11Vertex(Vertex(-1.0f, -1.0f, 1.0f, 0.0f, 1.0f,0.0f)),
+			D3D11Vertex(Vertex(-1.0f, 1.0f, 1.0f, 0.0f, 0.0f,0.0f)),
+			D3D11Vertex(Vertex(-1.0f, 1.0f, -1.0f, 1.0f, 0.0f,0.0f)),
+			D3D11Vertex(Vertex(-1.0f, -1.0f, -1.0f, 1.0f, 1.0f,0.0f)),
+			// Right Face
+			D3D11Vertex(Vertex(1.0f, -1.0f, -1.0f, 0.0f, 1.0f,0.0f)),
+			D3D11Vertex(Vertex(1.0f, 1.0f, -1.0f, 0.0f, 0.0f,0.0f)),
+			D3D11Vertex(Vertex(1.0f, 1.0f, 1.0f, 1.0f, 0.0f,0.0f)),
+			D3D11Vertex(Vertex(1.0f, -1.0f, 1.0f, 1.0f, 1.0f,0.0f)),
+		});
+
+
+
+
+
+	D3D11SkyBoxShaderSet shaderSet(L"Skybox.dds");
+	D3D11SkyBoxShaderSet shaderSet2(L"Skybox2.dds");
+	D3D11TexturedDiffuseShaderSet shaderSet3(L"box_texture.dds");
+
+	D3D11Model* Model = new D3D11Model(shaderSet, *Mesh);
+	//D3D11Model* Model2 = new D3D11Model(shaderSet2, *Mesh);
+	D3D11Model* Model3= new D3D11Model(shaderSet3, *Mesh2);
 
 
 	Handle<GameObject> gHandle = e->ObjectsFactory.CreateGameObject();
+	Handle<GameObject> gHandle2 = e->ObjectsFactory.CreateGameObject();
 
-	Engine::MainInstance().ObjectsFactory[gHandle].ObjectTransform.Scale = Vector3f(999.0f,999.0f,999.0f);
-	ComponentHandle cHandle = e->ObjectsFactory[gHandle].AddComponent<D3D11ModelRenderer>(Model);
-
+		
+	ComponentHandle cHandle = e->ObjectsFactory[gHandle].AddComponent<D3D11ModelRenderer>(Model3);
+	
 	e->ObjectsFactory.at(a).ObjectTransform.Position = Vector3f(0.0f, 0.0f, -8.0f);
-	e->ObjectsFactory.at(gHandle).ObjectTransform.Rotation = Vector3f(0.0f, 45.0f, 0.0f);
+	//e->ObjectsFactory.at(gHandle).ObjectTransform.Rotation = Quaternion(0.0f, 45.0f, 0.0f, 0.0f);
+
+	Engine::MainInstance().ObjectsFactory[gHandle2].ObjectTransform.Scale = Vector3f(999.0f, 999.0f, 999.0f);
+	ComponentHandle cHandle2 = e->ObjectsFactory[gHandle2].AddComponent<D3D11ModelRenderer>(Model);
+
 	e->GameLoop();
 
 	e->ObjectsFactory[gHandle].RemoveComponent<D3D11ModelRenderer>(cHandle);
@@ -83,8 +153,6 @@ int main()
 
 
 	delete e;
-	delete PS;
-	delete VS;
 	delete Mesh;
     return 0;
 }

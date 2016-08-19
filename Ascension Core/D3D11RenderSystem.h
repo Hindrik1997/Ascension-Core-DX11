@@ -15,6 +15,7 @@
 using namespace DirectX;
 using std::unique_ptr;
 
+
 class D3D11RenderSystem : public RenderSystem
 {
 public:
@@ -28,6 +29,12 @@ public:
 	XMMATRIX RecalculateProjectionMatrix();
 	XMMATRIX RecalculateViewMatrix();
 	virtual void Update(float deltaTime);
+
+	//Matrix on object
+	static XMMATRIX GetWorldViewProjectionMatrix(GameObject& gameObject);
+	static XMMATRIX GetWorldViewMatrix(GameObject& gameObject);
+	static XMMATRIX GetWorldMatrix(GameObject& gameObject);
+
 
 	//Component stuff
 	template<typename ...Args>

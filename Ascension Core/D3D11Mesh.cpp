@@ -22,8 +22,6 @@ D3D11Mesh::D3D11Mesh(vector<DWORD> indices, vector<D3D11Vertex> vertices) : Indi
 	IndexBufferData.pSysMem = &Indices[0];
 	ParentRenderer.Device->CreateBuffer(&IndexBufferDesc, &IndexBufferData, &IndexBuffer);
 
-	ParentRenderer.DeviceContext->IASetIndexBuffer(IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-
 	//VertexBuffer
 	D3D11_BUFFER_DESC VertexBufferDesc;
 	ZeroMemory(&VertexBufferDesc, sizeof(VertexBufferDesc));
@@ -54,5 +52,6 @@ void D3D11Mesh::Set()
 	unsigned int stride = sizeof(D3D11Vertex);
 	unsigned int offset = 0;
 	ParentRenderer.DeviceContext->IASetVertexBuffers(START_SLOT, NUM_BUFFERS, &(VertexBuffer), &stride, &offset);
+	ParentRenderer.DeviceContext->IASetIndexBuffer(IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	ParentRenderer.DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }

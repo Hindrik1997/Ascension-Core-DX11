@@ -17,6 +17,8 @@ using std::unique_ptr;
 using std::vector;
 using std::mutex;
 
+class CoreSystem;
+
 class SystemManager {
 public:
     SystemManager();
@@ -55,9 +57,10 @@ public:
     
 	//Gets reference to current render system.
 	RenderSystem& GetRenderSystem();
+	CoreSystem& GetCoreSystem();
 private:
 	Handle<EngineSystem> CurrentRenderSystem;
-
+	Handle<EngineSystem> CurrentCoreSystem;
 	mutex CSMutex;
 	vector<unique_ptr<EngineSystem>> Systems;
 };

@@ -100,7 +100,9 @@
       <ObjectFileOutput>$(OutDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)Skybox2.dds" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -119,7 +121,9 @@
       <ObjectFileOutput>$(OutDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)Skybox2.dds" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,7 +145,9 @@
       <ObjectFileOutput>$(OutDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)Skybox2.dds" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -163,7 +169,9 @@
       <ObjectFileOutput>$(OutDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)Skybox2.dds" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -182,13 +190,18 @@
     <ClCompile Include="D3D11TexturedDiffuseShaderSet.cpp" />
     <ClCompile Include="D3D11Vertex.cpp" />
     <ClCompile Include="D3D11VSBase.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EngineSystem.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectFactory.cpp" />
+    <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Matrix4x4.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PixelShaderBase.cpp" />
+    <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="ReleaseCOM.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="ShaderBase.cpp" />
@@ -210,6 +223,7 @@
     <ClInclude Include="D3D11ModelRendererShaderSet.h" />
     <ClInclude Include="D3D11SkyBoxShaderSet.h" />
     <ClInclude Include="D3D11TexturedDiffuseShaderSet.h" />
+    <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="HelperFunctions.h" />
     <ClInclude Include="CoreSystem.h" />
     <ClInclude Include="D3D11Mesh.h" />
@@ -225,12 +239,17 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectFactory.h" />
     <ClInclude Include="Handle.h" />
+    <ClInclude Include="LightManager.h" />
+    <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PixelShaderBase.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="Pool.h" />
     <ClInclude Include="PoolItem.h" />
+    <ClInclude Include="Quaternion.h" />
     <ClInclude Include="ReleaseCOM.h" />
     <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ShaderBase.h" />
     <ClInclude Include="SimpleInput.h" />
     <ClInclude Include="SystemManager.h" />
@@ -257,12 +276,25 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="TexturedDiffuseVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="InputStructures.hlslh" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SkyBoxVSOUTPUT.hlslh" />
+    <FxCompile Include="TexturedDiffusePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <None Include="TexturedDiffuseVSOUTPUT.hlslh" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="box_texture.jpg" />

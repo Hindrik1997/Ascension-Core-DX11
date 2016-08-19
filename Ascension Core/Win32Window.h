@@ -10,6 +10,9 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
+#include <Keyboard.h>
+#include <Mouse.h>
+
 template<typename T>
 class Win32Window
 {
@@ -68,6 +71,7 @@ public:
 
 		ShowWindow(hWnd, 1);
 		UpdateWindow(hWnd);
+		
 	};
 	~Win32Window()
 	{
@@ -91,6 +95,21 @@ public:
 	{
 		switch (msg)
 		{
+		case WM_INPUT:
+		case WM_MOUSEMOVE:
+		case WM_LBUTTONDOWN:
+		case WM_LBUTTONUP:
+		case WM_RBUTTONDOWN:
+		case WM_RBUTTONUP:
+		case WM_MBUTTONDOWN:
+		case WM_MBUTTONUP:
+		case WM_MOUSEWHEEL:
+		case WM_XBUTTONDOWN:
+		case WM_XBUTTONUP:
+		case WM_MOUSEHOVER:
+			Mouse::ProcessMessage(msg, wParam, lParam);
+			return 0;
+
 		case WM_KEYDOWN:
 		{
 			if (wParam == VK_ESCAPE)

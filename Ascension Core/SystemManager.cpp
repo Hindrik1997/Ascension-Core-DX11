@@ -12,7 +12,7 @@ SystemManager::~SystemManager()
 
 SystemManager::SystemManager()
 {
-	AddSystem<CoreSystem>();
+	CurrentCoreSystem = AddSystem<CoreSystem>();
 }
 
 EngineSystem& SystemManager::operator[](const int index)
@@ -57,4 +57,9 @@ void SystemManager::RemoveSystem(const Handle<EngineSystem> handle)
 {
 	std::lock_guard<std::mutex> guard(CSMutex);
 	Systems.erase(Systems.begin() + handle.GetIndex());
+}
+
+CoreSystem& SystemManager::GetCoreSystem() 
+{
+	return *static_cast<CoreSystem*>(Systems[CurrentCoreSystem.GetIndex()].get());
 }

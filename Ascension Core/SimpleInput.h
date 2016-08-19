@@ -13,6 +13,9 @@ public:
 
 	bool IsKeyDown(unsigned int);
 
+	float ChangeHorizontal = 0.0f;
+	float ChangeVertical = 0.0f;
+
 private:
 	bool m_keys[256];
 };
