@@ -69,19 +69,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Libs\TinyOBJLoader\;$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libs\DirectXTK\Lib\x86\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Libs\TinyOBJLoader\;$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libs\DirectXTK\Lib\x86\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Libs\TinyOBJLoader\;$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libs\DirectXTK\Lib\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Libs\TinyOBJLoader\;$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libs\DirectXTK\Lib\x64\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -187,6 +187,8 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <ClCompile Include="D3D11RenderSystem.cpp" />
     <ClCompile Include="D3D11ModelRendererShaderSet.cpp" />
     <ClCompile Include="D3D11SkyBoxShaderSet.cpp" />
+    <ClCompile Include="D3D11StandardShaderSet.cpp" />
+    <ClCompile Include="D3D11TexturedAmbientDiffuseShaderSet.cpp" />
     <ClCompile Include="D3D11TexturedDiffuseShaderSet.cpp" />
     <ClCompile Include="D3D11Vertex.cpp" />
     <ClCompile Include="D3D11VSBase.cpp" />
@@ -222,6 +224,8 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <ClInclude Include="ComponentHandle.h" />
     <ClInclude Include="D3D11ModelRendererShaderSet.h" />
     <ClInclude Include="D3D11SkyBoxShaderSet.h" />
+    <ClInclude Include="D3D11StandardShaderSet.h" />
+    <ClInclude Include="D3D11TexturedAmbientDiffuseShaderSet.h" />
     <ClInclude Include="D3D11TexturedDiffuseShaderSet.h" />
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="HelperFunctions.h" />
@@ -240,6 +244,7 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <ClInclude Include="GameObjectFactory.h" />
     <ClInclude Include="Handle.h" />
     <ClInclude Include="LightManager.h" />
+    <ClInclude Include="LightStructs.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PixelShaderBase.h" />
@@ -249,7 +254,6 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="ReleaseCOM.h" />
     <ClInclude Include="RenderSystem.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="ShaderBase.h" />
     <ClInclude Include="SimpleInput.h" />
     <ClInclude Include="SystemManager.h" />
@@ -276,6 +280,30 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="StandardPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="StandardVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="TexturedAmbientDiffusePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="TexturedAmbientDiffuseVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="TexturedDiffuseVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
@@ -287,6 +315,8 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <Text Include="InputStructures.hlslh" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="LightStructs.hlslh" />
     <None Include="SkyBoxVSOUTPUT.hlslh" />
     <FxCompile Include="TexturedDiffusePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
@@ -294,6 +324,8 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+    <None Include="StandardVSOUTPUT.hlslh" />
+    <None Include="TexturedAmbientDiffuseVSOUTPUT.hlslh" />
     <None Include="TexturedDiffuseVSOUTPUT.hlslh" />
   </ItemGroup>
   <ItemGroup>

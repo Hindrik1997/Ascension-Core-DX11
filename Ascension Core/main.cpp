@@ -7,8 +7,12 @@
 #include "Camera.h"
 #include "D3D11Model.h"
 #include "D3D11SkyBoxShaderSet.h"
-#include "D3D11TexturedDiffuseShaderSet.h"
+#include "D3D11StandardShaderSet.h"
+#include "D3D11TexturedAmbientDiffuseShaderSet.h"
+#include "CoreSystem.h"
 
+#define TINYOBJLOADER_IMPLEMENTATION
+#include <tiny_obj_loader.h>
 
 using namespace std;
 
@@ -22,6 +26,8 @@ int main()
 	ComponentHandle c = e->ObjectsFactory[a.GetIndex()].AddComponent<Camera>();
 	e->SystemsManager.GetRenderSystem().SetCamera(c);
 
+
+	CoreSystem& cSystem = Engine::MainInstance().SystemsManager.GetCoreSystem();
 
 	D3D11Renderer& rs = *static_cast<D3D11RenderSystem*>(&e->SystemsManager.GetRenderSystem())->Renderer.get();
 
@@ -121,27 +127,66 @@ int main()
 			D3D11Vertex(Vertex(1.0f, -1.0f, 1.0f, 1.0f, 1.0f,0.0f)),
 		});
 
+	/*
+	std::vector<DWORD> indices;
+	std::vector<D3D11Vertex> vertices;
+
+	tinyobj::attrib_t attrib;
+	vector<tinyobj::shape_t> shapes;
+	vector<tinyobj::material_t> materials;
+	string err;
+	if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &err, "chalet.obj")) {
+		throw std::runtime_error(err);
+	}
+		for (const auto& shape : shapes) 
+		{
+			for (const auto& index : shape.mesh.indices)
+			{
+				Vertex v;
+
+				v.Position = {
+					attrib.vertices[3 * index.vertex_index + 0],
+					attrib.vertices[3 * index.vertex_index + 1],
+					attrib.vertices[3 * index.vertex_index + 2]
+				};
+
+				v.UVW = {
+					attrib.texcoords[2 * index.texcoord_index + 0],
+					1.0f - attrib.texcoords[2 * index.texcoord_index + 1],
+					1.0f
+				};
+
+				vertices.push_back(D3D11Vertex(v));
+				indices.push_back(indices.size());
+			}
+		}
 
 
-
+	D3D11Mesh* Mesh3 = new D3D11Mesh(indices, vertices);
+	*/
 
 	D3D11SkyBoxShaderSet shaderSet(L"Skybox.dds");
 	D3D11SkyBoxShaderSet shaderSet2(L"Skybox2.dds");
-	D3D11TexturedDiffuseShaderSet shaderSet3(L"box_texture.dds");
+	D3D11StandardShaderSet shaderSet3(L"box_texture.dds");
+
+	//Mesh2->CalculateNormals();
 
 	D3D11Model* Model = new D3D11Model(shaderSet, *Mesh);
 	//D3D11Model* Model2 = new D3D11Model(shaderSet2, *Mesh);
 	D3D11Model* Model3= new D3D11Model(shaderSet3, *Mesh2);
 
 
+
 	Handle<GameObject> gHandle = e->ObjectsFactory.CreateGameObject();
 	Handle<GameObject> gHandle2 = e->ObjectsFactory.CreateGameObject();
 
+	Handle<DirectionalLight> Dl = cSystem.lightManager.AddDirectionalLight();
+	DirectionalLight& dLight = const_cast< Pool<DirectionalLight, 8>& >(cSystem.lightManager.GetDirectionalLightsList())[Dl.GetIndex()];
+	dLight.SetIntensity(1.0f);
 		
 	ComponentHandle cHandle = e->ObjectsFactory[gHandle].AddComponent<D3D11ModelRenderer>(Model3);
 	
 	e->ObjectsFactory.at(a).ObjectTransform.Position = Vector3f(0.0f, 0.0f, -8.0f);
-	//e->ObjectsFactory.at(gHandle).ObjectTransform.Rotation = Quaternion(0.0f, 45.0f, 0.0f, 0.0f);
 
 	Engine::MainInstance().ObjectsFactory[gHandle2].ObjectTransform.Scale = Vector3f(999.0f, 999.0f, 999.0f);
 	ComponentHandle cHandle2 = e->ObjectsFactory[gHandle2].AddComponent<D3D11ModelRenderer>(Model);

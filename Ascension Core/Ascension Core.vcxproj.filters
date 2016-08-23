@@ -52,9 +52,6 @@
     <ClCompile Include="D3D11ModelRenderer.cpp">
       <Filter>GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>GameObjects and Components\Components</Filter>
-    </ClCompile>
     <ClCompile Include="CoreSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
@@ -110,9 +107,24 @@
     <ClCompile Include="Matrix4x4.cpp">
       <Filter>Utilities\Matrices</Filter>
     </ClCompile>
-    <ClCompile Include="PointLight.cpp" />
-    <ClCompile Include="DirectionalLight.cpp" />
-    <ClCompile Include="LightManager.cpp" />
+    <ClCompile Include="D3D11TexturedAmbientDiffuseShaderSet.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedAmbientDiffuseShaderSet</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11StandardShaderSet.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\StandardShaderSet</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>GameObjects and Components\Components\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectionalLight.cpp">
+      <Filter>GameObjects and Components\Components\Core\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>GameObjects and Components\Components\Core\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="LightManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector2f.h">
@@ -175,9 +187,6 @@
     <ClInclude Include="D3D11ModelRenderer.h">
       <Filter>GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>GameObjects and Components\Components</Filter>
-    </ClInclude>
     <ClInclude Include="CoreSystem.h">
       <Filter>Systems</Filter>
     </ClInclude>
@@ -233,13 +242,30 @@
       <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="Quaternion.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Matrix4x4.h">
       <Filter>Utilities\Matrices</Filter>
     </ClInclude>
-    <ClInclude Include="PointLight.h" />
-    <ClInclude Include="DirectionalLight.h" />
-    <ClInclude Include="LightManager.h" />
+    <ClInclude Include="D3D11TexturedAmbientDiffuseShaderSet.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedAmbientDiffuseShaderSet</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11StandardShaderSet.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\StandardShaderSet</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>GameObjects and Components\Components\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionalLight.h">
+      <Filter>GameObjects and Components\Components\Core\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>GameObjects and Components\Components\Core\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="LightManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="LightStructs.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -296,14 +322,26 @@
     <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedDiffuseShaderSet">
       <UniqueIdentifier>{7cc14b2d-b2ed-47f8-a50f-7ee51b47410f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Shaders">
-      <UniqueIdentifier>{a893372d-1bff-4736-9c2b-0bfe8e5d34bc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Textures">
       <UniqueIdentifier>{21d67b51-fe5f-47d8-80e7-2caeb6ec4cb8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utilities\Matrices">
       <UniqueIdentifier>{1fdd6bc0-4709-491a-86db-afb7d492766c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedAmbientDiffuseShaderSet">
+      <UniqueIdentifier>{8e4240bc-2d48-434b-8f99-1d5b7221f9a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\StandardShaderSet">
+      <UniqueIdentifier>{00285820-bc89-4cbc-9179-afcacabe227f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects and Components\Components\Core">
+      <UniqueIdentifier>{67c0992f-f27b-4309-98fc-3a45b6057dce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects and Components\Components\Core\Lights">
+      <UniqueIdentifier>{578b8e6c-7c60-4955-9f28-f3fc5142bbc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common">
+      <UniqueIdentifier>{a893372d-1bff-4736-9c2b-0bfe8e5d34bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -319,10 +357,22 @@
     <FxCompile Include="TexturedDiffuseVS.hlsl">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedDiffuseShaderSet</Filter>
     </FxCompile>
+    <FxCompile Include="TexturedAmbientDiffusePS.hlsl">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedAmbientDiffuseShaderSet</Filter>
+    </FxCompile>
+    <FxCompile Include="TexturedAmbientDiffuseVS.hlsl">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedAmbientDiffuseShaderSet</Filter>
+    </FxCompile>
+    <FxCompile Include="StandardPS.hlsl">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\StandardShaderSet</Filter>
+    </FxCompile>
+    <FxCompile Include="StandardVS.hlsl">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\StandardShaderSet</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="InputStructures.hlslh">
-      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Shaders</Filter>
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
@@ -332,6 +382,16 @@
     <None Include="TexturedDiffuseVSOUTPUT.hlslh">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedDiffuseShaderSet</Filter>
     </None>
+    <None Include="TexturedAmbientDiffuseVSOUTPUT.hlslh">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedAmbientDiffuseShaderSet</Filter>
+    </None>
+    <None Include="StandardVSOUTPUT.hlslh">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\StandardShaderSet</Filter>
+    </None>
+    <None Include="LightStructs.hlslh">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common</Filter>
+    </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Skybox2.dds">

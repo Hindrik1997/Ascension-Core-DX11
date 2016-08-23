@@ -8,6 +8,7 @@ unique_ptr<Keyboard> keyboard = std::make_unique<Keyboard>();
 
 D3D11RenderSystem::D3D11RenderSystem(int width, int height) : MainWindow(new Win32Window<D3D11Renderer>(width, height)), Renderer(new D3D11Renderer(*MainWindow))
 {
+	renderFunction = &D3D11RenderSystem::RenderForward;
 	MainWindow->WindowRenderer = Renderer.get();
 
 #ifdef _DEBUG
@@ -265,4 +266,41 @@ void D3D11RenderSystem::UnLoadPixelShader(wstring name)
 
 void D3D11RenderSystem::UnLoadMesh(wstring name)
 {
+}
+
+void D3D11RenderSystem::RenderForward()
+{
+	ClearScreenAndBackBuffers();
+
+	for (size_t i = 0; i < ModelRendererPool.size(); ++i)
+	{
+		if (ModelRendererPool.GetStorageRef()[i].IsUsed)
+		{
+			ModelRendererPool[i].Render();
+			Renderer->DeviceContext->DrawIndexed(static_cast<int>(ModelRendererPool[i].Model->Mesh.Indices.size()), 0, 0);
+		}
+	}
+	Renderer->SwapChain->Present(0, 0);
+}
+
+void D3D11RenderSystem::RenderDeferred()
+{
+}
+
+void D3D11RenderSystem::RenderTiledForward()
+{
+}
+
+void D3D11RenderSystem::RenderTiledDeferred()
+{
+}
+
+void D3D11RenderSystem::ClearScreenAndBackBuffers()
+{
+	//Clear depthstencil
+	Renderer->DeviceContext->ClearDepthStencilView(Renderer->DepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+	//Clear background to black
+	float bgColor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	Renderer->DeviceContext->ClearRenderTargetView(Renderer->RenderTargetView, bgColor);
 }

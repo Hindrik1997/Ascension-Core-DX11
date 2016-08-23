@@ -1,0 +1,16 @@
+#define LIGHT_COUNT_PS 8
+#define LIGHT_COUNT_VS 24
+#define LIGHT_COUNT_DIRECTIONAL_PS 4
+
+struct DirectionalLight
+{
+	float3 Direction;
+	float4 Color;
+};
+
+struct PointLight
+{
+	float3 Position;
+	float4 Color;
+	float  LightRadius;
+};

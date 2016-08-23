@@ -15,6 +15,9 @@
 using namespace DirectX;
 using std::unique_ptr;
 
+class D3D11RenderSystem;
+typedef void (D3D11RenderSystem::*RenderFunction)(void);
+
 
 class D3D11RenderSystem : public RenderSystem
 {
@@ -71,10 +74,16 @@ private:
 	Pool<D3D11ModelRenderer, DEFAULT_SIZE> ModelRendererPool;
 
 private:
-	//Resources
+	RenderFunction renderFunction = nullptr;
 
-
-
+	//Rendermodes
+	void RenderForward();
+	void RenderDeferred();
+	void RenderTiledForward();
+	void RenderTiledDeferred();
+	
+	//Utilities
+	void ClearScreenAndBackBuffers();
 
 };
 
@@ -85,21 +94,7 @@ inline bool D3D11RenderSystem::ProcessAPI()
 
 inline void D3D11RenderSystem::Render()
 {
-	
-	//Clear depthstencil
-	Renderer->DeviceContext->ClearDepthStencilView(Renderer->DepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-
-	//Clear background to black
-	float bgColor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-	Renderer->DeviceContext->ClearRenderTargetView(Renderer->RenderTargetView, bgColor);
-
-
-	for (size_t i = 0; i < ModelRendererPool.size(); ++i)
-	{
-		if(ModelRendererPool.GetStorageRef()[i].IsUsed)
-		ModelRendererPool[i].Render();
-	}
-	Renderer->SwapChain->Present(0, 0);
+	(this->*renderFunction)();
 }
 
 inline XMMATRIX D3D11RenderSystem::GetProjectionMatrix() const

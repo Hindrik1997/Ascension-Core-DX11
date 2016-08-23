@@ -16,7 +16,7 @@ public:
 	~CoreSystem();
 
 
-	LightManager lManager;
+	LightManager lightManager;
 
 	void Update(float deltaTime);
 

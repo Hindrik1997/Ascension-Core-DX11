@@ -14,10 +14,10 @@ using std::wstring;
 template<typename T>
 void ReleaseCOM(T& ptr)
 {
-	if (ptr != NULL)
+	if (ptr != nullptr)
 	{
 		ptr->Release();
-		ptr = NULL;
+		ptr = nullptr;
 	}
 }
 

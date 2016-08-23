@@ -29,6 +29,7 @@ public:
 
 	inline void Reset(Handle<GameObject> parentObject);
 private:
+	friend class D3D11RenderSystem;
 	static Handle<EngineSystem> sysHandle;
 	D3D11Model* Model;
 	//Methods

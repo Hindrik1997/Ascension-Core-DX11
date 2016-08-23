@@ -47,7 +47,6 @@ void D3D11ModelRenderer::Render()
 
 	Model->Set(*this);
 	Model->Update(*this);
-	ParentRenderer.DeviceContext->DrawIndexed(static_cast<int>(Model->Mesh.Indices.size()), 0, 0);
 }
 
 XMMATRIX D3D11ModelRenderer::GetWorldViewProjectionMatrix()

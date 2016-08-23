@@ -20,6 +20,8 @@ public:
 	XMFLOAT4 Position;
 	XMFLOAT3 UV;
 	XMFLOAT3 Normal;
+	XMFLOAT3 BiNormal;
+	XMFLOAT3 Tangent;
 	XMFLOAT4 Color;
 
 	D3D11Vertex(Vertex v);

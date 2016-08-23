@@ -22,9 +22,11 @@ public:
 	Vertex(float pos_x, float pos_y, float pos_z);
 
 public:
-	 Vector3f Position;
-	 Vector3f UV;
-	 Vector3f Normal;
-	 Vector4f Color;
+	 Vector3f Position = Vector3f();
+	 Vector3f UVW = Vector3f();
+	 Vector3f Normal = Vector3f();
+	 Vector3f BiNormal = Vector3f();
+	 Vector3f Tangent = Vector3f();
+	 Vector4f Color = Vector4f();
 };
 

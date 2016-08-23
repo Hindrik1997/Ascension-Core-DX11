@@ -30,6 +30,10 @@ public:
 
 	vector<DWORD> Indices;
 	vector<D3D11Vertex> Vertices;
+
+	void CalculateNormals();
+
+
 };
 
 
