@@ -60,7 +60,7 @@ void D3D11Mesh::Set()
 
 void D3D11Mesh::CalculateNormals()
 {
-	for (int i = 0; i < Indices.size(); i += 3)
+	for (size_t i = 0; i < Indices.size(); i += 3)
 	{
 		D3D11Vertex p1 = Vertices[Indices[i]];
 		D3D11Vertex p2 = Vertices[Indices[i + 1]];
@@ -73,9 +73,22 @@ void D3D11Mesh::CalculateNormals()
 		XMVECTOR v1 = vp1 - vp2;
 		XMVECTOR v2 = vp3 - vp1;
 		XMVECTOR Normal = XMVector3Cross(v1, v2);
-		XMStoreFloat3(&Vertices[Indices[i]].Normal, Normal);
-		XMStoreFloat3(&Vertices[Indices[i + 1]].Normal, Normal);
-		XMStoreFloat3(&Vertices[Indices[i + 2]].Normal, Normal);
+
+		XMVECTOR SN1 = XMVectorSet(p1.Normal.x, p1.Normal.y, p1.Normal.z, 0.0f);
+		XMVECTOR SN2 = XMVectorSet(p2.Normal.x, p2.Normal.y, p2.Normal.z, 0.0f);
+		XMVECTOR SN3 = XMVectorSet(p3.Normal.x, p3.Normal.y, p3.Normal.z, 0.0f);
+
+		SN1 = XMVectorAdd(SN1, Normal);
+		SN2 = XMVectorAdd(SN2, Normal);
+		SN3 = XMVectorAdd(SN3, Normal);
+
+		SN1 = XMVector3Normalize(SN1);
+		SN2 = XMVector3Normalize(SN2);
+		SN3 = XMVector3Normalize(SN3);
+
+		XMStoreFloat3(&Vertices[Indices[i]].Normal, SN1);
+		XMStoreFloat3(&Vertices[Indices[i + 1]].Normal, SN2);
+		XMStoreFloat3(&Vertices[Indices[i + 2]].Normal, SN3);
 	}
 
 
