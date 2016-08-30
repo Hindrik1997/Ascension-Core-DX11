@@ -17,6 +17,7 @@ public:
 
 	virtual void Set(D3D11ModelRenderer& renderer) = 0;
 	virtual void Update(D3D11ModelRenderer& renderer) = 0;
+	virtual void RevertState(D3D11ModelRenderer& renderer) = 0;
 
 	virtual ~D3D11ModelRendererShaderSet() = 0;
 };

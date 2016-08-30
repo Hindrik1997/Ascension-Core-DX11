@@ -1,0 +1,41 @@
+struct _Material
+{
+	float4 Emissive;
+	float4 Ambient;
+	float4 Diffuse;
+	float4 Specular;
+	float SpecularPower;
+	bool UseTexture;
+	float2 _padding_;
+};
+
+float4 DoDiffuse( float4 light, float3 L, float3 N )
+{
+    float NdotL = max( 0, dot( N, L ) );
+    return light * NdotL;
+}
+
+float4 DoSpecularPhong( float4 light, float3 V, float3 L, float3 N, float SpecularPower )
+{
+    // Phong lighting.
+    float3 R = normalize( reflect( -L, N ) );
+    float RdotV = max( 0, dot( R, V ) );
+
+    return light * pow( RdotV, SpecularPower );
+}
+
+float4 DoSpecularBlinnPhong( float4 light, float3 V, float3 L, float3 N, float SpecularPower )
+{
+    // Blinn-Phong lighting
+    float3 H = normalize( L + V );
+    float NdotH = max( 0, dot( N, H ) );
+    return light * pow( NdotH, SpecularPower);
+}
+
+float G_Smith(float Roughness, float NoV, float NoL)
+{
+	float R2 = Roughness * Roughness;
+	float G_V = NoV + sqrt((NoV - NoV * R2) * NoV + R2);
+	float G_L = NoL + sqrt((NoL - NoL * R2) * NoL + R2);
+	return rcp(G_V * G_L);
+}

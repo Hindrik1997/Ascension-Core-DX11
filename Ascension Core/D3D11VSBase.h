@@ -20,7 +20,7 @@
 using std::wstring;
 using std::unique_ptr;
 
-typedef void(*BufferDeleterFncptr)(void* ptr);
+//typedef void(*BufferDeleterFncptr)(void* ptr);
 
 class D3D11VertexShaderBase
 {

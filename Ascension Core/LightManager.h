@@ -19,11 +19,8 @@ public:
 	~LightManager();
 
 private:
-	float AmbientIntensity = 255.0f;
-	Vector3f AmbientColor = Vector3f(255.0f, 255.0f, 255.0f);
-
-
-	
+	float AmbientIntensity = 37.75f;
+	Vector3f AmbientColor = Vector3f(255.0f, 255.0f, 255.0f);	
 public:
 	//Intensity in range of 0-255
 	void SetAmbientIntensity(signed char intensity);

@@ -36,15 +36,23 @@ public:
 
     void RemoveItem(Handle<T> item);
 
+	inline int GetItemInUseCount();
     inline size_t size();
 
 	inline const int GetFirstFreeIndex() const;
 private:
+	int InUseCounter = 0;
     int FirstFreeIndex = 0;
     int Max_Size = SIZE;
     array<PoolItem<T>, SIZE> storage;
 };
 
+
+template<typename T, int SIZE>
+inline int Pool<T, SIZE>::GetItemInUseCount()
+{
+	return InUseCounter;
+}
 
 template<typename T, int SIZE>
 inline size_t Pool<T, SIZE>::size()
@@ -80,6 +88,7 @@ Handle<T> Pool<T, SIZE>::GetNewItem(ResetArgs... args) {
     FirstFreeIndex = storage[FirstFreeIndex].CurrentState.NextItemIndex;
     storage[TempIndex].IsUsed = true;
 	storage[TempIndex].Reset(args...);
+	InUseCounter++;
     return Handle<T>(TempIndex);
 }
 
@@ -99,6 +108,7 @@ void Pool<T, SIZE>::RemoveItem(Handle<T> item)
     FirstFreeIndex = item.GetIndex();
     storage[item.GetIndex()].IsUsed = false;
 	storage[item.GetIndex()].CleanUp();
+	InUseCounter--;
 }
 
 template<typename T, int SIZE>

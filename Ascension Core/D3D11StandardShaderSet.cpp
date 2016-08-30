@@ -14,10 +14,18 @@ D3D11StandardShaderSet::D3D11StandardShaderSet(wstring fileName) : ps(L"Standard
 	Handle<EngineSystem> sysHandle = D3D11RenderSystem::GetHandle();
 	D3D11Renderer& ParentRenderer = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle])->Renderer;
 
-	HRESULT hr = CreateDDSTextureFromFile(ParentRenderer.Device, fileName.c_str(), NULL, &Texture);
+	HRESULT hr = CreateDDSTextureFromFile(ParentRenderer.Device, fileName.c_str(), NULL, &DiffuseMap);
 	if (!SUCCEEDED(hr))
 	{
-		hr = CreateWICTextureFromFile(ParentRenderer.Device, fileName.c_str(), NULL, &Texture);
+		hr = CreateWICTextureFromFile(ParentRenderer.Device, fileName.c_str(), NULL, &DiffuseMap);
+		if (!SUCCEEDED(hr))
+			throw "Could not load the specified texture";
+	}
+
+	hr = CreateDDSTextureFromFile(ParentRenderer.Device, L"Skybox.dds", NULL, &EnvironmentMap);
+	if (!SUCCEEDED(hr))
+	{
+		hr = CreateWICTextureFromFile(ParentRenderer.Device, fileName.c_str(), NULL, &EnvironmentMap);
 		if (!SUCCEEDED(hr))
 			throw "Could not load the specified texture";
 	}
@@ -37,11 +45,10 @@ D3D11StandardShaderSet::D3D11StandardShaderSet(wstring fileName) : ps(L"Standard
 
 	CheckFail(ParentRenderer.Device->CreateSamplerState(&sampDesc, &TextureSampler), L"Error creating sampler state");
 
-	VSConstanBufferStructurePerFrame = new VSPerFrameBufferStructSTD;
-
+	VSConstantBufferStructurePerFrame = new VSPerFrameBufferStructSTD;
 	VSConstantBufferStructurePerObject = new VSPerObjectBufferStructSTD;
-
 	PSConstantBufferStructurePerFrame = new PSPerFrameBufferStructSTD;
+	PSConstantBufferStructurePerMaterial = new PSPerMaterialBufferStructSTD;
 
 	D3D11_BUFFER_DESC bufferDesc;
 	ZeroMemory(&bufferDesc, sizeof(D3D11_BUFFER_DESC));
@@ -67,47 +74,77 @@ D3D11StandardShaderSet::D3D11StandardShaderSet(wstring fileName) : ps(L"Standard
 	ZeroMemory(&bufferDesc3, sizeof(D3D11_BUFFER_DESC));
 
 	bufferDesc3.Usage = D3D11_USAGE_DEFAULT;
-	bufferDesc3.ByteWidth = sizeof(PSPerFrameBufferStructSTD);
+	bufferDesc3.ByteWidth = sizeof(VSPerFrameBufferStructSTD);
 	bufferDesc3.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	bufferDesc3.CPUAccessFlags = NULL;
 	bufferDesc3.MiscFlags = NULL;
 	ParentRenderer.Device->CreateBuffer(&bufferDesc3, NULL, &VSPerFrameBuffer);
 
+	D3D11_BUFFER_DESC bufferDesc4;
+	ZeroMemory(&bufferDesc4, sizeof(D3D11_BUFFER_DESC));
+
+	bufferDesc4.Usage = D3D11_USAGE_DEFAULT;
+	bufferDesc4.ByteWidth = sizeof(PSPerMaterialBufferStructSTD);
+	bufferDesc4.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	bufferDesc4.CPUAccessFlags = NULL;
+	bufferDesc4.MiscFlags = NULL;
+	ParentRenderer.Device->CreateBuffer(&bufferDesc4, NULL, &PSPerMaterialBuffer);
+
+
+	_Material m;
+	m.Emmisive = XMFLOAT4{ 0.0f, 0.0f, 0.0f, 0.0f };
+	m.Ambient = XMFLOAT4{ 0.05375f, 0.05f, 0.06625f, 1.0f };
+	m.Diffuse = XMFLOAT4{ 0.18275f, 0.17f, 0.22525f, 1.0f };
+	m.Specular = XMFLOAT4{ 0.332741f, 0.328634f, 0.346435f, 1.0f };
+	m.SpecularPower = 38.4f;
+	m.UseTexture = true;
+	PSConstantBufferStructurePerMaterial->material = m;
 }
 
 
 D3D11StandardShaderSet::~D3D11StandardShaderSet()
 {
 	ReleaseCOM(TextureSampler);
-	ReleaseCOM(Texture);
+	ReleaseCOM(DiffuseMap);
+	ReleaseCOM(EnvironmentMap);
 
 	ReleaseCOM(VSPerFrameBuffer);
 	ReleaseCOM(VSPerObjectBuffer);
 	ReleaseCOM(PSPerFrameBuffer);
+	ReleaseCOM(PSPerMaterialBuffer);
 
-	if (VSConstanBufferStructurePerFrame != nullptr)
-		delete VSConstanBufferStructurePerFrame;
+	if (VSConstantBufferStructurePerFrame != nullptr)
+		delete VSConstantBufferStructurePerFrame;
 
 	if (VSConstantBufferStructurePerObject != nullptr)
 		delete VSConstantBufferStructurePerObject;
 
 	if (PSConstantBufferStructurePerFrame != nullptr)
 		delete PSConstantBufferStructurePerFrame;
+
+	if (PSConstantBufferStructurePerMaterial != nullptr)
+		delete PSConstantBufferStructurePerMaterial;
 }
 
 void D3D11StandardShaderSet::Set(D3D11ModelRenderer& renderer)
 {
 	Handle<EngineSystem> sysHandle = D3D11RenderSystem::GetHandle();
 	D3D11Renderer& ParentRenderer = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle])->Renderer;
+	D3D11RenderSystem& RSystem = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle]);
+	Vector3f CPosition = RSystem.GetCamera().GetCamPosition();
 
+	ParentRenderer.DeviceContext->RSGetState(&RSPrevState);
 	ParentRenderer.DeviceContext->RSSetState(NULL);
 
 	vs.Set();
 	ps.Set();
 
 	ParentRenderer.DeviceContext->VSSetConstantBuffers(START_SLOT, NUM_BUFFERS, &VSPerObjectBuffer);
+	ParentRenderer.DeviceContext->VSSetConstantBuffers(START_SLOT + 1, NUM_BUFFERS, &VSPerFrameBuffer);
 	ParentRenderer.DeviceContext->PSSetConstantBuffers(START_SLOT, NUM_BUFFERS, &PSPerFrameBuffer);
-	ParentRenderer.DeviceContext->PSSetShaderResources(0, 1, &Texture);
+	ParentRenderer.DeviceContext->PSSetConstantBuffers(START_SLOT + 1, NUM_BUFFERS, &PSPerMaterialBuffer);
+	ParentRenderer.DeviceContext->PSSetShaderResources(0, 1, &DiffuseMap);
+	ParentRenderer.DeviceContext->PSSetShaderResources(1, 1, &EnvironmentMap);
 	ParentRenderer.DeviceContext->PSSetSamplers(0, 1, &TextureSampler);
 
 	//AMBIENT LIGHT
@@ -120,43 +157,59 @@ void D3D11StandardShaderSet::Set(D3D11ModelRenderer& renderer)
 	//Mappen naar 0.0f - 1.0f range
 	Ambient.w = Ambient.w / 255.0f;
 
+
+	Camera& CurrentCamera = RSystem.GetCamera();
+	GameObject& Parent = Engine::MainInstance().ObjectsFactory[CurrentCamera.ParentObject];
+
+	XMMATRIX Camera = RSystem.GetWorldMatrix(Parent);
+	XMMATRIX View = XMMatrixInverse(&XMMatrixDeterminant(Camera), Camera);
 	PSConstantBufferStructurePerFrame->AmbientColor = Ambient;
 
 	CoreSystem& Cs = Engine::MainInstance().SystemsManager.GetCoreSystem();
 	DLPool& lightList = const_cast<DLPool&>(Cs.lightManager.GetDirectionalLightsList());
 
-	int isValid = 0;
+	int lightCount = lightList.GetItemInUseCount();
 
-	for (int i = 0; i < LIGHT_COUNT_PS; ++i)
+	for (int i = 0; i < 1; ++i)
 	{
-		if (lightList.GetStorageRef()[i].IsUsed)
-		{
-			PSConstantBufferStructurePerFrame->DirectionalLights[i] = DirectionalLightShaderStruct
-			{
-				XMFLOAT3(lightList[i].GetDirection().x, lightList[i].GetDirection().y, lightList[i].GetDirection().z),
-				XMFLOAT4(lightList[i].GetColor().x, lightList[i].GetColor().y, lightList[i].GetColor().z, lightList[i].GetIntensity())
-			};
-			isValid++;
-		}
+		DirectionalLightShaderStruct temp;
+
+		temp.Direction = XMFLOAT3(lightList[i].GetDirection().x, lightList[i].GetDirection().y, lightList[i].GetDirection().z);
+		XMVECTOR resultDir = XMVector3Transform(XMLoadFloat3(&temp.Direction), XMMatrixTranspose(View));
+		XMStoreFloat3(&temp.Direction, resultDir);
+		temp.Color = XMFLOAT4(lightList[i].GetColor().x / 255, lightList[i].GetColor().y / 255, lightList[i].GetColor().z / 255, lightList[i].GetIntensity());
+
+		PSConstantBufferStructurePerFrame->DirectionalLights[i].Color = temp.Color;
+		PSConstantBufferStructurePerFrame->DirectionalLights[i].Direction = temp.Direction;
 	}
-
-	PSConstantBufferStructurePerFrame->LightCount = isValid;
-
+	PSConstantBufferStructurePerFrame->DirectionalLightCount = lightCount;
+	
+	VSConstantBufferStructurePerFrame->CameraWorldPosition = { CPosition.x, CPosition.y, CPosition.z };
 	ParentRenderer.DeviceContext->UpdateSubresource(PSPerFrameBuffer, 0, NULL, &*PSConstantBufferStructurePerFrame, 0, 0);
+	ParentRenderer.DeviceContext->UpdateSubresource(VSPerFrameBuffer, 0, NULL, &*VSConstantBufferStructurePerFrame, 0, 0);
+	ParentRenderer.DeviceContext->UpdateSubresource(PSPerMaterialBuffer, 0, NULL, &*PSConstantBufferStructurePerMaterial, 0, 0);
 }
 
 void D3D11StandardShaderSet::Update(D3D11ModelRenderer& renderer)
 {
+	Handle<EngineSystem> sysHandle = D3D11RenderSystem::GetHandle();
+	D3D11Renderer& ParentRenderer = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle])->Renderer;
+	
 	XMMATRIX W = renderer.GetWorldMatrix();
 	XMMATRIX WV = renderer.GetWorldViewMatrix();
 	XMMATRIX WVP = renderer.GetWorldViewProjectionMatrix();
-
-	Handle<EngineSystem> sysHandle = D3D11RenderSystem::GetHandle();
-	D3D11Renderer& ParentRenderer = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle])->Renderer;
 
 	VSConstantBufferStructurePerObject->WorldMatrix = XMMatrixTranspose(W);
 	VSConstantBufferStructurePerObject->WorldViewMatrix = XMMatrixTranspose(WV);
 	VSConstantBufferStructurePerObject->WorldViewProjectionMatrix = XMMatrixTranspose(WVP);
 
 	ParentRenderer.DeviceContext->UpdateSubresource(VSPerObjectBuffer, 0, NULL, &*VSConstantBufferStructurePerObject, 0, 0);
+}
+
+void D3D11StandardShaderSet::RevertState(D3D11ModelRenderer& renderer)
+{
+	Handle<EngineSystem> sysHandle = D3D11RenderSystem::GetHandle();
+	D3D11Renderer& ParentRenderer = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle])->Renderer;
+	ParentRenderer.DeviceContext->RSSetState(RSPrevState);
+	RSPrevState = nullptr;
 }

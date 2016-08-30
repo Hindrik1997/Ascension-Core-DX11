@@ -23,7 +23,9 @@ __declspec(align(16)) struct VSPerObjectBufferStructSTD
 
 __declspec(align(16)) struct VSPerFrameBufferStructSTD
 {
-	//light list
+	XMFLOAT3 CameraWorldPosition;
+	XMFLOAT3 LightDirection;
+	XMFLOAT2 padding;
 
 	void* operator new(size_t i)
 	{
@@ -36,14 +38,26 @@ __declspec(align(16)) struct VSPerFrameBufferStructSTD
 	}
 };
 
+__declspec(align(16)) struct PSPerMaterialBufferStructSTD
+{
+	_Material material;
+
+	void* operator new(size_t i)
+	{
+		return _mm_malloc(i, 16);
+	}
+
+	void operator delete(void* p)
+	{
+		_mm_free(p);
+	}
+};
 
 __declspec(align(16)) struct PSPerFrameBufferStructSTD
 {
 	//Intensity stored in 4th element of this float
 	XMFLOAT4 AmbientColor;
-
-	//Directional light list
-	int LightCount;
+	int DirectionalLightCount;
 	DirectionalLightShaderStruct DirectionalLights[LIGHT_COUNT_PS];
 
 	void* operator new(size_t i)
@@ -65,24 +79,27 @@ public:
 
 	void Set(D3D11ModelRenderer& renderer);
 	void Update(D3D11ModelRenderer& renderer);
+	void RevertState(D3D11ModelRenderer& renderer);
 
 private:
 	D3D11PixelShaderBase ps;
 	D3D11VertexShaderBase vs;
 
-	ID3D11ShaderResourceView* Texture = nullptr;
+	ID3D11ShaderResourceView* EnvironmentMap = nullptr;
+	ID3D11ShaderResourceView* DiffuseMap = nullptr;
 	ID3D11SamplerState* TextureSampler = nullptr;
 
+	ID3D11RasterizerState* RSPrevState = nullptr;
 	//Buffers
 
 	ID3D11Buffer* VSPerFrameBuffer = nullptr;
-	VSPerFrameBufferStructSTD* VSConstanBufferStructurePerFrame = nullptr;
+	VSPerFrameBufferStructSTD* VSConstantBufferStructurePerFrame = nullptr;
 
 	ID3D11Buffer* VSPerObjectBuffer = nullptr;
 	VSPerObjectBufferStructSTD* VSConstantBufferStructurePerObject = nullptr;
 
-
-
+	ID3D11Buffer* PSPerMaterialBuffer = nullptr;
+	PSPerMaterialBufferStructSTD* PSConstantBufferStructurePerMaterial = nullptr;
 
 	ID3D11Buffer* PSPerFrameBuffer = nullptr;
 	PSPerFrameBufferStructSTD* PSConstantBufferStructurePerFrame = nullptr;

@@ -1,40 +1,50 @@
 #include "StandardVSOUTPUT.hlslh"
 #include "LightStructs.hlslh"
-
-
+#include "CommonFunc.hlslh"
 
 cbuffer cbPerFrame : register(b0)
 {
-	float4 Ambient;
-	int lightCount;
-	DirectionalLight DirectionalLights[LIGHT_COUNT_PS];
+	float4 GlobalAmbientLight;
+	int DirLightCount;
+	DirectionalLight DirectionalLights[DIR_LIGHT_LIMIT];
 };
 
-SamplerState TrilinearSampler;
-Texture2D Texture;
-
-float4 main(VS_OUTPUT input) : SV_TARGET
+cbuffer cbPerMaterial : register(b1)
 {
-	float4 color = Texture.Sample(TrilinearSampler, input.TextureCoordinate);
-	color.rgb *= Ambient.rgb * Ambient.a;
-	//Ambient.rgb = ambient color
-	//Ambient.a = Intensity
+	_Material Material;
+}
 
-	float3 diffuse = (float3)0;
+//Lightning calculations in view space!
+//LightDirections precalculated on cpu in view space
 
-	for (int i = 0; i < lightCount; ++i)
+SamplerState TrilinearSampler;
+Texture2D ColorMap : register(t0);
+TextureCube CubeMap : register(t1);
+
+float4 main(VS_OUTPUT IN) : SV_TARGET
+{
+	
+	float LightIntensity = 1.0f;
+	float3 L = normalize( - DirectionalLights[0].Direction);
+	float3 N = normalize(IN.ViewSpaceNormal);
+	float4 Light = DirectionalLights[0].Color;
+	float3 ViewDirection = normalize( - IN.ViewSpaceViewDirection);
+	LightIntensity += Light.w;
+
+	float4 emissive = Material.Emissive;
+	float4 ambient = Material.Ambient * GlobalAmbientLight;
+	float4 diffuse = Material.Diffuse * DoDiffuse(Light, L, N);
+	float4 specular = Material.Specular * DoSpecularBlinnPhong(Light, ViewDirection, L, N, Material.SpecularPower);
+
+	float4 Environment = CubeMap.Sample(TrilinearSampler, IN.ReflectionVector);
+
+	float4 color = {1,1,1,1};
+
+	if (Material.UseTexture)
 	{
-		float3 lightDir = normalize(- DirectionalLights[i].Direction);
-		float3 normal = normalize(input.ViewSpaceNormal);
-		
-		float n_dot_l = dot(lightDir, normal);
-
-		if (n_dot_l > 0)
-		{
-			diffuse += DirectionalLights[i].Color.rgb * DirectionalLights[i].Color.a * n_dot_l * color.rgb;
-		}
-
+		color = ColorMap.Sample(TrilinearSampler, IN.TextureCoordinate);
 	}
 
-	return color + float4(diffuse, 0.0f);
+	float4 fragmentColor = (emissive + ambient + diffuse + specular) * color;
+	return fragmentColor;
 }

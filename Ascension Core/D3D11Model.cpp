@@ -22,3 +22,8 @@ void D3D11Model::Update(D3D11ModelRenderer& modelRenderer)
 {
 	ShaderSet.Update(modelRenderer);
 }
+
+void D3D11Model::RevertState(D3D11ModelRenderer & modelRenderer)
+{
+	ShaderSet.RevertState(modelRenderer);
+}

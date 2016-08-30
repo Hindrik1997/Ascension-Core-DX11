@@ -31,7 +31,7 @@ D3D11SkyBoxShaderSet::D3D11SkyBoxShaderSet(wstring fileName) : ps(L"SkyBoxPS.cso
 
 	D3D11_RASTERIZER_DESC wfdesc;
 	ZeroMemory(&wfdesc, sizeof(D3D11_RASTERIZER_DESC));
-	wfdesc.CullMode = D3D11_CULL_NONE;
+	wfdesc.CullMode = D3D11_CULL_FRONT;
 	wfdesc.FillMode = D3D11_FILL_SOLID;
 	ParentRenderer.Device->CreateRasterizerState(&wfdesc, &NoCullState);
 
@@ -46,6 +46,13 @@ D3D11SkyBoxShaderSet::D3D11SkyBoxShaderSet(wstring fileName) : ps(L"SkyBoxPS.cso
 	bufferDesc.CPUAccessFlags = NULL;
 	bufferDesc.MiscFlags = NULL;
 	ParentRenderer.Device->CreateBuffer(&bufferDesc, NULL, &PerObjectBuffer);
+
+	D3D11_DEPTH_STENCIL_DESC dsdesc;
+	ZeroMemory(&dsdesc, sizeof(D3D11_DEPTH_STENCIL_DESC));
+	dsdesc.DepthEnable = true;
+	dsdesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	dsdesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+	ParentRenderer.Device->CreateDepthStencilState(&dsdesc, &DSLessEqualState);
 }
 
 
@@ -64,7 +71,13 @@ void D3D11SkyBoxShaderSet::Set(D3D11ModelRenderer& renderer)
 	Handle<EngineSystem> sysHandle = D3D11RenderSystem::GetHandle();
 	D3D11Renderer& ParentRenderer = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle])->Renderer;
 	
+	ParentRenderer.DeviceContext->OMGetDepthStencilState(&DsSPrevState,0);
+	ParentRenderer.DeviceContext->RSGetState(&RSPrevState);
+
+	ParentRenderer.DeviceContext->OMSetDepthStencilState(DSLessEqualState, 0);
 	ParentRenderer.DeviceContext->RSSetState(NoCullState);
+
+
 	vs.Set();
 	ps.Set();
 	ParentRenderer.DeviceContext->VSSetConstantBuffers(START_SLOT, NUM_BUFFERS, &PerObjectBuffer);
@@ -89,4 +102,14 @@ void D3D11SkyBoxShaderSet::Update(D3D11ModelRenderer& renderer)
 
 	ConstantBufferStructure->WVP = XMMatrixTranspose(WVP);
 	ParentRenderer.DeviceContext->UpdateSubresource(PerObjectBuffer, 0, NULL, &*ConstantBufferStructure, 0, 0);
+}
+
+void D3D11SkyBoxShaderSet::RevertState(D3D11ModelRenderer& renderer)
+{
+	Handle<EngineSystem> sysHandle = D3D11RenderSystem::GetHandle();
+	D3D11Renderer& ParentRenderer = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle])->Renderer;
+	ParentRenderer.DeviceContext->OMSetDepthStencilState(DsSPrevState, 0);
+	ParentRenderer.DeviceContext->RSSetState(RSPrevState);
+	DsSPrevState = nullptr;
+	RSPrevState = nullptr;
 }

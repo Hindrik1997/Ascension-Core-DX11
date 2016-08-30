@@ -21,7 +21,7 @@ void DirectionalLight::SetIntensity(float intensity)
 	Intensity = intensity;
 }
 
-void DirectionalLight::SetColor(signed char r, signed char g, signed char b)
+void DirectionalLight::SetColor(float r, float g, float b)
 {
 	Color.x = r;
 	Color.y = g;

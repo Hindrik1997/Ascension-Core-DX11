@@ -27,7 +27,7 @@ public:
 
 	void Set(D3D11ModelRenderer& renderer);
 	void Update(D3D11ModelRenderer& renderer);
-
+	void RevertState(D3D11ModelRenderer& renderer);
 private:
 	D3D11PixelShaderBase ps;
 	D3D11VertexShaderBase vs;
@@ -36,4 +36,6 @@ private:
 	ID3D11SamplerState* TextureSampler = nullptr;
 	ID3D11Buffer* PerObjectBuffer = nullptr;
 	PerObjectBufferStructTD* ConstantBufferStructure = nullptr;
+
+	ID3D11RasterizerState* RSPrevState = nullptr;
 };

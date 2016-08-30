@@ -125,6 +125,12 @@
     <ClCompile Include="LightManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="ProceduralMeshGeneration.cpp">
+      <Filter>Utilities\Procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11GUITextureRenderer.cpp">
+      <Filter>GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector2f.h">
@@ -266,6 +272,12 @@
     <ClInclude Include="LightStructs.h">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common</Filter>
     </ClInclude>
+    <ClInclude Include="ProceduralMeshGeneration.h">
+      <Filter>Utilities\Procedural</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11GUITextureRenderer.h">
+      <Filter>GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -343,6 +355,9 @@
     <Filter Include="Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common">
       <UniqueIdentifier>{a893372d-1bff-4736-9c2b-0bfe8e5d34bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities\Procedural">
+      <UniqueIdentifier>{50d04a37-4390-4433-bca8-1f509073698e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SkyBoxPS.hlsl">
@@ -391,13 +406,12 @@
     <None Include="LightStructs.hlslh">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
+    <None Include="CommonFunc.hlslh">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Skybox2.dds">
-      <Filter>Textures</Filter>
-    </Image>
-    <Image Include="box_texture.jpg">
       <Filter>Textures</Filter>
     </Image>
     <Image Include="Skybox.dds">

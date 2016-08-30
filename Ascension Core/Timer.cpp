@@ -58,5 +58,5 @@ double Timer::GetFrameTime()
 	if (tickCount < 0.0f)
 		tickCount = 0;
 
-	return float(tickCount) / CountsPerSecond;
+	return double(tickCount) / CountsPerSecond;
 }

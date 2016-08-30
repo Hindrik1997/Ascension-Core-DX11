@@ -95,6 +95,7 @@ public:
 	{
 		switch (msg)
 		{
+			/*
 		case WM_INPUT:
 		case WM_MOUSEMOVE:
 		case WM_LBUTTONDOWN:
@@ -109,7 +110,7 @@ public:
 		case WM_MOUSEHOVER:
 			Mouse::ProcessMessage(msg, wParam, lParam);
 			return 0;
-
+*/
 		case WM_KEYDOWN:
 		{
 			if (wParam == VK_ESCAPE)

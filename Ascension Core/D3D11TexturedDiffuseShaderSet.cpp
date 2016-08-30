@@ -62,7 +62,8 @@ void D3D11TexturedDiffuseShaderSet::Set(D3D11ModelRenderer& renderer)
 {
 	Handle<EngineSystem> sysHandle = D3D11RenderSystem::GetHandle();
 	D3D11Renderer& ParentRenderer = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle])->Renderer;
-
+	
+	ParentRenderer.DeviceContext->RSGetState(&RSPrevState);
 	ParentRenderer.DeviceContext->RSSetState(NULL);
 
 	vs.Set();
@@ -84,4 +85,12 @@ void D3D11TexturedDiffuseShaderSet::Update(D3D11ModelRenderer& renderer)
 
 	ConstantBufferStructure->WVP = XMMatrixTranspose(WVP);
 	ParentRenderer.DeviceContext->UpdateSubresource(PerObjectBuffer, 0, NULL, &*ConstantBufferStructure, 0, 0);
+}
+
+void D3D11TexturedDiffuseShaderSet::RevertState(D3D11ModelRenderer& renderer)
+{
+	Handle<EngineSystem> sysHandle = D3D11RenderSystem::GetHandle();
+	D3D11Renderer& ParentRenderer = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle])->Renderer;
+	ParentRenderer.DeviceContext->RSSetState(RSPrevState);
+	RSPrevState = nullptr;
 }

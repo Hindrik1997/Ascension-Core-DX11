@@ -12,6 +12,8 @@ public:
 	
 	~Mesh();
 
+	void ReverseWindingOrder();
+	void GenerateNormals();
 
 	inline int VerticeCount();
 	inline int IndiceCount();

@@ -14,12 +14,15 @@
 #include <dxgi.h>
 #include <d3dcompiler.h>
 
+
 using std::vector;
 
+class Mesh;
 
 class D3D11Mesh
 {
 public:
+	D3D11Mesh(Mesh& m);
 	D3D11Mesh(vector<DWORD> indices, vector<D3D11Vertex> vertices);
 	~D3D11Mesh();
 

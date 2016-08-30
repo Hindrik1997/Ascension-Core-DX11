@@ -20,6 +20,7 @@ public:
 public:
 	void Set(D3D11ModelRenderer& modelRenderer);
 	void Update(D3D11ModelRenderer& modelRenderer);
+	void RevertState(D3D11ModelRenderer& modelRenderer);
 };
 
 #endif

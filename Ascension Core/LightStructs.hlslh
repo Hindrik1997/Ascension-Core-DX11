@@ -1,9 +1,9 @@
-#define LIGHT_COUNT_PS 8
-#define LIGHT_COUNT_VS 24
-#define LIGHT_COUNT_DIRECTIONAL_PS 4
+#define DIR_LIGHT_LIMIT 8
+#define PNT_LIGHT_LIMIT 24
 
 struct DirectionalLight
 {
+	float padding;
 	float3 Direction;
 	float4 Color;
 };

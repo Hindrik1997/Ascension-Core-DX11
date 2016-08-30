@@ -1,9 +1,9 @@
 struct VS_OUTPUT
 {
     float4 Position : SV_POSITION;
+	float3 TextureCoordinate : TEXCOORD0;
 	float4 ViewSpacePosition : TEXCOORD1;
-    float3 TextureCoordinate : TEXCOORD0;
-	float3 ViewSpaceTangent : TANGENT;
-	float3 ViewSpaceBiNormal : BINORMAL;
-	float3 ViewSpaceNormal : NORMAL;	
+	float3 ViewSpaceViewDirection : TEXCOORD2;
+	float3 ViewSpaceNormal : NORMAL;
+	float3 ReflectionVector : TEXCOORD3;
 };

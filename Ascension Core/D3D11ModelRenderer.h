@@ -26,8 +26,6 @@ public:
 
 	template<typename... ResetArgs>
 	static void RemoveComponent(ComponentHandle cHandle, ResetArgs... arguments);
-
-	inline void Reset(Handle<GameObject> parentObject);
 private:
 	friend class D3D11RenderSystem;
 	static Handle<EngineSystem> sysHandle;
@@ -39,9 +37,4 @@ public:
 	XMMATRIX GetWorldViewMatrix();
 	XMMATRIX GetWorldMatrix();
 };
-
-inline void D3D11ModelRenderer::Reset(Handle<GameObject> parentObject)
-{
-	ParentObject = parentObject;
-}
 #endif

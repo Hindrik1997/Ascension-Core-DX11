@@ -89,7 +89,7 @@ void D3D11Renderer::Initialize()
 	depthStencilDesc.SampleDesc.Count = 1;
 	depthStencilDesc.SampleDesc.Quality = 0;
 	depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
-	depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL; 
 	depthStencilDesc.CPUAccessFlags = 0;
 	depthStencilDesc.MiscFlags = 0;
 
@@ -98,10 +98,11 @@ void D3D11Renderer::Initialize()
 	hr = Device->CreateDepthStencilView(DepthStencilBuffer, NULL, &DepthStencilView);
 	CheckFail(hr, L"Creating the depth stencil view failed.");
 	DeviceContext->OMSetRenderTargets(NUM_VIEWPORTS, &RenderTargetView, DepthStencilView);
-
 	D3D11_VIEWPORT viewport;
 	ZeroMemory(&viewport, sizeof(viewport));
 
+	viewport.MaxDepth = 1.0f;
+	viewport.MinDepth = 0.0f;
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
 	viewport.Width = static_cast<float>(CurrentWindow.Width);

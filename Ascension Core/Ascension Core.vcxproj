@@ -69,20 +69,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)Libs\TinyOBJLoader\;$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libs\DirectXTK\Lib\x86\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libs\DirectXMesh\Inc;$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libs\DirectXTK\Lib\x86\Debug;$(SolutionDir)Libs\DirectXMesh\Lib\x86\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)Libs\TinyOBJLoader\;$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libs\DirectXTK\Lib\x86\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libs\DirectXMesh\Inc;$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libs\DirectXTK\Lib\x86\Release;$(SolutionDir)Libs\DirectXMesh\Lib\x86\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Libs\TinyOBJLoader\;$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libs\DirectXTK\Lib\x64\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libs\DirectXMesh\Inc;$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libs\DirectXTK\Lib\x64\Debug;$(SolutionDir)Libs\DirectXMesh\Lib\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)Libs\TinyOBJLoader\;$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libs\DirectXTK\Lib\x64\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libs\DirectXMesh\Inc;$(SolutionDir)Libs\DirectXTK\Inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libs\DirectXTK\Lib\x64\Release;$(SolutionDir)Libs\DirectXMesh\Lib\x64\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -102,7 +102,8 @@
     <PostBuildEvent>
       <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"
 xcopy /y /d "$(ProjectDir)Skybox2.dds" "$(OutDir)"
-xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
+xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)Obsidian.jpg" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -147,7 +148,8 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <PostBuildEvent>
       <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"
 xcopy /y /d "$(ProjectDir)Skybox2.dds" "$(OutDir)"
-xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
+xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)Obsidian.jpg" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -179,6 +181,7 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentHandle.cpp" />
     <ClCompile Include="CoreSystem.cpp" />
+    <ClCompile Include="D3D11GUITextureRenderer.cpp" />
     <ClCompile Include="D3D11Mesh.cpp" />
     <ClCompile Include="D3D11Model.cpp" />
     <ClCompile Include="D3D11ModelRenderer.cpp" />
@@ -203,6 +206,7 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PixelShaderBase.cpp" />
     <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="ProceduralMeshGeneration.cpp" />
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="ReleaseCOM.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
@@ -222,6 +226,7 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentHandle.h" />
+    <ClInclude Include="D3D11GUITextureRenderer.h" />
     <ClInclude Include="D3D11ModelRendererShaderSet.h" />
     <ClInclude Include="D3D11SkyBoxShaderSet.h" />
     <ClInclude Include="D3D11StandardShaderSet.h" />
@@ -251,6 +256,7 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Pool.h" />
     <ClInclude Include="PoolItem.h" />
+    <ClInclude Include="ProceduralMeshGeneration.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="ReleaseCOM.h" />
     <ClInclude Include="RenderSystem.h" />
@@ -315,7 +321,7 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <Text Include="InputStructures.hlslh" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <None Include="CommonFunc.hlslh" />
     <None Include="LightStructs.hlslh" />
     <None Include="SkyBoxVSOUTPUT.hlslh" />
     <FxCompile Include="TexturedDiffusePS.hlsl">
@@ -329,7 +335,6 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <None Include="TexturedDiffuseVSOUTPUT.hlslh" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="box_texture.jpg" />
     <Image Include="Skybox.dds" />
     <Image Include="Skybox2.dds" />
   </ItemGroup>

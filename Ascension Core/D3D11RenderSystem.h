@@ -10,6 +10,7 @@
 #include "Win32Window.h"
 #include "D3D11Renderer.h"
 #include "D3D11ModelRenderer.h"
+#include "D3D11GUITextureRenderer.h"
 #include "GameObjectFactory.h"
 
 using namespace DirectX;
@@ -46,6 +47,13 @@ public:
 	template<typename... Args>
 	inline void RemoveD3D11ModelRenderer(ComponentHandle cHandle, Args... args);
 
+	template<typename ...Args>
+	inline Handle<Component> GetD3D11GUITextureRenderer(Handle<GameObject> parentObject, Args... args);
+
+	template<typename... Args>
+	inline void RemoveD3D11GUITextureRenderer(ComponentHandle cHandle, Args... args);
+
+
 	static Handle<EngineSystem> GetHandle();
 
 	//Models, textures, meshes and shaders
@@ -62,6 +70,8 @@ public:
 	unique_ptr<Win32Window<D3D11Renderer>> MainWindow;
 	unique_ptr<D3D11Renderer> Renderer;
 
+	static bool UseEnvironmentMapping;
+
 #ifdef _DEBUG
 	ID3D11Debug* debug = nullptr;
 #endif
@@ -71,7 +81,9 @@ private:
 	XMFLOAT4X4 ViewMatrix;
 
 	mutex MRPMutex;
+	mutex GTRMutex;
 	Pool<D3D11ModelRenderer, DEFAULT_SIZE> ModelRendererPool;
+	Pool<D3D11GUITextureRenderer, DEFAULT_SIZE> GUITextureRendererPool;
 
 private:
 	RenderFunction renderFunction = nullptr;
@@ -89,6 +101,9 @@ private:
 
 inline bool D3D11RenderSystem::ProcessAPI()
 {
+	
+
+
 	return MainWindow->ProcessMessages();
 };
 
@@ -118,6 +133,20 @@ inline void D3D11RenderSystem::RemoveD3D11ModelRenderer(ComponentHandle cHandle,
 {
 	std::lock_guard<std::mutex> guard(MRPMutex);
 	ModelRendererPool.RemoveItem(Handle<D3D11ModelRenderer>(cHandle.GetCompHandle().GetIndex()), args...);
+}
+
+template<typename ...Args>
+inline Handle<Component> D3D11RenderSystem::GetD3D11GUITextureRenderer(Handle<GameObject> parentObject, Args ...args)
+{
+	std::lock_guard<std::mutex> guard(GTRMutex);
+	return Handle<Component>(GUITextureRendererPool.GetNewItem(parentObject, args...).GetIndex());
+}
+
+template<typename ...Args>
+inline void D3D11RenderSystem::RemoveD3D11GUITextureRenderer(ComponentHandle cHandle, Args ...args)
+{
+	std::lock_guard<std::mutex> guard(GTRMutex);
+	GUITextureRendererPool.RemoveItem(Handle<D3D11GUITextureRenderer>(cHandle.GetCompHandle().GetIndex()), args...);
 }
 
 #endif

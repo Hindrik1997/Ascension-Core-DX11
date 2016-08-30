@@ -2,9 +2,12 @@
 #include "Engine.h"
 #include "CoreSystem.h"
 #include <iostream>
+#include "DirectionalLight.h"
 
-unique_ptr<Mouse> mouse = std::make_unique<Mouse>();
-unique_ptr<Keyboard> keyboard = std::make_unique<Keyboard>();
+//unique_ptr<Mouse> mouse = std::make_unique<Mouse>();
+//unique_ptr<Keyboard> keyboard = std::make_unique<Keyboard>();
+
+bool D3D11RenderSystem::UseEnvironmentMapping = false;
 
 D3D11RenderSystem::D3D11RenderSystem(int width, int height) : MainWindow(new Win32Window<D3D11Renderer>(width, height)), Renderer(new D3D11Renderer(*MainWindow))
 {
@@ -33,7 +36,7 @@ XMMATRIX D3D11RenderSystem::RecalculateProjectionMatrix()
 {
 	if (MainWindow == nullptr)
 		throw "No window attached??!!???";
-	XMMATRIX t = XMMatrixPerspectiveFovLH(0.4f * 3.14f, static_cast<float>(MainWindow->Width) / static_cast<float>(MainWindow->Height), 1.0f, 1000.0f);
+	XMMATRIX t = XMMatrixPerspectiveFovLH(0.4f * 3.14f, static_cast<float>(MainWindow->Width) / static_cast<float>(MainWindow->Height), 0.1f, 1000.0f);
 
 	XMStoreFloat4x4(&ProjectionMatrix, t);
 	return t;
@@ -93,13 +96,13 @@ XMMATRIX D3D11RenderSystem::RecalculateViewMatrix()
 
 void D3D11RenderSystem::Update(float deltaTime)
 {
-	//Nothing to happen here yet...
-
+	float MoveSpeed = 5.0f;
+	float RotateSpeed = 1.8f;
 	for (size_t i = 0; i < ModelRendererPool.size(); ++i)
 	{
 		if (ModelRendererPool.GetStorageRef()[i].IsUsed && i == 0)
 		{
-			//Engine::MainInstance().ObjectsFactory[ModelRendererPool[i].ParentObject].ObjectTransform.Rotation.y += 0.05f;
+			//Engine::MainInstance().ObjectsFactory[ModelRendererPool[i].ParentObject].ObjectTransform.RotateToWorldAxisY(430 * deltaTime);
 		}
 	}
 
@@ -108,8 +111,7 @@ void D3D11RenderSystem::Update(float deltaTime)
 
 	XMMATRIX WorldMatrix = D3D11RenderSystem::GetWorldMatrix(CParent);
 
-	float MoveSpeed = 5.0f;
-	float RotateSpeed = 1.8f;
+
 
 	Transform& ct = CParent.ObjectTransform;
 	Transform LocalTransformChanges;
@@ -147,6 +149,56 @@ void D3D11RenderSystem::Update(float deltaTime)
 		ct.RotateToWorldAxisY(RotateSpeed * deltaTime);
 	}
 
+	CoreSystem& cSystem = Engine::MainInstance().SystemsManager.GetCoreSystem();
+
+	DirectionalLight& dLight = const_cast<Pool<DirectionalLight, 8>&>(cSystem.lightManager.GetDirectionalLightsList())[0];
+
+	float intensity = 0.0f;
+	Transform t;
+	Vector3f v = dLight.GetDirection();;
+	t.Rotation = Quaternion(v.x, v.y, v.z, 0.0f);
+	
+	if (MainWindow->Input.IsKeyDown(0x31)) // x-left
+	{
+		t.RotateToWorldAxisX(RotateSpeed * deltaTime);
+	}
+	if (MainWindow->Input.IsKeyDown(0x32)) // x-right
+	{
+		t.RotateToWorldAxisX(-1.0f * RotateSpeed * deltaTime);
+	}
+
+	if (MainWindow->Input.IsKeyDown(0x33)) // y-left
+	{
+		t.RotateToWorldAxisY(RotateSpeed * deltaTime);
+	}
+	if (MainWindow->Input.IsKeyDown(0x34)) // y-right
+	{
+		t.RotateToWorldAxisY(-1.0f * RotateSpeed * deltaTime);
+	}
+
+	if (MainWindow->Input.IsKeyDown(0x35)) // z-left
+	{
+		t.RotateToWorldAxisZ(RotateSpeed * deltaTime);
+	}
+	if (MainWindow->Input.IsKeyDown(0x36)) // z-right
+	{
+		t.RotateToWorldAxisZ(-1.0f * RotateSpeed * deltaTime);
+	}
+
+	if (MainWindow->Input.IsKeyDown(0x37))
+	{
+		intensity += 5.0f * deltaTime;
+	}
+	if (MainWindow->Input.IsKeyDown(0x38))
+	{
+		intensity += -5.0f * deltaTime;
+	}
+
+	dLight.SetIntensity(dLight.GetIntensity() + intensity);
+	dLight.SetDirection(Vector3f(t.Rotation.x, t.Rotation.y, t.Rotation.z));
+
+
+	/*
 	auto mstate = mouse->GetState();
 
 	if (mstate.positionMode == Mouse::MODE_RELATIVE)
@@ -170,7 +222,7 @@ void D3D11RenderSystem::Update(float deltaTime)
 		}
 
 	}
-
+	*/
 	if (MainWindow->Input.IsKeyDown(VK_SHIFT))
 	{
 		ct.MoveToLocalAxisY(MoveSpeed * deltaTime * -1.0f);
@@ -196,8 +248,15 @@ void D3D11RenderSystem::Update(float deltaTime)
 		ct.MoveToLocalAxisZ(MoveSpeed * deltaTime * -1.0f);
 	}
 
-	mouse->SetWindow(MainWindow->hWnd);
-	mouse->SetMode(mstate.leftButton ? Mouse::MODE_RELATIVE : Mouse::MODE_ABSOLUTE);
+	if (MainWindow->Input.IsKeyDown(0x5A))
+	{
+		D3D11RenderSystem::UseEnvironmentMapping = true;
+	}
+	else
+		D3D11RenderSystem::UseEnvironmentMapping = false;
+
+	//mouse->SetWindow(MainWindow->hWnd);
+	//mouse->SetMode(mstate.leftButton ? Mouse::MODE_RELATIVE : Mouse::MODE_ABSOLUTE);
 }
 
 XMMATRIX D3D11RenderSystem::GetWorldViewProjectionMatrix(GameObject& gameObject)
@@ -271,6 +330,7 @@ void D3D11RenderSystem::UnLoadMesh(wstring name)
 void D3D11RenderSystem::RenderForward()
 {
 	ClearScreenAndBackBuffers();
+	int DrawCallCount = 0;
 
 	for (size_t i = 0; i < ModelRendererPool.size(); ++i)
 	{
@@ -278,8 +338,24 @@ void D3D11RenderSystem::RenderForward()
 		{
 			ModelRendererPool[i].Render();
 			Renderer->DeviceContext->DrawIndexed(static_cast<int>(ModelRendererPool[i].Model->Mesh.Indices.size()), 0, 0);
+			ModelRendererPool[i].Model->RevertState(ModelRendererPool[i]);
+			DrawCallCount++;
 		}
 	}
+
+	for (size_t i = 0; i < GUITextureRendererPool.size(); ++i)
+	{
+		if (GUITextureRendererPool.GetStorageRef()[i].IsUsed)
+		{
+			GUITextureRendererPool[i].Set();
+			GUITextureRendererPool[i].Update();
+			//Renderer->DeviceContext->DrawIndexed();
+			GUITextureRendererPool[i].RevertState();
+
+			DrawCallCount++;
+		}
+	}
+	
 	Renderer->SwapChain->Present(0, 0);
 }
 

@@ -9,18 +9,23 @@ cbuffer cbPerObject : register(b0)
 	float4x4 WorldViewProjectionMatrix;
 };
 
-
+cbuffer cbPerFrame : register(b1)
+{
+	float3 CameraWorldPosition;
+	float3 LightDirection;
+	float2 padding;
+};
 
 VS_OUTPUT main(VS_INPUT IN)
 {
 	VS_OUTPUT output;
-	output.TextureCoordinate = IN.TextureCoordinate;
-	output.Position = mul(IN.Position, WorldViewProjectionMatrix);
-	output.ViewSpacePosition = mul(IN.Position, WorldViewMatrix);
 
-	output.ViewSpaceNormal = mul((float3x3)WorldViewMatrix, IN.Normal);
-	output.ViewSpaceBiNormal = mul((float3x3)WorldViewMatrix, IN.BiNormal);
-	output.ViewSpaceTangent = mul((float3x3)WorldViewMatrix, IN.Tangent);
+	float3 worldPosition = mul(IN.Position, WorldMatrix).xyz;
+
+	output.Position = mul(IN.Position, WorldViewProjectionMatrix);
+	output.TextureCoordinate = IN.TextureCoordinate;
+	output.ViewSpaceNormal = normalize(mul((float3x3)WorldViewMatrix, IN.Normal));
+	output.ViewSpaceViewDirection = normalize(mul((float3x3)WorldViewMatrix,normalize(CameraWorldPosition - worldPosition)));
 
 	return output;
 }
