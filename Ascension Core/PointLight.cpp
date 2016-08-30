@@ -37,3 +37,13 @@ Vector3f PointLight::GetColor()
 {
 	return Vector3f();
 }
+
+void PointLight::SetPosition(Vector3f v)
+{
+	Position = v;
+}
+
+Vector3f PointLight::GetPosition()
+{
+	return Position;
+}

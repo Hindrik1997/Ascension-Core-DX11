@@ -16,7 +16,7 @@ public:
 	//Direction vector
 	void SetDirection(Vector3f dir);
 
-	//As float value from 0 to 1 (Higher is possible!)
+	//As float value from 0 to 1 (Higher is possible, but not recommended, unless you implement HDR :D)
 	void SetIntensity(float intensity);
 
 	//As rgb value from 0 to 255
@@ -26,6 +26,7 @@ public:
 	float GetIntensity();
 	Vector3f GetColor();
 
+	void SetPosition(Vector3f v);
 	Vector3f GetPosition();
 
 };

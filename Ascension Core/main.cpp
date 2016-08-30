@@ -148,7 +148,7 @@ int main()
 	Handle<GameObject> gHandle2 = e->ObjectsFactory.CreateGameObject();
 	
 
-	Handle<DirectionalLight> Dl = cSystem.lightManager.AddDirectionalLight();// cSystem.lightManager.AddDirectionalLight();
+	Handle<DirectionalLight> Dl = cSystem.lightManager.AddDirectionalLight(); cSystem.lightManager.AddDirectionalLight();
 	DirectionalLight& dLight = const_cast< Pool<DirectionalLight, 8>& >(cSystem.lightManager.GetDirectionalLightsList())[Dl.GetIndex()];
 	dLight.SetColor(255, 255, 255);
 	dLight.SetDirection(Vector3f(1.0f, 1.0f, 1.0f));

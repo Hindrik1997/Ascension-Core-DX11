@@ -59,6 +59,8 @@ __declspec(align(16)) struct PSPerFrameBufferStructSTD
 	XMFLOAT4 AmbientColor;
 	int DirectionalLightCount;
 	DirectionalLightShaderStruct DirectionalLights[LIGHT_COUNT_PS];
+	int PointLightCount;
+	PointLightShaderStruct PointLights[LIGHT_COUNT_PS];
 
 	void* operator new(size_t i)
 	{

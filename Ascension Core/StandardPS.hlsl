@@ -7,6 +7,8 @@ cbuffer cbPerFrame : register(b0)
 	float4 GlobalAmbientLight;
 	int DirLightCount;
 	DirectionalLight DirectionalLights[DIR_LIGHT_LIMIT];
+	int PntLightCount;
+	PointLight PointLights[PNT_LIGHT_LIMIT];
 };
 
 cbuffer cbPerMaterial : register(b1)
@@ -25,26 +27,34 @@ float4 main(VS_OUTPUT IN) : SV_TARGET
 {
 	
 	float LightIntensity = 1.0f;
-	float3 L = normalize( - DirectionalLights[0].Direction);
 	float3 N = normalize(IN.ViewSpaceNormal);
-	float4 Light = DirectionalLights[0].Color;
 	float3 ViewDirection = normalize( - IN.ViewSpaceViewDirection);
-	LightIntensity += Light.w;
 
 	float4 emissive = Material.Emissive;
 	float4 ambient = Material.Ambient * GlobalAmbientLight;
-	float4 diffuse = Material.Diffuse * DoDiffuse(Light, L, N);
-	float4 specular = Material.Specular * DoSpecularBlinnPhong(Light, ViewDirection, L, N, Material.SpecularPower);
+	float4 diffuse = 0.0f;
+	float4 specular = 0.0f;
 
+	for (int i = 0; i < DirLightCount; ++i)
+	{
+		float4 Light = DirectionalLights[0].Color;
+		float3 L = normalize(-DirectionalLights[i].Direction);
+		if (Light.w > 0)
+		LightIntensity += Light.w;
+		diffuse += Material.Diffuse * DoDiffuse(Light, L, N);
+		specular += Material.Specular * DoSpecularBlinnPhong(Light, ViewDirection, L, N, Material.SpecularPower);
+	}
 	float4 Environment = CubeMap.Sample(TrilinearSampler, IN.ReflectionVector);
 
 	float4 color = {1,1,1,1};
 
 	if (Material.UseTexture)
 	{
-		color = ColorMap.Sample(TrilinearSampler, IN.TextureCoordinate);
+		color = ColorMap.Sample(TrilinearSampler, (float2)IN.TextureCoordinate);
 	}
+	
+	
 
-	float4 fragmentColor = (emissive + ambient + diffuse + specular) * color;
+	float4 fragmentColor = (emissive + ambient + (diffuse + specular * LightIntensity)) * color;
 	return fragmentColor;
 }

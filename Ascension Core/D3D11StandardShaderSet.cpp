@@ -132,6 +132,8 @@ void D3D11StandardShaderSet::Set(D3D11ModelRenderer& renderer)
 	D3D11Renderer& ParentRenderer = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle])->Renderer;
 	D3D11RenderSystem& RSystem = *static_cast<D3D11RenderSystem*>(&Engine::MainInstance().SystemsManager[sysHandle]);
 	Vector3f CPosition = RSystem.GetCamera().GetCamPosition();
+	CoreSystem& Cs = Engine::MainInstance().SystemsManager.GetCoreSystem();
+
 
 	ParentRenderer.DeviceContext->RSGetState(&RSPrevState);
 	ParentRenderer.DeviceContext->RSSetState(NULL);
@@ -139,6 +141,7 @@ void D3D11StandardShaderSet::Set(D3D11ModelRenderer& renderer)
 	vs.Set();
 	ps.Set();
 
+	//SETBUFFERS
 	ParentRenderer.DeviceContext->VSSetConstantBuffers(START_SLOT, NUM_BUFFERS, &VSPerObjectBuffer);
 	ParentRenderer.DeviceContext->VSSetConstantBuffers(START_SLOT + 1, NUM_BUFFERS, &VSPerFrameBuffer);
 	ParentRenderer.DeviceContext->PSSetConstantBuffers(START_SLOT, NUM_BUFFERS, &PSPerFrameBuffer);
@@ -146,6 +149,9 @@ void D3D11StandardShaderSet::Set(D3D11ModelRenderer& renderer)
 	ParentRenderer.DeviceContext->PSSetShaderResources(0, 1, &DiffuseMap);
 	ParentRenderer.DeviceContext->PSSetShaderResources(1, 1, &EnvironmentMap);
 	ParentRenderer.DeviceContext->PSSetSamplers(0, 1, &TextureSampler);
+
+	//CAMERA POSITION
+	VSConstantBufferStructurePerFrame->CameraWorldPosition = { CPosition.x, CPosition.y, CPosition.z };
 
 	//AMBIENT LIGHT
 
@@ -164,27 +170,36 @@ void D3D11StandardShaderSet::Set(D3D11ModelRenderer& renderer)
 	XMMATRIX Camera = RSystem.GetWorldMatrix(Parent);
 	XMMATRIX View = XMMatrixInverse(&XMMatrixDeterminant(Camera), Camera);
 	PSConstantBufferStructurePerFrame->AmbientColor = Ambient;
+	
+	//DIRECTIONAL LIGHT
+	DLPool& DirlightList = const_cast<DLPool&>(Cs.lightManager.GetDirectionalLightsList());
+	int DirlightCount = DirlightList.GetItemInUseCount();
 
-	CoreSystem& Cs = Engine::MainInstance().SystemsManager.GetCoreSystem();
-	DLPool& lightList = const_cast<DLPool&>(Cs.lightManager.GetDirectionalLightsList());
-
-	int lightCount = lightList.GetItemInUseCount();
-
-	for (int i = 0; i < 1; ++i)
+	for (int i = 0; i < DirlightCount; ++i)
 	{
 		DirectionalLightShaderStruct temp;
 
-		temp.Direction = XMFLOAT3(lightList[i].GetDirection().x, lightList[i].GetDirection().y, lightList[i].GetDirection().z);
+		temp.Direction = XMFLOAT3(DirlightList[i].GetDirection().x, DirlightList[i].GetDirection().y, DirlightList[i].GetDirection().z);
 		XMVECTOR resultDir = XMVector3Transform(XMLoadFloat3(&temp.Direction), XMMatrixTranspose(View));
 		XMStoreFloat3(&temp.Direction, resultDir);
-		temp.Color = XMFLOAT4(lightList[i].GetColor().x / 255, lightList[i].GetColor().y / 255, lightList[i].GetColor().z / 255, lightList[i].GetIntensity());
+		temp.Color = XMFLOAT4(DirlightList[i].GetColor().x / 255, DirlightList[i].GetColor().y / 255, DirlightList[i].GetColor().z / 255, DirlightList[i].GetIntensity());
 
 		PSConstantBufferStructurePerFrame->DirectionalLights[i].Color = temp.Color;
 		PSConstantBufferStructurePerFrame->DirectionalLights[i].Direction = temp.Direction;
 	}
-	PSConstantBufferStructurePerFrame->DirectionalLightCount = lightCount;
+	PSConstantBufferStructurePerFrame->DirectionalLightCount = DirlightCount;
 	
-	VSConstantBufferStructurePerFrame->CameraWorldPosition = { CPosition.x, CPosition.y, CPosition.z };
+	//POINT LIGHT
+	PLPool& PntlightList = const_cast<PLPool&>(Cs.lightManager.GetPointLightList());
+	int PntlightCount = PntlightList.GetItemInUseCount();
+
+	for () 
+	{
+	
+	}
+	PSConstantBufferStructurePerFrame->PointLightCount = PntlightCount;
+
+	//UPDATE RESOURCES
 	ParentRenderer.DeviceContext->UpdateSubresource(PSPerFrameBuffer, 0, NULL, &*PSConstantBufferStructurePerFrame, 0, 0);
 	ParentRenderer.DeviceContext->UpdateSubresource(VSPerFrameBuffer, 0, NULL, &*VSConstantBufferStructurePerFrame, 0, 0);
 	ParentRenderer.DeviceContext->UpdateSubresource(PSPerMaterialBuffer, 0, NULL, &*PSConstantBufferStructurePerMaterial, 0, 0);
