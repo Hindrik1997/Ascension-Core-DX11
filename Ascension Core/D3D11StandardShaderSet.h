@@ -2,7 +2,28 @@
 #include "D3D11ModelRendererShaderSet.h"
 #include "D3D11PSBase.h"
 #include "D3D11VSBase.h"
-#include "LightStructs.h"
+#include "D3D11LightStructs.h"
+
+__declspec(align(16)) struct _Material
+{
+	XMFLOAT4 Emmisive;
+	XMFLOAT4 Ambient;
+	XMFLOAT4 Diffuse;
+	XMFLOAT4 Specular;
+	float SpecularPower;
+	int UseTexture;
+	XMFLOAT2 _PADDING_;
+
+	void* operator new(size_t i)
+	{
+		return _mm_malloc(i, 16);
+	}
+
+	void operator delete(void* p)
+	{
+		_mm_free(p);
+	}
+};
 
 __declspec(align(16)) struct VSPerObjectBufferStructSTD
 {
@@ -58,9 +79,9 @@ __declspec(align(16)) struct PSPerFrameBufferStructSTD
 	//Intensity stored in 4th element of this float
 	XMFLOAT4 AmbientColor;
 	int DirectionalLightCount;
-	DirectionalLightShaderStruct DirectionalLights[LIGHT_COUNT_PS];
+	DirectionalLightShaderStruct DirectionalLights[DIR_LIGHT_SHADER_LIMIT];
 	int PointLightCount;
-	PointLightShaderStruct PointLights[LIGHT_COUNT_PS];
+	PointLightShaderStruct PointLights[POINT_LIGHT_SHADER_LIMIT];
 
 	void* operator new(size_t i)
 	{

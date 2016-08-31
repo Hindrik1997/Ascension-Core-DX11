@@ -35,16 +35,33 @@ float4 main(VS_OUTPUT IN) : SV_TARGET
 	float4 diffuse = 0.0f;
 	float4 specular = 0.0f;
 
+	
 	for (int i = 0; i < DirLightCount; ++i)
 	{
-		float4 Light = DirectionalLights[0].Color;
+		float4 Light = DirectionalLights[i].Color;
 		float3 L = normalize(-DirectionalLights[i].Direction);
 		if (Light.w > 0)
-		LightIntensity += Light.w;
-		diffuse += Material.Diffuse * DoDiffuse(Light, L, N);
-		specular += Material.Specular * DoSpecularBlinnPhong(Light, ViewDirection, L, N, Material.SpecularPower);
+		{
+			LightIntensity += Light.w;
+			diffuse += Material.Diffuse * DoDiffuse(Light, L, N);
+			specular += Material.Specular * DoSpecularBlinnPhong(Light, ViewDirection, L, N, Material.SpecularPower);
+		}
 	}
-	float4 Environment = CubeMap.Sample(TrilinearSampler, IN.ReflectionVector);
+	
+	for (int j = 0; j < PntLightCount; ++j)
+	{
+		float4 Light = PointLights[j].Color;
+		float3 L = normalize(PointLights[j].Position - IN.WorldPosition);
+		if (Light.w > 0)
+		{
+			LightIntensity += saturate(1.0f - (length(L) / PointLights[j].Radius));
+			diffuse += Material.Diffuse * DoDiffuse(Light, L, N);
+			//specular += Material.Specular * DoSpecularBlinnPhong(Light, ViewDirection, L, N, Material.SpecularPower);
+		}
+	}
+
+
+	//float4 Environment = CubeMap.Sample(TrilinearSampler, IN.ReflectionVector);
 
 	float4 color = {1,1,1,1};
 

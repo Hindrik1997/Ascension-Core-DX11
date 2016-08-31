@@ -31,11 +31,3 @@ float4 DoSpecularBlinnPhong( float4 light, float3 V, float3 L, float3 N, float S
     float NdotH = max( 0, dot( N, H ) );
     return light * pow( NdotH, SpecularPower);
 }
-
-float G_Smith(float Roughness, float NoV, float NoL)
-{
-	float R2 = Roughness * Roughness;
-	float G_V = NoV + sqrt((NoV - NoV * R2) * NoV + R2);
-	float G_L = NoL + sqrt((NoL - NoL * R2) * NoL + R2);
-	return rcp(G_V * G_L);
-}

@@ -148,11 +148,14 @@ int main()
 	Handle<GameObject> gHandle2 = e->ObjectsFactory.CreateGameObject();
 	
 
-	Handle<DirectionalLight> Dl = cSystem.lightManager.AddDirectionalLight(); cSystem.lightManager.AddDirectionalLight();
+	Handle<DirectionalLight> Dl = cSystem.lightManager.AddDirectionalLight(); 
+	
+	
+	cSystem.lightManager.AddPointLight();
 	DirectionalLight& dLight = const_cast< Pool<DirectionalLight, 8>& >(cSystem.lightManager.GetDirectionalLightsList())[Dl.GetIndex()];
 	dLight.SetColor(255, 255, 255);
 	dLight.SetDirection(Vector3f(1.0f, 1.0f, 1.0f));
-	dLight.SetIntensity(1.0f);
+	dLight.SetIntensity(0.0f);
 
 	ComponentHandle cHandle = e->ObjectsFactory[gHandle].AddComponent<D3D11ModelRenderer>(Model3);
 	e->ObjectsFactory[gHandle].AddComponent<D3D11GUITextureRenderer>(0.0f, 0.0f, 0.1f, 0.1f, wstring(L"box_texture.dds"));

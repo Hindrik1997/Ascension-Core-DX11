@@ -131,6 +131,9 @@
     <ClCompile Include="D3D11GUITextureRenderer.cpp">
       <Filter>GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
     </ClCompile>
+    <ClCompile Include="D3D11LightStructs.cpp">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector2f.h">
@@ -269,14 +272,14 @@
     <ClInclude Include="LightManager.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="LightStructs.h">
-      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common</Filter>
-    </ClInclude>
     <ClInclude Include="ProceduralMeshGeneration.h">
       <Filter>Utilities\Procedural</Filter>
     </ClInclude>
     <ClInclude Include="D3D11GUITextureRenderer.h">
       <Filter>GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11LightStructs.h">
+      <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

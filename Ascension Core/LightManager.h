@@ -5,12 +5,12 @@
 #include "DirectionalLight.h"
 #include "Pool.h"
 
-#define DIR_LIGHT_LIMIT 8
-#define POINT_LIGHT_LIMIT 32767
+#define DIR_LIGHT_WORLD_LIMIT 8
+#define POINT_LIGHT_WORLD_LIMIT 32767
 #define LIGHT_CULL_RANGE 100
 
-typedef Pool<DirectionalLight, DIR_LIGHT_LIMIT> DLPool;
-typedef Pool<PointLight, POINT_LIGHT_LIMIT> PLPool;
+typedef Pool<DirectionalLight, DIR_LIGHT_WORLD_LIMIT> DLPool;
+typedef Pool<PointLight, POINT_LIGHT_WORLD_LIMIT> PLPool;
 
 class LightManager
 {
@@ -33,8 +33,8 @@ public:
 	//Maximum of POINT_LIGHT_LIMIT lights can be put into the scene. If you exceed this limit, this function will throw an exception
 	Handle<PointLight> AddPointLight();
 
-	const Pool<DirectionalLight, DIR_LIGHT_LIMIT>& GetDirectionalLightsList();
-	const Pool<PointLight, POINT_LIGHT_LIMIT>& GetPointLightList();
+	const Pool<DirectionalLight, DIR_LIGHT_WORLD_LIMIT>& GetDirectionalLightsList();
+	const Pool<PointLight, POINT_LIGHT_WORLD_LIMIT>& GetPointLightsList();
 
 	//Removes point light, invalidates the handle.
 	void RemovePointLight(Handle<PointLight> light);

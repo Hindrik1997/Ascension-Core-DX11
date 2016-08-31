@@ -182,6 +182,7 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <ClCompile Include="ComponentHandle.cpp" />
     <ClCompile Include="CoreSystem.cpp" />
     <ClCompile Include="D3D11GUITextureRenderer.cpp" />
+    <ClCompile Include="D3D11LightStructs.cpp" />
     <ClCompile Include="D3D11Mesh.cpp" />
     <ClCompile Include="D3D11Model.cpp" />
     <ClCompile Include="D3D11ModelRenderer.cpp" />
@@ -249,7 +250,7 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <ClInclude Include="GameObjectFactory.h" />
     <ClInclude Include="Handle.h" />
     <ClInclude Include="LightManager.h" />
-    <ClInclude Include="LightStructs.h" />
+    <ClInclude Include="D3D11LightStructs.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PixelShaderBase.h" />

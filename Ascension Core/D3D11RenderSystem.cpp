@@ -4,11 +4,6 @@
 #include <iostream>
 #include "DirectionalLight.h"
 
-//unique_ptr<Mouse> mouse = std::make_unique<Mouse>();
-//unique_ptr<Keyboard> keyboard = std::make_unique<Keyboard>();
-
-bool D3D11RenderSystem::UseEnvironmentMapping = false;
-
 D3D11RenderSystem::D3D11RenderSystem(int width, int height) : MainWindow(new Win32Window<D3D11Renderer>(width, height)), Renderer(new D3D11Renderer(*MainWindow))
 {
 	renderFunction = &D3D11RenderSystem::RenderForward;
@@ -55,43 +50,6 @@ XMMATRIX D3D11RenderSystem::RecalculateViewMatrix()
 	XMMATRIX View = XMMatrixInverse(&XMMatrixDeterminant(World), World);
 	XMStoreFloat4x4(&ViewMatrix, View);
 	return View;
-
-	/*
-	Transform CT = Parent.ObjectTransform;
-	Transform LCT = CurrentCamera.ChangeSinceLastFrame;
-	
-	XMVECTOR DefaultForward = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
-	XMVECTOR DefaultRight = XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
-	XMVECTOR DefaultUp = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-
-	XMMATRIX camRotationMatrix = XMMatrixRotationRollPitchYaw(XMConvertToRadians(CT.Rotation.x), XMConvertToRadians(CT.Rotation.y), XMConvertToRadians(CT.Rotation.z));
-	XMVECTOR camTarget = XMVector3TransformCoord(DefaultForward, camRotationMatrix);
-	camTarget = XMVector3Normalize(camTarget);
-	
-	XMVECTOR camRight = XMVector3TransformCoord(DefaultRight, camRotationMatrix);
-	XMVECTOR camForward = XMVector3TransformCoord(DefaultForward, camRotationMatrix);
-	XMVECTOR camUp = XMVector3TransformCoord(DefaultUp, camRotationMatrix);
-
-	XMVECTOR camPosition = XMVectorSet(CT.Position.x, CT.Position.y, CT.Position.z, 0.0f);
-
-	camPosition += LCT.Position.x * camRight;
-	camPosition += LCT.Position.y * camUp;
-	camPosition += LCT.Position.z * camForward;
-
-	XMFLOAT3 cp;
-	XMStoreFloat3(&cp, camPosition);
-
-	CurrentCamera.ChangeSinceLastFrame = Transform();
-	CurrentCamera.ChangeSinceLastFrame.Scale = Vector3f();
-
-	Parent.ObjectTransform.Position = Vector3f(cp.x, cp.y, cp.z);
-	camTarget = camPosition + camTarget;
-
-	XMMATRIX View = XMMatrixLookAtLH(camPosition, camTarget,camUp);
-	XMStoreFloat4x4(&ViewMatrix, View);
-	return View;
-	
-	*/
 }
 
 void D3D11RenderSystem::Update(float deltaTime)
@@ -152,6 +110,9 @@ void D3D11RenderSystem::Update(float deltaTime)
 	CoreSystem& cSystem = Engine::MainInstance().SystemsManager.GetCoreSystem();
 
 	DirectionalLight& dLight = const_cast<Pool<DirectionalLight, 8>&>(cSystem.lightManager.GetDirectionalLightsList())[0];
+	PointLight& pLight = const_cast<PLPool&>(cSystem.lightManager.GetPointLightsList())[0];
+	Transform t2;
+
 
 	float intensity = 0.0f;
 	Transform t;
@@ -198,31 +159,6 @@ void D3D11RenderSystem::Update(float deltaTime)
 	dLight.SetDirection(Vector3f(t.Rotation.x, t.Rotation.y, t.Rotation.z));
 
 
-	/*
-	auto mstate = mouse->GetState();
-
-	if (mstate.positionMode == Mouse::MODE_RELATIVE)
-	{
-		Vector3f v = Vector3f(float(mstate.x), float(mstate.y), 0.f);
-
-		if (v.x != 0.0f)
-		{
-			if (v.x > 0.0f)
-				ct.RotateToWorldAxisY(RotateSpeed * deltaTime * 3.0f);
-			else
-				ct.RotateToWorldAxisY(-1.0f * RotateSpeed * deltaTime * 3.0f);
-		}
-
-		if (v.y != 0.0f)
-		{
-			if (v.y > 0.0f)
-				ct.RotateToWorldAxisX(RotateSpeed * deltaTime * 3.0f);
-			else
-				ct.RotateToWorldAxisX(RotateSpeed * deltaTime * -1.0f * 3.0f);
-		}
-
-	}
-	*/
 	if (MainWindow->Input.IsKeyDown(VK_SHIFT))
 	{
 		ct.MoveToLocalAxisY(MoveSpeed * deltaTime * -1.0f);
@@ -248,12 +184,28 @@ void D3D11RenderSystem::Update(float deltaTime)
 		ct.MoveToLocalAxisZ(MoveSpeed * deltaTime * -1.0f);
 	}
 
-	if (MainWindow->Input.IsKeyDown(0x5A))
+
+	if (MainWindow->Input.IsKeyDown(0x49)) //I
 	{
-		D3D11RenderSystem::UseEnvironmentMapping = true;
+		t2.MoveToLocalAxisZ(MoveSpeed * deltaTime);
 	}
-	else
-		D3D11RenderSystem::UseEnvironmentMapping = false;
+
+	if (MainWindow->Input.IsKeyDown(0x4B)) //K
+	{
+		t2.MoveToLocalAxisZ(MoveSpeed * deltaTime * -1.0f);
+	}
+
+	if (MainWindow->Input.IsKeyDown(0x4A)) //J
+	{
+		t2.MoveToLocalAxisX(MoveSpeed * deltaTime);
+	}
+
+	if (MainWindow->Input.IsKeyDown(0x4C)) //L
+	{
+		t2.MoveToLocalAxisX(MoveSpeed * deltaTime * -1.0f);
+	}
+
+	pLight.SetPosition(pLight.GetPosition() + t2.Position);
 
 	//mouse->SetWindow(MainWindow->hWnd);
 	//mouse->SetMode(mstate.leftButton ? Mouse::MODE_RELATIVE : Mouse::MODE_ABSOLUTE);

@@ -10,7 +10,8 @@ struct DirectionalLight
 
 struct PointLight
 {
+	float  Radius;
 	float3 Position;
 	float4 Color;
-	float  LightRadius;
+	float4 padding;
 };

@@ -37,12 +37,12 @@ Handle<PointLight> LightManager::AddPointLight()
 	return PntLightPool.GetNewItem();
 }
 
-const Pool<DirectionalLight, DIR_LIGHT_LIMIT>& LightManager::GetDirectionalLightsList()
+const Pool<DirectionalLight, DIR_LIGHT_WORLD_LIMIT>& LightManager::GetDirectionalLightsList()
 {
 	return DirLightPool;
 }
 
-const Pool<PointLight, POINT_LIGHT_LIMIT>& LightManager::GetPointLightList()
+const Pool<PointLight, POINT_LIGHT_WORLD_LIMIT>& LightManager::GetPointLightsList()
 {
 	return PntLightPool;
 }

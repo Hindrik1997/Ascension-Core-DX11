@@ -25,7 +25,7 @@ namespace ProceduralMeshGeneration
 			for (int yv = 0; yv < verticesHeight; ++yv)
 			{
 				//sin(xv * widthVertsDistance) * cos(yv * heightVertsDistance),
-				Vertices[static_cast<int>(Dimensions.x) * xv + yv] = Vector3f(offsetWidth + xv * widthVertsDistance, sin(xv * widthVertsDistance) * cos(yv * heightVertsDistance), offsetHeight + yv * heightVertsDistance);
+				Vertices[static_cast<int>(Dimensions.x) * xv + yv] = Vector3f(offsetWidth + xv * widthVertsDistance, 0.0f, offsetHeight + yv * heightVertsDistance);
 				UVWS[static_cast<int>(Dimensions.x) * xv + yv] = Vector3f(xv * xStep, yv * yStep, 0.0f);
 			}
 		}

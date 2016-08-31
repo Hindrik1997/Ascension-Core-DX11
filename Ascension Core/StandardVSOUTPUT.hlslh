@@ -5,5 +5,5 @@ struct VS_OUTPUT
 	float4 ViewSpacePosition : TEXCOORD1;
 	float3 ViewSpaceViewDirection : TEXCOORD2;
 	float3 ViewSpaceNormal : NORMAL;
-	float3 ReflectionVector : TEXCOORD3;
+	float4 WorldPosition : TEXCOORD3;
 };

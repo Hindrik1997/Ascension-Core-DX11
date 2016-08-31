@@ -169,6 +169,7 @@ void D3D11StandardShaderSet::Set(D3D11ModelRenderer& renderer)
 
 	XMMATRIX Camera = RSystem.GetWorldMatrix(Parent);
 	XMMATRIX View = XMMatrixInverse(&XMMatrixDeterminant(Camera), Camera);
+
 	PSConstantBufferStructurePerFrame->AmbientColor = Ambient;
 	
 	//DIRECTIONAL LIGHT
@@ -178,25 +179,23 @@ void D3D11StandardShaderSet::Set(D3D11ModelRenderer& renderer)
 	for (int i = 0; i < DirlightCount; ++i)
 	{
 		DirectionalLightShaderStruct temp;
-
-		temp.Direction = XMFLOAT3(DirlightList[i].GetDirection().x, DirlightList[i].GetDirection().y, DirlightList[i].GetDirection().z);
-		XMVECTOR resultDir = XMVector3Transform(XMLoadFloat3(&temp.Direction), XMMatrixTranspose(View));
-		XMStoreFloat3(&temp.Direction, resultDir);
-		temp.Color = XMFLOAT4(DirlightList[i].GetColor().x / 255, DirlightList[i].GetColor().y / 255, DirlightList[i].GetColor().z / 255, DirlightList[i].GetIntensity());
-
-		PSConstantBufferStructurePerFrame->DirectionalLights[i].Color = temp.Color;
-		PSConstantBufferStructurePerFrame->DirectionalLights[i].Direction = temp.Direction;
+		LoadInShaderStructToViewSpace(DirlightList[i], temp, View);
+		PSConstantBufferStructurePerFrame->DirectionalLights[i] = temp;
 	}
 	PSConstantBufferStructurePerFrame->DirectionalLightCount = DirlightCount;
 	
 	//POINT LIGHT
-	PLPool& PntlightList = const_cast<PLPool&>(Cs.lightManager.GetPointLightList());
+	PLPool& PntlightList = const_cast<PLPool&>(Cs.lightManager.GetPointLightsList());
 	int PntlightCount = PntlightList.GetItemInUseCount();
 
-	for () 
+	for (int i = 0; i < POINT_LIGHT_SHADER_LIMIT; ++i) 
 	{
-	
+		PointLightShaderStruct temp;
+		LoadInShaderStruct(PntlightList[i], temp);
+		PSConstantBufferStructurePerFrame->PointLights[i] = temp;
 	}
+	if (PntlightCount > POINT_LIGHT_SHADER_LIMIT)
+		PntlightCount = POINT_LIGHT_SHADER_LIMIT;
 	PSConstantBufferStructurePerFrame->PointLightCount = PntlightCount;
 
 	//UPDATE RESOURCES

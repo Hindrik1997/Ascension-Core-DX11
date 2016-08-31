@@ -20,9 +20,10 @@ VS_OUTPUT main(VS_INPUT IN)
 {
 	VS_OUTPUT output;
 
-	float3 worldPosition = mul(IN.Position, WorldMatrix).xyz;
-	float3 incident = normalize(CameraWorldPosition - worldPosition);
-
+	float4 worldPosition = mul(IN.Position, WorldMatrix);
+	float3 incident = normalize(CameraWorldPosition - worldPosition.xyz);
+	output.WorldPosition = worldPosition;
+	output.ViewSpacePosition = mul(IN.Position, WorldViewMatrix);
 	output.Position = mul(IN.Position, WorldViewProjectionMatrix);
 	output.TextureCoordinate = IN.TextureCoordinate;
 	output.ViewSpaceNormal = normalize(mul((float3x3)WorldViewMatrix, IN.Normal));

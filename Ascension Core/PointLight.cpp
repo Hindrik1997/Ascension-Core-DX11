@@ -11,31 +11,26 @@ PointLight::~PointLight()
 {
 }
 
-void PointLight::SetDirection(Vector3f dir)
-{
-}
-
 void PointLight::SetIntensity(float intensity)
 {
+	Intensity = intensity;
 }
 
 void PointLight::SetColor(float r, float g, float b)
 {
-}
-
-Vector3f PointLight::GetDirection()
-{
-	return Vector3f();
+	Color.x = r;
+	Color.y = g;
+	Color.z = b;
 }
 
 float PointLight::GetIntensity()
 {
-	return 0.0f;
+	return Intensity;
 }
 
 Vector3f PointLight::GetColor()
 {
-	return Vector3f();
+	return Color;
 }
 
 void PointLight::SetPosition(Vector3f v)
@@ -46,4 +41,14 @@ void PointLight::SetPosition(Vector3f v)
 Vector3f PointLight::GetPosition()
 {
 	return Position;
+}
+
+void PointLight::SetRadius(float r)
+{
+	Radius = r;
+}
+
+float PointLight::GetRadius()
+{
+	return Radius;
 }

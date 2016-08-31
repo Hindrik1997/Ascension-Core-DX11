@@ -70,8 +70,6 @@ public:
 	unique_ptr<Win32Window<D3D11Renderer>> MainWindow;
 	unique_ptr<D3D11Renderer> Renderer;
 
-	static bool UseEnvironmentMapping;
-
 #ifdef _DEBUG
 	ID3D11Debug* debug = nullptr;
 #endif
