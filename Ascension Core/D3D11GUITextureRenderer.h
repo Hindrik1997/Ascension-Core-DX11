@@ -6,6 +6,7 @@
 #include <string>
 
 using std::wstring;
+class D3D11RenderSystem;
 
 class D3D11GUITextureRenderer : public Component
 {
@@ -24,6 +25,7 @@ public:
 	template<typename... ResetArgs>
 	static void RemoveComponent(ComponentHandle cHandle, ResetArgs... arguments);
 
+	static D3D11RenderSystem& ConvertToParentSystemType(EngineSystem& system);
 private:
 	friend class D3D11RenderSystem;
 	static Handle<EngineSystem> sysHandle;

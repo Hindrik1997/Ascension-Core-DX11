@@ -10,6 +10,8 @@
 #include "ComponentHandle.h"
 #include "D3D11Model.h"
 
+class D3D11RenderSystem;
+
 class D3D11ModelRenderer : public Component
 {
 public:
@@ -26,6 +28,8 @@ public:
 
 	template<typename... ResetArgs>
 	static void RemoveComponent(ComponentHandle cHandle, ResetArgs... arguments);
+
+	static D3D11RenderSystem& ConvertToParentSystemType(EngineSystem& system);
 private:
 	friend class D3D11RenderSystem;
 	static Handle<EngineSystem> sysHandle;

@@ -103,7 +103,9 @@
       <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"
 xcopy /y /d "$(ProjectDir)Skybox2.dds" "$(OutDir)"
 xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"
-xcopy /y /d "$(ProjectDir)Obsidian.jpg" "$(OutDir)"</Command>
+xcopy /y /d "$(ProjectDir)Obsidian.jpg" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)white.png" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)gloss.dds" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -124,7 +126,10 @@ xcopy /y /d "$(ProjectDir)Obsidian.jpg" "$(OutDir)"</Command>
     <PostBuildEvent>
       <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"
 xcopy /y /d "$(ProjectDir)Skybox2.dds" "$(OutDir)"
-xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
+xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)Obsidian.jpg" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)white.png" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)gloss.dds" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -149,7 +154,9 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
       <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"
 xcopy /y /d "$(ProjectDir)Skybox2.dds" "$(OutDir)"
 xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"
-xcopy /y /d "$(ProjectDir)Obsidian.jpg" "$(OutDir)"</Command>
+xcopy /y /d "$(ProjectDir)Obsidian.jpg" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)white.png" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)gloss.dds" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -173,7 +180,10 @@ xcopy /y /d "$(ProjectDir)Obsidian.jpg" "$(OutDir)"</Command>
     <PostBuildEvent>
       <Command>xcopy /y /d "$(ProjectDir)Skybox.dds" "$(OutDir)"
 xcopy /y /d "$(ProjectDir)Skybox2.dds" "$(OutDir)"
-xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
+xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)Obsidian.jpg" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)white.png" "$(OutDir)"
+xcopy /y /d "$(ProjectDir)gloss.dds" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -201,7 +211,6 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <ClCompile Include="EngineSystem.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectFactory.cpp" />
-    <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix4x4.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -249,8 +258,8 @@ xcopy /y /d "$(ProjectDir)box_texture.dds" "$(OutDir)"</Command>
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectFactory.h" />
     <ClInclude Include="Handle.h" />
-    <ClInclude Include="LightManager.h" />
     <ClInclude Include="D3D11LightStructs.h" />
+    <ClInclude Include="Limits.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PixelShaderBase.h" />

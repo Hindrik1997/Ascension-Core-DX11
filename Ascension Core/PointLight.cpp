@@ -1,8 +1,10 @@
 #include "PointLight.h"
+#include "CoreSystem.h"
+#include "Engine.h"
 
+Handle<EngineSystem> PointLight::sysHandle;
 
-
-PointLight::PointLight()
+PointLight::PointLight(Handle<GameObject> parentObject) : Component(parentObject)
 {
 }
 
@@ -52,3 +54,30 @@ float PointLight::GetRadius()
 {
 	return Radius;
 }
+
+Handle<EngineSystem> PointLight::GetSystemHandle()
+{
+	return (sysHandle.GetIndex() == -1) ? CoreSystem::GetHandle() : sysHandle;
+}
+
+CoreSystem& PointLight::ConvertToParentSystemType(EngineSystem& system)
+{
+	return static_cast<CoreSystem&>(system);
+}
+
+//template implementations
+template<typename... ResetArgs>
+Handle<Component> PointLight::AddComponent(Handle<GameObject> parentObject, ResetArgs... arguments)
+{
+	return static_cast<CoreSystem*>(&Engine::MainInstance().SystemsManager[GetSystemHandle().GetIndex()])->GetPointLight(parentObject, arguments...);
+}
+
+template<typename ...ResetArgs>
+void PointLight::RemoveComponent(ComponentHandle cHandle, ResetArgs ...arguments)
+{
+	static_cast<CoreSystem*>(&Engine::MainInstance().SystemsManager[GetSystemHandle().GetIndex()])->RemovePointLight(cHandle, arguments...);
+}
+
+//explicit instantiations
+template Handle<Component> PointLight::AddComponent(Handle<GameObject> parentObject);
+template void PointLight::RemoveComponent(ComponentHandle cHandle);

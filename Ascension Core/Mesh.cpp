@@ -17,7 +17,7 @@ Mesh::~Mesh()
 
 void Mesh::ReverseWindingOrder()
 {
-	for (size_t i = 0; i < IndiceCount(); i += 3)
+	for (int i = 0; i < IndiceCount(); i += 3)
 	{
 		int second;
 		second = Indices[i + 1];
@@ -28,7 +28,7 @@ void Mesh::ReverseWindingOrder()
 
 void Mesh::GenerateNormals()
 {
-	for (size_t i = 0; i < IndiceCount(); i += 3)
+	for (int i = 0; i < IndiceCount(); i += 3)
 	{
 		Vertex p1 = Vertices[Indices[i]];
 		Vertex p2 = Vertices[Indices[i + 1]];

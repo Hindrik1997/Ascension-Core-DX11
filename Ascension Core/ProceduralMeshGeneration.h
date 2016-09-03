@@ -18,7 +18,6 @@ namespace ProceduralMeshGeneration
 	//Generates procedural quad
 	Mesh GenerateQuad(float size);
 
-
+	
 
 };
-

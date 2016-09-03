@@ -51,7 +51,7 @@ inline void TestComponent::RemoveComponent(ComponentHandle cHandle, ResetArgs ..
 class TestSystem : public EngineSystem
 {
 public:
-	Pool<TestComponent, DEFAULT_SIZE> components;
+	Pool<TestComponent, DEFAULT_GAMEOBJECT_COUNT> components;
 
 	static Handle<EngineSystem> GetHandle();
 

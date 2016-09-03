@@ -1,9 +1,11 @@
 struct VS_OUTPUT
 {
-    float4 Position : SV_POSITION;
+    float4 PSPosition : SV_POSITION;
+	float3 VSPosition : POSITION0;
+	float3 WSPosition : POSITION1;
+	
 	float3 TextureCoordinate : TEXCOORD0;
-	float4 ViewSpacePosition : TEXCOORD1;
-	float3 ViewSpaceViewDirection : TEXCOORD2;
-	float3 ViewSpaceNormal : NORMAL;
-	float4 WorldPosition : TEXCOORD3;
+	float3 WorldSpaceNormal : NORMAL;
+	float3 WorldSpaceViewDirection : TEXCOORD1;
+
 };

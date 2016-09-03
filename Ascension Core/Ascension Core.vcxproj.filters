@@ -10,12 +10,6 @@
     <ClCompile Include="Vector4f.cpp">
       <Filter>Utilities\Vectors</Filter>
     </ClCompile>
-    <ClCompile Include="RenderSystem.cpp">
-      <Filter>Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineSystem.cpp">
-      <Filter>Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
@@ -40,9 +34,6 @@
     <ClCompile Include="Transform.cpp">
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
-    <ClCompile Include="TestSystem.cpp">
-      <Filter>Systems</Filter>
-    </ClCompile>
     <ClCompile Include="D3D11Renderer.cpp">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
     </ClCompile>
@@ -51,9 +42,6 @@
     </ClCompile>
     <ClCompile Include="D3D11ModelRenderer.cpp">
       <Filter>GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="CoreSystem.cpp">
-      <Filter>Systems</Filter>
     </ClCompile>
     <ClCompile Include="ReleaseCOM.cpp">
       <Filter>Systems\RenderSystems\Direct3D</Filter>
@@ -103,7 +91,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="Matrix4x4.cpp">
       <Filter>Utilities\Matrices</Filter>
     </ClCompile>
@@ -122,9 +109,6 @@
     <ClCompile Include="PointLight.cpp">
       <Filter>GameObjects and Components\Components\Core\Lights</Filter>
     </ClCompile>
-    <ClCompile Include="LightManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="ProceduralMeshGeneration.cpp">
       <Filter>Utilities\Procedural</Filter>
     </ClCompile>
@@ -133,6 +117,21 @@
     </ClCompile>
     <ClCompile Include="D3D11LightStructs.cpp">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSystem.cpp">
+      <Filter>Systems\Core Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSystem.cpp">
+      <Filter>Systems\Core Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>Systems\RenderSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreSystem.cpp">
+      <Filter>Systems\Core Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>Utilities\Generic classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -144,12 +143,6 @@
     </ClInclude>
     <ClInclude Include="Vector4f.h">
       <Filter>Utilities\Vectors</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderSystem.h">
-      <Filter>Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineSystem.h">
-      <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>GameObjects and Components</Filter>
@@ -195,9 +188,6 @@
     </ClInclude>
     <ClInclude Include="D3D11ModelRenderer.h">
       <Filter>GameObjects and Components\Components\RenderSystems\Direct3D\D3D11RenderSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="CoreSystem.h">
-      <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="HelperFunctions.h">
       <Filter>Utilities</Filter>
@@ -247,10 +237,6 @@
     <ClInclude Include="D3D11TexturedDiffuseShaderSet.h">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\TexturedDiffuseShaderSet</Filter>
     </ClInclude>
-    <ClInclude Include="TestSystem.h">
-      <Filter>Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Matrix4x4.h">
       <Filter>Utilities\Matrices</Filter>
     </ClInclude>
@@ -269,9 +255,6 @@
     <ClInclude Include="PointLight.h">
       <Filter>GameObjects and Components\Components\Core\Lights</Filter>
     </ClInclude>
-    <ClInclude Include="LightManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="ProceduralMeshGeneration.h">
       <Filter>Utilities\Procedural</Filter>
     </ClInclude>
@@ -280,6 +263,24 @@
     </ClInclude>
     <ClInclude Include="D3D11LightStructs.h">
       <Filter>Systems\RenderSystems\Direct3D\D3D11RenderSystem\Custom ShaderSets\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSystem.h">
+      <Filter>Systems\Core Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSystem.h">
+      <Filter>Systems\Core Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem.h">
+      <Filter>Systems\RenderSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreSystem.h">
+      <Filter>Systems\Core Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>Utilities\Generic classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Limits.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -360,6 +361,12 @@
     </Filter>
     <Filter Include="Utilities\Procedural">
       <UniqueIdentifier>{50d04a37-4390-4433-bca8-1f509073698e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Core Classes">
+      <UniqueIdentifier>{dc0f966f-e4af-4dcb-a016-2d50e1adef26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Core Systems">
+      <UniqueIdentifier>{6963a2c5-8124-411e-b9d7-1996564c657a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -15,6 +15,7 @@
 #include <WaveFrontReader.h>
 #include "ProceduralMeshGeneration.h"
 #include "D3D11GUITextureRenderer.h"
+#include "HelperFunctions.h"
 
 using namespace std;
 
@@ -137,30 +138,40 @@ int main()
 	//Mesh2->CalculateNormals();
 
 	Mesh plane = ProceduralMeshGeneration::GeneratePlane(500, 500, 0.1f, 0.1f);
-	//Mesh plane = ProceduralMeshGeneration::GenerateQuad(5,5);
+	Mesh plane2 = ProceduralMeshGeneration::GenerateQuad(25,25);
 	//Mesh plane = ProceduralMeshGeneration::GenerateCircle(5, 5);
 	//Mesh plane = ProceduralMeshGeneration::GenerateCone(5.0f, 5.0f, 1500);
 	D3D11Mesh* planed = new D3D11Mesh(plane);
+	D3D11Mesh* planed2 = new D3D11Mesh(plane2);
 	D3D11Model* Model = new D3D11Model(shaderSet, *Meshd);
 	D3D11Model* Model3= new D3D11Model(shaderSet3, *planed);
+	D3D11Model* Model4 = new D3D11Model(shaderSet3, *planed2);
 
 	Handle<GameObject> gHandle = e->ObjectsFactory.CreateGameObject();
 	Handle<GameObject> gHandle2 = e->ObjectsFactory.CreateGameObject();
 	
 
-	Handle<DirectionalLight> Dl = cSystem.lightManager.AddDirectionalLight(); 
+	//Handle<DirectionalLight> Dl = cSystem.AddDirectionalLight(); 
+	//cSystem.lightManager.AddDirectionalLight();
 	
-	
-	cSystem.lightManager.AddPointLight();
-	DirectionalLight& dLight = const_cast< Pool<DirectionalLight, 8>& >(cSystem.lightManager.GetDirectionalLightsList())[Dl.GetIndex()];
-	dLight.SetColor(255, 255, 255);
-	dLight.SetDirection(Vector3f(1.0f, 1.0f, 1.0f));
-	dLight.SetIntensity(0.0f);
+	//cSystem.lightManager.AddPointLight();
+	//Handle<PointLight> pl = cSystem.lightManager.AddPointLight();
 
+	//PointLight& pLight = const_cast<PLPool& >(cSystem.lightManager.GetPointLightsList())[pl.GetIndex()];
+	//DirectionalLight& dLight = const_cast<DLPool& >(cSystem.GetDirectionalLightsList())[Dl.GetIndex()];
+	//dLight.SetColor(255, 255, 255);
+	//dLight.SetDirection(Vector3f(1.0f, 1.0f, 1.0f));
+	//dLight.SetIntensity(0.72f);
+//	pLight.SetColor(0, 255, 0);
+
+	//e->ObjectsFactory[gHandle].AddComponent<D3D11ModelRenderer>(Model4);
 	ComponentHandle cHandle = e->ObjectsFactory[gHandle].AddComponent<D3D11ModelRenderer>(Model3);
 	e->ObjectsFactory[gHandle].AddComponent<D3D11GUITextureRenderer>(0.0f, 0.0f, 0.1f, 0.1f, wstring(L"box_texture.dds"));
 	GameObject& gOb = e->ObjectsFactory[gHandle];
 
+	D3D11ModelRenderer& r = GetComponentReference<D3D11ModelRenderer>(cHandle);
+
+	e->ObjectsFactory.at(gHandle).ObjectTransform.Position = Vector3f(0.0f, -5.0f, 0.0f);
 	e->ObjectsFactory.at(a).ObjectTransform.Position = Vector3f(0.0f, 0.0f, -8.0f);
 
 	Engine::MainInstance().ObjectsFactory[gHandle2].ObjectTransform.Scale = Vector3f(50.0f, 50.0f, 50.0f);

@@ -18,7 +18,7 @@ void LoadInShaderStruct(Spotlight & s, SpotLightShaderStruct & ss)
 void LoadInShaderStruct(DirectionalLight & d, DirectionalLightShaderStruct & ds)
 {
 	ds.Direction = XMFLOAT3(d.GetDirection().x, d.GetDirection().y, d.GetDirection().z);
-	ds.Color = XMFLOAT4(d.GetColor().x / 255, d.GetColor().y / 255, d.GetColor().z / 255,d.GetIntensity());
+	ds.Color = XMFLOAT4(d.GetColor().x / 255, d.GetColor().y / 255, d.GetColor().z / 255, d.GetIntensity());
 }
 
 void LoadInShaderStructToViewSpace(DirectionalLight & d, DirectionalLightShaderStruct & ds, XMMATRIX& ViewMatrix)

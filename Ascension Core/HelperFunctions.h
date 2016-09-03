@@ -1,11 +1,10 @@
 #pragma once
-
 #include "Engine.h"
 #include "ComponentHandle.h"
 
-/* MUST BE FIXED SOMEDAY
+
 template<typename T>
 T& GetComponentReference(ComponentHandle cHandle)
 {
-	//return Engine::MainInstance().SystemsManager[cHandle.GetSysHandle().GetIndex()]->GetComponentFromStorage<T>(cHandle.GetCompHandle());
-}*/
+	return T::ConvertToParentSystemType(Engine::MainInstance().SystemsManager[cHandle.GetSysHandle().GetIndex()]).GetFromStorage<T>(cHandle.GetCompHandle().GetIndex());
+}

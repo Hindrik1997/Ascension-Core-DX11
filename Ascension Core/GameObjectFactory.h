@@ -9,8 +9,7 @@
 #include "Pool.h"
 #include "GameObject.h"
 #include <mutex>
-
-#define DEFAULT_SIZE 65535
+#include "Limits.h"
 
 using std::mutex;
 
@@ -39,7 +38,7 @@ public:
 
 private:
 	mutex GMutex;
-    Pool<GameObject, DEFAULT_SIZE> GameObjects;
+    Pool<GameObject, DEFAULT_GAMEOBJECT_COUNT> GameObjects;
 };
 
 inline GameObject& GameObjectFactory::at(const int index)

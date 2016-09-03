@@ -70,7 +70,7 @@ inline Handle<EngineSystem> SystemManager::AddSystem(CustomArgs ...arguments)
 {
 	std::lock_guard<std::mutex> guard(CSMutex);
 	Systems.push_back(std::make_unique<T>(arguments...));
-	return Handle<EngineSystem>(Systems.size() - 1);
+	return Handle<EngineSystem>(static_cast<int>(Systems.size()) - 1);
 }
 
 template<typename T, typename ...CustomArgs>

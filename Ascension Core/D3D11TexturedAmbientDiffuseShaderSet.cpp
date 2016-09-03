@@ -96,9 +96,9 @@ void D3D11TexturedAmbientDiffuseShaderSet::Set(D3D11ModelRenderer& renderer)
 
 	//Update per frame buffer
 	XMFLOAT4 Ambient;
-	Vector3f a = Engine::MainInstance().SystemsManager.GetCoreSystem().lightManager.GetAmbientColor();
+	Vector3f a = Engine::MainInstance().SystemsManager.GetCoreSystem().GetAmbientColor();
 	Ambient.x = a.x / 255.0f; Ambient.y = a.y / 255.0f; Ambient.z = a.z / 255.0f;
-	Ambient.w = Engine::MainInstance().SystemsManager.GetCoreSystem().lightManager.GetAmbientIntensity();
+	Ambient.w = Engine::MainInstance().SystemsManager.GetCoreSystem().GetAmbientIntensity();
 	//Mappen naar 0.0f - 1.0f range
 	Ambient.w = Ambient.w / 255.0f;
 		

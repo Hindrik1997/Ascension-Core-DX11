@@ -77,3 +77,8 @@ void D3D11GUITextureRenderer::RemoveComponent(ComponentHandle cHandle, ResetArgs
 //Explicit instantiations
 template Handle<Component> D3D11GUITextureRenderer::AddComponent(Handle<GameObject> parentObject, float x, float y, float size_x, float size_y, wstring texName);
 template void D3D11GUITextureRenderer::RemoveComponent(ComponentHandle cHandle);
+
+D3D11RenderSystem& D3D11GUITextureRenderer::ConvertToParentSystemType(EngineSystem & system)
+{
+	return static_cast<D3D11RenderSystem&>(system);
+}

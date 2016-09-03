@@ -26,8 +26,8 @@ public:
     Pool(const Pool&& pool) = delete;
     Pool& operator= (const Pool& pool) = delete;
 
-    inline T& operator[] (const int index);
-	inline T& At(const int index);
+    inline T& operator[] (const size_t index);
+	inline T& At(const size_t index);
 
 	template<typename... ResetArgs>
     Handle<T> GetNewItem(ResetArgs... args);
@@ -69,12 +69,12 @@ inline const int Pool<T, SIZE>::GetFirstFreeIndex() const
 template<typename T, int SIZE>
 inline Pool<T,SIZE>::Pool()
 {
-    for(size_t i = 0; i < static_cast<size_t>(size()); ++i)
+    for(size_t i = 0; i < size(); ++i)
     {
         if(i != size() - 1)
-            storage[i].CurrentState.NextItemIndex = (i + 1);
+            storage[static_cast<int>(i)].CurrentState.NextItemIndex = (static_cast<int>(i) + 1);
         else
-            storage[i].CurrentState.NextItemIndex = -1;
+            storage[static_cast<int>(i)].CurrentState.NextItemIndex = -1;
     }
 }
 
@@ -112,13 +112,13 @@ void Pool<T, SIZE>::RemoveItem(Handle<T> item)
 }
 
 template<typename T, int SIZE>
-inline T& Pool<T,SIZE>::operator[](const int index)
+inline T& Pool<T,SIZE>::operator[](const size_t index)
 {
     return storage[index].CurrentState.Object;
 }
 
 template<typename T, int SIZE>
-inline T& Pool<T,SIZE>::At(const int index)
+inline T& Pool<T,SIZE>::At(const size_t index)
 {
     if(index > 0 && index < size())
         return storage[index];

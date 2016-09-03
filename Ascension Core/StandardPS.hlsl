@@ -9,69 +9,89 @@ cbuffer cbPerFrame : register(b0)
 	DirectionalLight DirectionalLights[DIR_LIGHT_LIMIT];
 	int PntLightCount;
 	PointLight PointLights[PNT_LIGHT_LIMIT];
+	float3 CameraWorldPosition;
+	float padding;
 };
+
+static const float Glossines = 0.4f;
 
 cbuffer cbPerMaterial : register(b1)
 {
 	_Material Material;
 }
 
-//Lightning calculations in view space!
-//LightDirections precalculated on cpu in view space
-
-SamplerState TrilinearSampler;
+SamplerState Sampler;
 Texture2D ColorMap : register(t0);
-TextureCube CubeMap : register(t1);
+Texture2D RoughnessMap : register(t1);
 
 float4 main(VS_OUTPUT IN) : SV_TARGET
 {
-	
-	float LightIntensity = 1.0f;
-	float3 N = normalize(IN.ViewSpaceNormal);
-	float3 ViewDirection = normalize( - IN.ViewSpaceViewDirection);
 
-	float4 emissive = Material.Emissive;
-	float4 ambient = Material.Ambient * GlobalAmbientLight;
-	float4 diffuse = 0.0f;
-	float4 specular = 0.0f;
+	float3 NativeColor = ColorMap.Sample(Sampler, IN.TextureCoordinate.xy).xyz;
 
-	
+	float3 N = normalize(IN.WorldSpaceNormal);
+	float3 V = normalize(CameraWorldPosition - IN.WSPosition);
+
+	float3 Ambient = GlobalAmbientLight.rgb * GlobalAmbientLight.a;
+	float3 Diffuse = 0;
+	float3 Specular = 0;
+
 	for (int i = 0; i < DirLightCount; ++i)
 	{
-		float4 Light = DirectionalLights[i].Color;
+		if (DirectionalLights[i].Color.a <= 0.0f)
+			continue;
+
 		float3 L = normalize(-DirectionalLights[i].Direction);
-		if (Light.w > 0)
-		{
-			LightIntensity += Light.w;
-			diffuse += Material.Diffuse * DoDiffuse(Light, L, N);
-			specular += Material.Specular * DoSpecularBlinnPhong(Light, ViewDirection, L, N, Material.SpecularPower);
-		}
+		float Angle = dot(L,N);
+		Angle = Angle * 0.5f + 0.5f; //Remappen voor alle hoeken
+		
+		float3 R = normalize(2 * Angle * N - L);
+		float RdotV = dot(R,V);
+		
+		
+		float SpecularPower = exp2(10 * (1.0f - Glossines) + 1);
+		SpecularPower = 25.0f;
+		float3 Lspec = max(0, pow(abs(RdotV), SpecularPower));
+
+		float3 Ldiff = max(0, DirectionalLights[i].Color.rgb * DirectionalLights[i].Color.a * Angle - (Lspec * DirectionalLights[i].Color.a));
+
+
+		Diffuse += Ldiff;
+		Specular += Lspec;
 	}
+
 	
 	for (int j = 0; j < PntLightCount; ++j)
 	{
-		float4 Light = PointLights[j].Color;
-		float3 L = normalize(PointLights[j].Position - IN.WorldPosition);
-		if (Light.w > 0)
-		{
-			LightIntensity += saturate(1.0f - (length(L) / PointLights[j].Radius));
-			diffuse += Material.Diffuse * DoDiffuse(Light, L, N);
-			//specular += Material.Specular * DoSpecularBlinnPhong(Light, ViewDirection, L, N, Material.SpecularPower);
-		}
-	}
+		if (PointLights[j].Color.a <= 0.0f)
+			continue;
+		float3 L = normalize(- PointLights[j].Position - IN.WSPosition);
+		float Attenuation = saturate(1.0f - (length(L) / PointLights[j].Radius));
+		
+		if (Attenuation <= 0.0f)
+			continue;
+
+		float Angle = dot(L, N);
+		Angle = Angle * 0.5f + 0.5f; //Remappen voor alle hoeken
+
+		float3 R = normalize(2 * Angle * N - L);
+		float RdotV = dot(R, V);
+
+		float SpecularPower = exp2(10 * (1.0f - Glossines) + 1);
+		float3 Lspec = max(0, pow(abs(RdotV), SpecularPower)) * Attenuation;
+
+		float3 Ldiff = max(0, PointLights[j].Color.rgb * (PointLights[j].Color.a  * Attenuation)* Angle - (Lspec * PointLights[j].Color.a * Attenuation) );
 
 
-	//float4 Environment = CubeMap.Sample(TrilinearSampler, IN.ReflectionVector);
-
-	float4 color = {1,1,1,1};
-
-	if (Material.UseTexture)
-	{
-		color = ColorMap.Sample(TrilinearSampler, (float2)IN.TextureCoordinate);
+		Diffuse += Ldiff;
+		Specular += Lspec;
 	}
 	
-	
 
-	float4 fragmentColor = (emissive + ambient + (diffuse + specular * LightIntensity)) * color;
-	return fragmentColor;
+
+	
+	float4 OUT = 0;
+	OUT.rgb = NativeColor * (Ambient + Diffuse) + Specular;
+	OUT.a = 1;
+	return OUT;
 }

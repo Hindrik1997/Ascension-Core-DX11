@@ -40,6 +40,11 @@ template Handle<Component> D3D11ModelRenderer::AddComponent(Handle<GameObject> p
 template void D3D11ModelRenderer::RemoveComponent(ComponentHandle cHandle);
 
 
+D3D11RenderSystem& D3D11ModelRenderer::ConvertToParentSystemType(EngineSystem & system)
+{
+	return static_cast<D3D11RenderSystem&>(system);
+}
+
 void D3D11ModelRenderer::Render()
 {
 	Handle<EngineSystem> sysHandle = D3D11RenderSystem::GetHandle();

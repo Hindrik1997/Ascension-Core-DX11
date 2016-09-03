@@ -53,6 +53,9 @@ public:
 	template<typename... Args>
 	inline void RemoveD3D11GUITextureRenderer(ComponentHandle cHandle, Args... args);
 
+	template<typename T>
+	T& GetFromStorage(int index);
+
 
 	static Handle<EngineSystem> GetHandle();
 
@@ -80,8 +83,8 @@ private:
 
 	mutex MRPMutex;
 	mutex GTRMutex;
-	Pool<D3D11ModelRenderer, DEFAULT_SIZE> ModelRendererPool;
-	Pool<D3D11GUITextureRenderer, DEFAULT_SIZE> GUITextureRendererPool;
+	Pool<D3D11ModelRenderer, DEFAULT_GAMEOBJECT_COUNT> ModelRendererPool;
+	Pool<D3D11GUITextureRenderer, DEFAULT_GAMEOBJECT_COUNT> GUITextureRendererPool;
 
 private:
 	RenderFunction renderFunction = nullptr;
@@ -146,5 +149,26 @@ inline void D3D11RenderSystem::RemoveD3D11GUITextureRenderer(ComponentHandle cHa
 	std::lock_guard<std::mutex> guard(GTRMutex);
 	GUITextureRendererPool.RemoveItem(Handle<D3D11GUITextureRenderer>(cHandle.GetCompHandle().GetIndex()), args...);
 }
+
+
+
+template<typename T>
+inline T& D3D11RenderSystem::GetFromStorage(int index)
+{
+	throw "Please specialize the appropriate type!";
+}
+
+//Specializations
+template<>
+inline D3D11GUITextureRenderer& D3D11RenderSystem::GetFromStorage(int index)
+{
+	return GUITextureRendererPool[index];
+};
+
+template<>
+inline D3D11ModelRenderer& D3D11RenderSystem::GetFromStorage(int index)
+{
+	return ModelRendererPool[index];
+};
 
 #endif

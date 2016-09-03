@@ -22,7 +22,7 @@ D3D11StandardShaderSet::D3D11StandardShaderSet(wstring fileName) : ps(L"Standard
 			throw "Could not load the specified texture";
 	}
 
-	hr = CreateDDSTextureFromFile(ParentRenderer.Device, L"Skybox.dds", NULL, &EnvironmentMap);
+	hr = CreateDDSTextureFromFile(ParentRenderer.Device, L"gloss.dds", NULL, &EnvironmentMap);
 	if (!SUCCEEDED(hr))
 	{
 		hr = CreateWICTextureFromFile(ParentRenderer.Device, fileName.c_str(), NULL, &EnvironmentMap);
@@ -157,9 +157,9 @@ void D3D11StandardShaderSet::Set(D3D11ModelRenderer& renderer)
 
 	//Update per frame buffer
 	XMFLOAT4 Ambient;
-	Vector3f a = Engine::MainInstance().SystemsManager.GetCoreSystem().lightManager.GetAmbientColor();
+	Vector3f a = Engine::MainInstance().SystemsManager.GetCoreSystem().GetAmbientColor();
 	Ambient.x = a.x / 255.0f; Ambient.y = a.y / 255.0f; Ambient.z = a.z / 255.0f;
-	Ambient.w = Engine::MainInstance().SystemsManager.GetCoreSystem().lightManager.GetAmbientIntensity();
+	Ambient.w = Engine::MainInstance().SystemsManager.GetCoreSystem().GetAmbientIntensity();
 	//Mappen naar 0.0f - 1.0f range
 	Ambient.w = Ambient.w / 255.0f;
 
@@ -173,19 +173,19 @@ void D3D11StandardShaderSet::Set(D3D11ModelRenderer& renderer)
 	PSConstantBufferStructurePerFrame->AmbientColor = Ambient;
 	
 	//DIRECTIONAL LIGHT
-	DLPool& DirlightList = const_cast<DLPool&>(Cs.lightManager.GetDirectionalLightsList());
+	DLPool& DirlightList = const_cast<DLPool&>(Cs.GetDirectionalLightsList());
 	int DirlightCount = DirlightList.GetItemInUseCount();
 
 	for (int i = 0; i < DirlightCount; ++i)
 	{
 		DirectionalLightShaderStruct temp;
-		LoadInShaderStructToViewSpace(DirlightList[i], temp, View);
+		LoadInShaderStruct(DirlightList[i], temp);
 		PSConstantBufferStructurePerFrame->DirectionalLights[i] = temp;
 	}
 	PSConstantBufferStructurePerFrame->DirectionalLightCount = DirlightCount;
 	
 	//POINT LIGHT
-	PLPool& PntlightList = const_cast<PLPool&>(Cs.lightManager.GetPointLightsList());
+	PLPool& PntlightList = const_cast<PLPool&>(Cs.GetPointLightsList());
 	int PntlightCount = PntlightList.GetItemInUseCount();
 
 	for (int i = 0; i < POINT_LIGHT_SHADER_LIMIT; ++i) 
@@ -197,6 +197,7 @@ void D3D11StandardShaderSet::Set(D3D11ModelRenderer& renderer)
 	if (PntlightCount > POINT_LIGHT_SHADER_LIMIT)
 		PntlightCount = POINT_LIGHT_SHADER_LIMIT;
 	PSConstantBufferStructurePerFrame->PointLightCount = PntlightCount;
+	PSConstantBufferStructurePerFrame->CameraWorldPosition = { CPosition.x, CPosition.y, CPosition.z };
 
 	//UPDATE RESOURCES
 	ParentRenderer.DeviceContext->UpdateSubresource(PSPerFrameBuffer, 0, NULL, &*PSConstantBufferStructurePerFrame, 0, 0);

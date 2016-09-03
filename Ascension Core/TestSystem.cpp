@@ -24,7 +24,7 @@ Handle<EngineSystem> TestSystem::GetHandle()
 	{
 		if (typeid(TestSystem) == typeid(*(Engine::MainInstance().SystemsManager.GetSystems())[i]))
 		{
-			return Handle<EngineSystem>(i);
+			return Handle<EngineSystem>(static_cast<int>(i));
 		}
 	}
 	throw "System not found in engine!";

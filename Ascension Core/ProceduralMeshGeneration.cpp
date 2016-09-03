@@ -7,13 +7,13 @@ namespace ProceduralMeshGeneration
 {
 	Mesh GeneratePlane(int verticesWidth, int verticesHeight, float widthVertsDistance, float heightVertsDistance)
 	{
-		Vector2f Dimensions = Vector2f(verticesWidth, verticesHeight);
-		Vector3f* Vertices = new Vector3f[Dimensions.x * Dimensions.y];
-		Vector3f* UVWS = new Vector3f[Dimensions.x * Dimensions.y];
+		Vector2f Dimensions = Vector2f(static_cast<float>(verticesWidth), static_cast<float>(verticesHeight));
+		Vector3f* Vertices = new Vector3f[static_cast<int>(Dimensions.x * Dimensions.y)];
+		Vector3f* UVWS = new Vector3f[static_cast<int>(Dimensions.x * Dimensions.y)];
 		vector<int> Triangles;
 
-		int offsetWidth = -1 * (Dimensions.x * widthVertsDistance) / 2;
-		int offsetHeight = -1 * (Dimensions.y * heightVertsDistance) / 2;
+		int offsetWidth = static_cast<int>(-1 * (Dimensions.x * widthVertsDistance) / 2);
+		int offsetHeight = static_cast<int>(-1 * (Dimensions.y * heightVertsDistance) / 2);
 
 		float xStep = 1.0f / Dimensions.x;
 		float yStep = 1.0f / Dimensions.y;
@@ -24,8 +24,10 @@ namespace ProceduralMeshGeneration
 		{
 			for (int yv = 0; yv < verticesHeight; ++yv)
 			{
-				//sin(xv * widthVertsDistance) * cos(yv * heightVertsDistance),
-				Vertices[static_cast<int>(Dimensions.x) * xv + yv] = Vector3f(offsetWidth + xv * widthVertsDistance, 0.0f, offsetHeight + yv * heightVertsDistance);
+				float ylevel = sin(xv * widthVertsDistance) * cos(yv * heightVertsDistance);
+				//ylevel = 0;
+
+				Vertices[static_cast<int>(Dimensions.x) * xv + yv] = Vector3f(offsetWidth + xv * widthVertsDistance, ylevel , offsetHeight + yv * heightVertsDistance);
 				UVWS[static_cast<int>(Dimensions.x) * xv + yv] = Vector3f(xv * xStep, yv * yStep, 0.0f);
 			}
 		}
@@ -34,13 +36,13 @@ namespace ProceduralMeshGeneration
 		{
 			for (int y = 0; y < Dimensions.y - 1; ++y)
 			{
-				Triangles.push_back(Dimensions.x * x + 1 + y);
-				Triangles.push_back(Dimensions.x * x + Dimensions.x + 1 + y);
-				Triangles.push_back(Dimensions.x * x + y);
+				Triangles.push_back(static_cast<int>(Dimensions.x * x + 1 + y));
+				Triangles.push_back(static_cast<int>(Dimensions.x * x + Dimensions.x + 1 + y));
+				Triangles.push_back(static_cast<int>(Dimensions.x * x + y));
 
-				Triangles.push_back(Dimensions.x * x + y);
-				Triangles.push_back(Dimensions.x * x + Dimensions.x + 1 + y);
-				Triangles.push_back(Dimensions.x * x + Dimensions.x + y);
+				Triangles.push_back(static_cast<int>(Dimensions.x * x + y));
+				Triangles.push_back(static_cast<int>(Dimensions.x * x + Dimensions.x + 1 + y));
+				Triangles.push_back(static_cast<int>(Dimensions.x * x + Dimensions.x + y));
 			}
 		}
 
@@ -69,7 +71,7 @@ namespace ProceduralMeshGeneration
 	Mesh GenerateCone(float height, float radius, int segments)
 	{
 		Mesh mesh;
-		float angleInc = two_pi / segments;
+		float angleInc = static_cast<float>(two_pi / segments);
 
 		Vertex base(0, -height/2, 0);
 		Vertex top(0, height/2, 0);
@@ -119,7 +121,7 @@ namespace ProceduralMeshGeneration
 	Mesh GenerateCircle(float radius, int segments)
 	{
 		Mesh mesh;
-		float angleInc = two_pi / segments;
+		float angleInc = static_cast<float>(two_pi / segments);
 
 		Vertex base;
 
@@ -193,6 +195,8 @@ namespace ProceduralMeshGeneration
 	{
 		return GenerateQuad(size,size);
 	}
+
+
 
 }
 

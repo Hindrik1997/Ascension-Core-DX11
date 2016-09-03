@@ -15,15 +15,11 @@ public:
 	Vector3f Forward;
 	
 public:
-	//Transform ChangeSinceLastFrame;
-public:
 	Vector3f GetCamPosition();
 	void SetCamPosition(Vector3f pos);
 
 	Vector3f GetRightVector();
 	Vector3f GetLeftVector();
-
-
 public:
 	Camera(Handle<GameObject> parentObject);
 	~Camera();

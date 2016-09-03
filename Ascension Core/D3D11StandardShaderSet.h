@@ -45,8 +45,7 @@ __declspec(align(16)) struct VSPerObjectBufferStructSTD
 __declspec(align(16)) struct VSPerFrameBufferStructSTD
 {
 	XMFLOAT3 CameraWorldPosition;
-	XMFLOAT3 LightDirection;
-	XMFLOAT2 padding;
+	float padding;
 
 	void* operator new(size_t i)
 	{
@@ -82,6 +81,8 @@ __declspec(align(16)) struct PSPerFrameBufferStructSTD
 	DirectionalLightShaderStruct DirectionalLights[DIR_LIGHT_SHADER_LIMIT];
 	int PointLightCount;
 	PointLightShaderStruct PointLights[POINT_LIGHT_SHADER_LIMIT];
+	XMFLOAT3 CameraWorldPosition;
+	float padding;
 
 	void* operator new(size_t i)
 	{

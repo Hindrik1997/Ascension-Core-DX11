@@ -24,10 +24,10 @@ float4 DoSpecularPhong( float4 light, float3 V, float3 L, float3 N, float Specul
     return light * pow( RdotV, SpecularPower );
 }
 
-float4 DoSpecularBlinnPhong( float4 light, float3 V, float3 L, float3 N, float SpecularPower )
+float3 DoSpecularBlinnPhong(float3 V, float3 L, float3 N, float SpecularPower )
 {
     // Blinn-Phong lighting
     float3 H = normalize( L + V );
     float NdotH = max( 0, dot( N, H ) );
-    return light * pow( NdotH, SpecularPower);
+    return (float3)1 * pow(NdotH, SpecularPower);
 }

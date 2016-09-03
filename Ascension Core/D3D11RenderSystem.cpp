@@ -109,8 +109,8 @@ void D3D11RenderSystem::Update(float deltaTime)
 
 	CoreSystem& cSystem = Engine::MainInstance().SystemsManager.GetCoreSystem();
 
-	DirectionalLight& dLight = const_cast<Pool<DirectionalLight, 8>&>(cSystem.lightManager.GetDirectionalLightsList())[0];
-	PointLight& pLight = const_cast<PLPool&>(cSystem.lightManager.GetPointLightsList())[0];
+	DirectionalLight& dLight = const_cast<Pool<DirectionalLight, 8>&>(cSystem.GetDirectionalLightsList())[0];
+	PointLight& pLight = const_cast<PLPool&>(cSystem.GetPointLightsList())[0];
 	Transform t2;
 
 
@@ -148,14 +148,18 @@ void D3D11RenderSystem::Update(float deltaTime)
 
 	if (MainWindow->Input.IsKeyDown(0x37))
 	{
-		intensity += 5.0f * deltaTime;
+		intensity += (1.0f * deltaTime);
 	}
 	if (MainWindow->Input.IsKeyDown(0x38))
 	{
-		intensity += -5.0f * deltaTime;
+		intensity += (-1.0f * deltaTime);
 	}
 
-	dLight.SetIntensity(dLight.GetIntensity() + intensity);
+	
+
+	float f = dLight.GetIntensity();
+	float g = f - intensity;
+	dLight.SetIntensity(g);
 	dLight.SetDirection(Vector3f(t.Rotation.x, t.Rotation.y, t.Rotation.z));
 
 
@@ -197,12 +201,12 @@ void D3D11RenderSystem::Update(float deltaTime)
 
 	if (MainWindow->Input.IsKeyDown(0x4A)) //J
 	{
-		t2.MoveToLocalAxisX(MoveSpeed * deltaTime);
+		t2.MoveToLocalAxisX( - 1.0f * MoveSpeed * deltaTime);
 	}
 
 	if (MainWindow->Input.IsKeyDown(0x4C)) //L
 	{
-		t2.MoveToLocalAxisX(MoveSpeed * deltaTime * -1.0f);
+		t2.MoveToLocalAxisX(MoveSpeed * deltaTime);
 	}
 
 	pLight.SetPosition(pLight.GetPosition() + t2.Position);
@@ -249,7 +253,7 @@ Handle<EngineSystem> D3D11RenderSystem::GetHandle()
 	{
 		if (typeid(D3D11RenderSystem) == typeid(*(Engine::MainInstance().SystemsManager.GetSystems())[i]))
 		{
-			return Handle<EngineSystem>(i);
+			return Handle<EngineSystem>(static_cast<int>(i));
 		}
 	}
 	throw "System not found in engine!";
@@ -288,9 +292,9 @@ void D3D11RenderSystem::RenderForward()
 	{
 		if (ModelRendererPool.GetStorageRef()[i].IsUsed)
 		{
-			ModelRendererPool[i].Render();
-			Renderer->DeviceContext->DrawIndexed(static_cast<int>(ModelRendererPool[i].Model->Mesh.Indices.size()), 0, 0);
-			ModelRendererPool[i].Model->RevertState(ModelRendererPool[i]);
+			ModelRendererPool[static_cast<int>(i)].Render();
+			Renderer->DeviceContext->DrawIndexed(static_cast<int>(ModelRendererPool[static_cast<int>(i)].Model->Mesh.Indices.size()), 0, 0);
+			ModelRendererPool[static_cast<int>(i)].Model->RevertState(ModelRendererPool[static_cast<int>(i)]);
 			DrawCallCount++;
 		}
 	}
@@ -299,10 +303,10 @@ void D3D11RenderSystem::RenderForward()
 	{
 		if (GUITextureRendererPool.GetStorageRef()[i].IsUsed)
 		{
-			GUITextureRendererPool[i].Set();
-			GUITextureRendererPool[i].Update();
+			GUITextureRendererPool[static_cast<int>(i)].Set();
+			GUITextureRendererPool[static_cast<int>(i)].Update();
 			//Renderer->DeviceContext->DrawIndexed();
-			GUITextureRendererPool[i].RevertState();
+			GUITextureRendererPool[static_cast<int>(i)].RevertState();
 
 			DrawCallCount++;
 		}
